@@ -21,17 +21,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Profife ({title}) {
+export default function Profile ({user, logout}) {
 	const classes = useStyles();
 
 	return (
 		<div className={classes.root}>
-			<Avatar className={classes.avatar}>H</Avatar>
+			<Avatar className={classes.avatar}>{user}</Avatar>
 			 <Button
         variant="contained"
         color="secondary"
         startIcon={<ExitToApp />}
         className={classes.btn}
+        onClick={() => logout()}
       >
         退出登录
       </Button>

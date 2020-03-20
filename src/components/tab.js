@@ -47,11 +47,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function FullWidthTabs() {
+export default function FullWidthTabs({rows}) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -62,35 +61,42 @@ export default function FullWidthTabs() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-          aria-label="full width tabs example"
+      {
+        rows && rows.length
+      ?<React.Fragment>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="fullWidth"
+            aria-label="full width tabs example"
+          >
+          {
+            rows.map((item, index) => (
+              <Tab key={index}label={item[0].whose.name} {...a11yProps(index)} />
+            ))
+          }
+          </Tabs>
+        </AppBar>
+        <SwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={value}
+          onChangeIndex={handleChangeIndex}
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
-        </Tabs>
-      </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <Table />
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <Table />
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          <Table />
-        </TabPanel>
-      </SwipeableViews>
+        {
+          rows.map((item, index) => (
+              <TabPanel key={index}value={value} index={index} dir={theme.direction}>
+                <Table rows={item}/>
+              </TabPanel>
+            )
+          )
+        }
+        </SwipeableViews>
+      </React.Fragment>
+      :null
+      } 
     </div>
   );
 }

@@ -1,6 +1,34 @@
 export const picUrl = 'https://cn.bing.com/th?id=OIP.WMpknoaU9SsncVEW7W6SzAHaLH&pid=Api&rs=1'
 export const vedioUrl = 'http://cdn.moji.com/websrc/video/video621.mp4'
-export const isVedio = true
+//localStorage
+export const ATTANGEDATA = 'ARRANGEDATA'
+export const USER = 'USER'
+export const TOKEN = 'TOKEN'
+export const expire = 300//S
+
+export const isVedio = false
+export const whichPage = 0
+
+export function saveData(str, data, expire){
+	window.localStorage.setItem(
+    str,
+    JSON.stringify({
+    	expires: Date.now() + expire * 1000,
+      data: data,
+    })
+  );
+}
+
+export function readData(str){
+	const cache = JSON.parse(
+    window.localStorage.getItem(str) || '{}'
+  );
+  return cache
+}
+
+export function deleteData(str){
+	window.localStorage.removeItem(str);
+}
 
 export function h0(timestamp = Date.now()) {
   const target = new Date(timestamp);
@@ -32,12 +60,21 @@ export function h1(date , which){
 }
 
 export function flatten(arr) {  
-    return arr.reduce((result, item)=> {
-        return result.concat(Array.isArray(item) ? flatten(item) : item);
-    }, []);
+  return arr.reduce((result, item)=> {
+    return result.concat(Array.isArray(item) ? flatten(item) : item);
+  }, []);
 }
 
 const roles = ['高级柜员', '柜员', '主管', '客户经理']
+
+export function format(workers){
+	return [ 
+		workers.filter((i) => i.role === '高级柜员'),
+		workers.filter((i) => i.role === '客户经理'),
+		workers.filter((i) => i.role === '主管'),
+		workers.filter((i) => i.role === '柜员'),
+	]
+}
 
 export const workers = [
 	{
@@ -78,11 +115,52 @@ export const workers = [
 	},
 ]
 
-export function format(workers){
-	return [ 
-		workers.filter((i) => i.role === '高级柜员'),
-		workers.filter((i) => i.role === '客户经理'),
-		workers.filter((i) => i.role === '主管'),
-		workers.filter((i) => i.role === '柜员'),
-	]
+export function falmatData(array){
+	if(array && array.length > 0){
+			for(let i=0; i < array.length; i++){
+			array[i].name = (new Date(array[i].name).getMonth()+1) +'/' + (new Date(array[i].name).getDate())
+		}
+		return array
+	} else {
+		return array
+	}
 }
+
+export function color(){
+	let colorValue="0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f";
+	let colorArray = colorValue.split(",");
+	let color="#"
+	for(var i=0;i<6;i++){
+		color+=colorArray[Math.floor(Math.random()*16)];
+	}
+	if(color === '#ffffff'){
+		color()
+	} else return color
+}
+
+export function getScrollTop(){
+	let scrollTop=0
+  if(document.documentElement&&document.documentElement.scrollTop)
+  {
+      scrollTop=document.documentElement.scrollTop
+  }
+  else if(document.body)
+  {
+      scrollTop=document.body.scrollTop
+  }
+  return scrollTop
+}
+//获取视窗高度
+export function getClientHeight(){    
+  let clientHeight=0
+  if(document.body.clientHeight&&document.documentElement.clientHeight){    
+      clientHeight=(document.body.clientHeight<document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight            
+  }else{    
+      clientHeight=(document.body.clientHeight>document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight       
+  }    
+  return clientHeight
+}
+//获取文档内容实际高度
+export function getScrollHeight(){    
+  return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);   
+} 

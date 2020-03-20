@@ -70,7 +70,6 @@ function Month(props) {
     currentDay.setDate(currentDay.getDate() + 1);
       //console.log(currentDay.getMonth())
   }
-
   days = new Array(startDay.getDay() ? startDay.getDay() - 1 : 6)
       .fill(null)
       .concat(days);

@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function FloatingActionButtons({add, push}) {
+export default function FloatingActionButtons({add, push, clear, arrange}) {
   const classes = useStyles();
   let history = useHistory();
 
@@ -27,6 +27,7 @@ export default function FloatingActionButtons({add, push}) {
 
   const back = () => {
     history.goBack()
+    if(arrange) { clear() }
   }
 
   return (
@@ -36,7 +37,11 @@ export default function FloatingActionButtons({add, push}) {
         aria-label="add"
         onClick={push ? click : back}
       >
-        {add ? <AddIcon /> : <ArrowBack />}
+        {
+          add 
+          ? <AddIcon /> 
+          : <ArrowBack />
+        }
       </Fab>
     </div>
   );

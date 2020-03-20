@@ -6,20 +6,20 @@ import {
 } from '@material-ui/pickers';
 
 import { createStyles, withStyles, makeStyles } from '@material-ui/core/styles';
-
+import { h0 } from '../tools'
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%'
   },
 }));
 
-function MaterialUIPickers() {
+function MaterialUIPickers({getDate}) {
   const classes = useStyles();
-  // The first commit of Material-UI
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   const handleDateChange = date => {
     setSelectedDate(date);
+    getDate(h0(date.$d))
   };
 
   return (

@@ -2,7 +2,6 @@ import React, {useRef} from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
@@ -12,6 +11,7 @@ import Fab from '../components/fab'
 import {
   setWorker,
   setListSaga,
+  setArrangeData,
 } from '../store/action'
 
 const useStyles = makeStyles(theme => ({
@@ -52,15 +52,27 @@ function SubmitArrange(props) {
     history
    } = props
 
-  let day = location.payload.date
+  const dateRef = useRef()
+  if(!location.payload){
+    history.push('/')
+    return null
+  }
+  dateRef.current = location.payload.date
+  let day = dateRef.current
 
   const onSelect = (e) => {
-    dispatch(setWorker(e.target.innerHTML))
     dispatch(setListSaga(e.target.innerHTML))
   }
 
   const submitArrange = () => {
-    console.log(list)
+    dispatch(setArrangeData({date: day, list: list}))
+    dispatch(setWorker())
+    
+    history.goBack()
+  }
+
+  const clear = () => {
+    dispatch(setWorker())
   }
 
   return (
@@ -96,10 +108,11 @@ function SubmitArrange(props) {
         startIcon={<SubdirectoryArrowRightIcon />}
         onClick={submitArrange}
         disabled={list.length > 0 ? false : true}
+        ref={dateRef}
       >
         {`完成${new Date(day).getMonth() + 1}月${new Date(day).getDate()}日的排班：`}
       </Button>
-      <Fab bottom/>
+      <Fab arrange clear={clear}/>
     </div>
   );
 }

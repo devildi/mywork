@@ -32,8 +32,8 @@ const InjectedRoute = withRouter(connect(function mapStateToProps(state) {
 )(RouteController))
 
 export default () => [
-	<Route path='/' component = {Index} exact key='main'/>,
-	<Route path='/submit' component = {Submit} exact key='submit'/>,
-	<Route path='/submitArrange' component = {SubmitArrange} exact key='submitArrange'/>,
+	<InjectedRoute path='/' component = {Index} exact key='main'/>,
+	<InjectedRoute path='/submit' component = {Submit} exact key='submit'/>,
+	<InjectedRoute path='/submitArrange' component = {SubmitArrange} exact key='submitArrange'/>,
 	<Route path='/signin' component = {Signin} exact key='signin'/>,
 ]

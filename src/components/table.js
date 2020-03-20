@@ -14,19 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen', 159, 6.0, 24, 4.0),
-  createData('Ice', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-export default function SimpleTable() {
+export default function SimpleTable({rows}) {
   const classes = useStyles();
 
   return (
@@ -35,22 +23,29 @@ export default function SimpleTable() {
         <TableHead>
           <TableRow>
             <TableCell>日期</TableCell>
-            <TableCell align="right">姓名</TableCell>
             <TableCell align="right">镜头</TableCell>
             <TableCell align="right">节目</TableCell>
+            <TableCell align="right">描述</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name}>
+        {
+          rows && rows.length > 0
+        ?<React.Fragment>
+          {rows.map((row, index) => (
+            <TableRow key={index}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {`${new Date(row.date).getMonth()+1}月${new Date(row.date).getDate()}日`}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell align="right">{row.shootnums}</TableCell>
+              <TableCell align="right">{row.program}</TableCell>
+              <TableCell align="right">{row.des}</TableCell>
             </TableRow>
           ))}
+        </React.Fragment>
+        :null
+        }
+          
         </TableBody>
       </Table>
     </TableContainer>

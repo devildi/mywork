@@ -2,6 +2,7 @@ import React from 'react';
 import Days from '../commonComponents/DateSelector'
 import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
+import RemoveIcon from '@material-ui/icons/Clear';
 
 import Typography from '@material-ui/core/Typography';
 
@@ -27,37 +28,56 @@ const useStyles = makeStyles(theme => ({
     borderRadius: theme.spacing(1),
     backgroundColor: '#f0f0f0'
   },
-  head: {
-  	textAlign: 'center'
-  },
   chip: {
     margin: theme.spacing(0.5, 0.5, 0.5 ,0),
+  },
+  title: {
+    position: 'relative',
+  },
+  icon: {
+    position: 'absolute',
+    top: 0,
+    right: 0
   }
 }));
 
-function Data ({arr}){
+function Data ({arr, toArrange, clearDay}){
 	const classes = useStyles();
+
+  const clearThisDay = (e, index) => {
+    e.stopPropagation()
+    clearDay(index)
+  }
+
 	return (
 		<div className={classes.div}>
   	{
   		arr.map((i,index) => {
   			return(
-  				<div className={classes.div1}>
-  					<Typography 
-  						variant="h6" 
-  						component="h2"
-  						className={classes.head}
-		      		key={index}
-  					>
-              {`2月10日排班：`}
-            </Typography>
+  				<div 
+            className={classes.div1} 
+            key={i.date}
+            onClick={() => toArrange(index)}
+          > 
+            <div className={classes.title}>
+    					<Typography 
+    						variant="h6" 
+    						component="h2"
+    					>
+                {`${new Date(i.date).getMonth() + 1}月${new Date(i.date).getDate()}日排班情况：`}
+              </Typography>
+              <RemoveIcon 
+                className={classes.icon}
+                onClick={(e) => clearThisDay(e,index)}
+              />
+            </div>
 		      	<div>
 		      		{
 		      			i.list.map((row,index1) => (
 		      				<Chip 
 		                color="primary"
-		                key={index1}
-		                label={'item.name'} 
+		                key={row}
+		                label={row} 
 		                className={classes.chip}
 		                variant={'outlined'}
 		              />
@@ -72,15 +92,18 @@ function Data ({arr}){
 	)
 }
 
-function Arrange({onSelect}) {
-	
-	let arr1 = []
-
+function Arrange({onSelect, arrangeData, toArrange, clearDay}) {
   return (
     <div>
       <Days onSelect={onSelect}/>
       {
-      	arr1 && arr1.length > 0 ? <Data arr={arr1}/> : null
+      	arrangeData && arrangeData.length > 0 
+        ? <Data 
+            arr={arrangeData}
+            toArrange={toArrange}
+            clearDay={clearDay}
+          /> 
+        : null
       }
     </div>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState, useEffect} from 'react';
 import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -11,8 +11,13 @@ import {
   withStyles,
   makeStyles,
 } from '@material-ui/core/styles';
-
 import LockOpen from '@material-ui/icons/LockOpen';
+import { connect } from 'react-redux';
+import { useHistory } from "react-router-dom";
+import{
+  loginSaga,
+  getUserDataSaga,
+} from '../store/action'
 
 import { 
   picUrl,
@@ -139,8 +144,30 @@ function Copyright() {
   );
 }
 
-export default function SignIn() {
+function SignIn({user, dispatch}) {
   const classes = useStyles();
+  let history = useHistory();
+
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('');
+
+  const onSubmit = () => {
+    if(name && password){
+      dispatch(loginSaga({name: name.trim(), password: password.trim()}))
+    } else {
+      return alert('有未填的项目！')
+    } 
+  }
+
+  useEffect(() => {
+    dispatch(getUserDataSaga())
+  }, [dispatch])
+
+  useEffect(()=>{
+    if(user){ 
+      history.push('/') 
+    } 
+  }, [user, history])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -154,19 +181,21 @@ export default function SignIn() {
             Sign In
           </Typography>
         </div>
-        <form className={classes.form} noValidate>
+        <div className={classes.form} noValidate>
           <BootstrapInput 
-            id="工号"
-            placeholder="工号"
+            id="用户名"
+            placeholder="用户名"
             type="text"
             style={{width:'100%'}}
             top="true"
+            onChange={(e) => {setName(e.target.value)}}
           />
           <BootstrapInput 
             id="密码"
             placeholder="密码"
             type="password"
             style={{width:'100%'}}
+            onChange={(e) => {setPassword(e.target.value)}}
           />
           <div className={classes.block}></div>
           <Button
@@ -176,14 +205,15 @@ export default function SignIn() {
             color="primary"
             className={classes.submit}
             startIcon={<LockOpen />}
+            onClick={() => onSubmit()}
           >
             登录
           </Button>
-        </form>
+        </div>
       </div>
       <Copyright />
       {
-        isVedio
+        !isVedio
         ?<div className={classes.background}></div>
         :<video
           autoPlay
@@ -196,3 +226,12 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default connect(
+  function mapStateToProps(state) {
+    return state;
+  },
+  function mapDispatchToProps(dispatch) {
+    return { dispatch };
+  }
+)(SignIn);

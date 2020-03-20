@@ -1,15 +1,15 @@
 import React from 'react';
 import Routes from './routers';
-import { BrowserRouter } from 'react-router-dom'
+import { ConnectedRouter } from 'connected-react-router'
 import { Provider } from 'react-redux';
-import store from './store/store'
+import store, { history } from './store/store'
 
 function App() {
   return (
   	<Provider store={store}>
-	    <BrowserRouter>
+	    <ConnectedRouter history={history}>
 			  <Routes />
-	    </BrowserRouter>
+	    </ConnectedRouter>
 	  </Provider>
   )
 }
