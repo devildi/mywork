@@ -8,7 +8,6 @@ import Bar from '../components/appbar'
 
 import Chart from './chart'
 import Arrange from './arrange'
-import Photos from './photos'
 import Profile from './profile'
 
 import {
@@ -170,13 +169,6 @@ function Index(props) {
     }
     {
       whichPage === 2
-      &&<React.Fragment>
-        <Bar title={A[whichPage]} />
-        <Photos/>
-      </React.Fragment>
-    }
-    {
-      whichPage === 3
       &&<React.Fragment>
         <Bar title={A[whichPage]} />
         <Profile user={user} logout={logout}/>

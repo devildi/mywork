@@ -1,12 +1,16 @@
 export const picUrl = 'https://cn.bing.com/th?id=OIP.WMpknoaU9SsncVEW7W6SzAHaLH&pid=Api&rs=1'
-export const vedioUrl = 'http://cdn.moji.com/websrc/video/video621.mp4'
+const vedioUrlArray = [
+	'http://cdn.moji.com/websrc/video/video621.mp4',
+	'https://res.cloudinary.com/dnfhsjz8u/video/upload/v1584691245/DJI_20191006_114520_418_fl2drt.mp4'
+]
+export const vedioUrl = vedioUrlArray[0]
 //localStorage
 export const ATTANGEDATA = 'ARRANGEDATA'
 export const USER = 'USER'
 export const TOKEN = 'TOKEN'
 export const expire = 300//S
 
-export const isVedio = false
+export const isVedio = true
 export const whichPage = 0
 
 export function saveData(str, data, expire){
@@ -163,4 +167,4 @@ export function getClientHeight(){
 //获取文档内容实际高度
 export function getScrollHeight(){    
   return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);   
-} 
+}

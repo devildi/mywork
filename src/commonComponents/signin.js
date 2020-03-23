@@ -218,6 +218,7 @@ function SignIn({user, dispatch}) {
         :<video
           autoPlay
           loop
+          muted
           className={classes.vedioBackground}
          >
            <source src={vedioUrl} type="video/mp4"  />

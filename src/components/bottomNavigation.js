@@ -4,7 +4,6 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ProfileIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles({
@@ -36,7 +35,6 @@ export default function Navigation(props) {
     >
       <BottomNavigationAction icon={<RestoreIcon />} />
       <BottomNavigationAction icon={<FavoriteIcon />} />
-      <BottomNavigationAction icon={<LocationOnIcon />} />
       <BottomNavigationAction icon={<ProfileIcon />} />
     </BottomNavigation>
   );
