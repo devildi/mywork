@@ -44,7 +44,7 @@ function getlength(arr){
 }
 
 function Index(props) {
-  const A = ['数据', '排班', '照片墙', '用户']
+  const A = ['数据', '排班', '用户']
   const {
     user,
     whichPage,
@@ -101,7 +101,6 @@ function Index(props) {
   }
 
   useEffect(() => {
-    //window.localStorage.clear()
     dispatch(countSaga(1))
     dispatch(getArrangeDataSaga())
   }, [dispatch])

@@ -16,6 +16,9 @@ import {
   ATTANGEDATA,
   expire,
   saveData,
+  workers, 
+  format, 
+  whichPage
 } from '../tools';
 
 export default {
@@ -46,7 +49,7 @@ export default {
     }
     return state;
   },
-  all(state = null, action) {
+  all(state = 0, action) {
     const { type, payload } = action;
     switch (type) {
         case SET_ALL:
@@ -55,7 +58,7 @@ export default {
     }
     return state;
   },
-  loading(state = null, action) {
+  loading(state = false, action) {
     const { type, payload } = action;
     switch (type) {
         case SET_LOADING:
@@ -64,7 +67,7 @@ export default {
     }
     return state;
   },
-  whichPage(state = 1, action) {
+  whichPage(state = whichPage, action) {
     const { type, payload } = action;
     switch (type) {
         case SET_PAGE:
@@ -82,7 +85,7 @@ export default {
     }
     return state;
   },
-  workers(state = [], action) {
+  workers(state = format(workers), action) {
     const { type, payload } = action;
     switch (type) {
       case SET_WORKERS:
