@@ -3,14 +3,14 @@ const vedioUrlArray = [
 	'http://cdn.moji.com/websrc/video/video621.mp4',
 	'https://res.cloudinary.com/dnfhsjz8u/video/upload/v1584691245/DJI_20191006_114520_418_fl2drt.mp4'
 ]
-export const vedioUrl = vedioUrlArray[0]
+export const vedioUrl = vedioUrlArray[1]
 //localStorage
 export const ATTANGEDATA = 'ARRANGEDATA'
 export const USER = 'USER'
 export const TOKEN = 'TOKEN'
 export const expire = 300//S
 
-export const isVedio = true
+export const isVedio = false
 export const whichPage = 0
 
 export function saveData(str, data, expire){
@@ -168,3 +168,10 @@ export function getClientHeight(){
 export function getScrollHeight(){    
   return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);   
 }
+
+export const pic = [
+	'https://tse4-mm.cn.bing.net/th/id/OIP.ttSJgkRgYtFZquEitnNbTgHaEo?w=288&h=180&c=7&o=5&dpr=2&pid=1.7',
+	'https://tse4-mm.cn.bing.net/th/id/OIP.uO_nL1Ep5HD2W7XfVI76xQHaJ3?w=158&h=196&c=7&o=5&dpr=2&pid=1.7',
+	'https://tse3-mm.cn.bing.net/th/id/OIP.RiVuBdPbyZfUqwaC_rMgaAHaFj?w=200&h=189&c=7&o=5&dpr=2&pid=1.7',
+	'https://tse3-mm.cn.bing.net/th/id/OIP.PjwD3caT4zGrmyx5OSmsXQHaE7?w=285&h=185&c=7&o=5&dpr=2&pid=1.7',
+]

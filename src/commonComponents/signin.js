@@ -152,7 +152,7 @@ function SignIn({user, dispatch}) {
   const [password, setPassword] = useState('');
 
   const onSubmit = () => {
-    if(name && password){
+    if(name.trim() && password.trim()){
       dispatch(loginSaga({name: name.trim(), password: password.trim()}))
     } else {
       return alert('有未填的项目！')
