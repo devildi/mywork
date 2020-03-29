@@ -9,7 +9,9 @@ import {
   SET_TABLE_DATA,
   SET_ARRANGEDATA,
   SET_ARRANGEDATA_ARRAY,
-  SET_ARRANGEDATA_DELETE
+  SET_ARRANGEDATA_DELETE,
+  SET_LEFT,
+  SET_RIGHT,
 } from './action'
 
 import { 
@@ -35,6 +37,24 @@ export default {
     const { type, payload } = action;
     switch (type) {
         case SET_TABLE_DATA:
+            return payload;
+        default:
+    }
+    return state;
+  },
+  left(state = [], action) {
+    const { type, payload } = action;
+    switch (type) {
+        case SET_LEFT:
+            return payload;
+        default:
+    }
+    return state;
+  },
+  right(state = [], action) {
+    const { type, payload } = action;
+    switch (type) {
+        case SET_RIGHT:
             return payload;
         default:
     }

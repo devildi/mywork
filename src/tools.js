@@ -169,9 +169,38 @@ export function getScrollHeight(){
   return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);   
 }
 
+const getOrigiHeight = (url) => new Promise((resolve, reject) => {
+	let img = new Image()
+	img.src = url;
+	let check = function(){
+  	if(img.width>0 || img.height>0) {
+	    clearInterval(set);
+			resolve(img)
+  	}
+	}
+	let set = setInterval(check,10)
+})
+
+export const getImg = async (url, screenWidth) => {
+	let img = await getOrigiHeight(url)
+	let outHeight = Math.floor(img.height * screenWidth / img.width)
+	img.height = outHeight
+	img.width = screenWidth
+	return img
+}
+
+export const width = Math.floor(document.body.clientWidth / 2)
+
 export const pic = [
 	'https://tse4-mm.cn.bing.net/th/id/OIP.ttSJgkRgYtFZquEitnNbTgHaEo?w=288&h=180&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse4-mm.cn.bing.net/th/id/OIP.uO_nL1Ep5HD2W7XfVI76xQHaJ3?w=158&h=196&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse3-mm.cn.bing.net/th/id/OIP.RiVuBdPbyZfUqwaC_rMgaAHaFj?w=200&h=189&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse3-mm.cn.bing.net/th/id/OIP.PjwD3caT4zGrmyx5OSmsXQHaE7?w=285&h=185&c=7&o=5&dpr=2&pid=1.7',
-]
+	'https://tse4-mm.cn.bing.net/th/id/OIP.D9KCoJ2Szl3p8iiUt1XQ7wHaJQ?w=166&h=198&c=7&o=5&dpr=2&pid=1.7',
+	'https://tse2-mm.cn.bing.net/th/id/OIP.SAwRQOIAiwRcVE35WAu3lgHaEK?w=293&h=164&c=7&o=5&dpr=2&pid=1.7',
+	'https://tse2-mm.cn.bing.net/th/id/OIP.kzjuEOfhlRGHlAU7XTcRtgHaNJ?w=115&h=184&c=7&o=5&dpr=2&pid=1.7',
+	'https://tse3-mm.cn.bing.net/th/id/OIP.rb333I9ISUGd2y2bjn-qiQAAAA?w=299&h=194&c=7&o=5&dpr=2&pid=1.7',
+	'https://tse3-mm.cn.bing.net/th/id/OIP.qEiMn_h7rMBHf9QlQw8k2QHaEo?w=260&h=162&c=7&o=5&dpr=2&pid=1.7',
+	'https://tse2-mm.cn.bing.net/th/id/OIP._-DDuCgiElSuM37yuL-x9wHaE4?w=275&h=177&c=7&o=5&dpr=2&pid=1.7',
+	'https://tse3-mm.cn.bing.net/th/id/OIP.s_SXVVhK1MZhrGXQjWdOUAHaFm?w=212&h=160&c=7&o=5&dpr=2&pid=1.7'
+]	

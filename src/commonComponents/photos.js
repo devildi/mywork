@@ -1,79 +1,99 @@
-import React, {useRef, useState, useEffect} from 'react';
-import Skeleton from '@material-ui/lab/Skeleton';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import LazyLoad from 'react-lazyload';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Bar from '../components/appbar'
 
+import {
+  photosSaga,
+} from '../store/action'
+
 const useStyles = makeStyles(theme => ({
-	root: {
-		flexGrow: 1,
-	},
-	img: {
+	root:{
 		width: '100%',
-		marginBottom: 2,
+	},
+	container: {
+		paddingTop: theme.spacing(7),
 	},
 	block: {
 		overFlow: 'hidden',
 		padding: 1
+	},
+	circular:{
+		width: '100%',
+		position: 'absolute',
+		bottom: 0,
+		top:0,
+		display: 'flex',
+    flexDirection: 'column',
+    justifyContent: "center",
+    alignItems: 'center',
 	}
 }));
 
-function Photos() {
+function Photos({left, right, dispatch}) {
+
 	const classes = useStyles();
-
-	const [left ] = useState([])
-	const [right] = useState([])
-
-	let a = []
-	for( let i = 0; i < 20; i++){
-		a.push(Math.ceil(Math.random()*300))
-	}
-
-	let prevLeft = useRef(0);
-	let prevRight = useRef(0);
-
+	
 	useEffect(()=>{
-		
-	}, [])
-
-	for (let i = 0 ; i < a.length ; i++){
-		if(prevLeft.current >= prevRight.current){
-			right.push(a[i])
-			prevRight.current = prevRight.current + a[i]
-		} else {
-			left.push(a[i])
-			prevLeft.current = prevLeft.current + a[i]
-		}
-	}
+		dispatch(photosSaga(1))
+	}, [dispatch])
 
 	return (
-		<React.Fragment>
+		<div className={classes.root}>
 		<Bar title={'照片'} />
-		<div className={classes.root} >
-			<LazyLoad>
-				<Grid container >
-					<Grid item xs={6} className={classes.block}>
-					{
-						left.length > 0 && left.map((item, index) => (
-							<Skeleton className={classes.img} variant="rect" key={index} width={'100%'} height={item} />
-						))
-					}
-					</Grid>
-					<Grid item xs={6} className={classes.block}>
-						{
-							right.length > 0 && right.map((item, index) => (
-								<Skeleton className={classes.img} variant="rect" key={index} width={'100%'} height={item} />
-							))
-						}
-					</Grid>
+		<div className={classes.container}>
+			<Grid container >
+			{
+				left.length > 0 && right.length > 0
+			?<React.Fragment>
+				<Grid item xs={6} className={classes.block}>
+				{
+					left.map((item, index) => (
+						<LazyLoad key={index} height={item.height}>
+							<img alt='' 
+								src={item.src} 
+								width={'100%'} 
+								height={item.height}
+								onClick={()=>{console.log(item)}}
+							/>
+						</LazyLoad>
+					))
+				}
 				</Grid>
-			</LazyLoad>
+				<Grid item xs={6} className={classes.block}>
+				{
+					right.map((item, index) => (
+						<LazyLoad key={index} height={item.height}>
+							<img alt='' 
+								src={item.src} 
+								width={'100%'} 
+								height={item.height}
+								onClick={()=>{console.log(item)}} 
+							/>
+						</LazyLoad>
+					))
+				}
+				</Grid>
+			</React.Fragment>
+			: <div className={classes.circular}>
+					<CircularProgress />
+				</div>
+			}		
+			</Grid>
 		</div>
-		</React.Fragment>
+		</div>
 	);
 }
 
-export default Photos;
+export default connect(
+  function mapStateToProps(state) {
+    return state;
+  },
+  function mapDispatchToProps(dispatch) {
+    return { dispatch };
+  }
+)(Photos);

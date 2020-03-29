@@ -5,19 +5,23 @@ import {
   setUser,
   setWorker,
   setArrangeDataArray,
+  setPage,
+  setChartData,
+  setTableData,
+  setAll,
+  setLoading,
+  setFenye,
+  setLeft,
+  setRight,
+
   SET_LIST_SAGA,
   GET_ARRANGEDATA_SAGA,
   GET_USER_SAGA,
   LOGIN_SAGA,
   LOGOUT_SAGA,
-  setPage,
   SUBMIT_SAGA,
   COUNT_SAGA,
-  setChartData,
-  setTableData,
-  setAll,
-  setLoading,
-  setFenye
+  PHOTOS_SAGA
 } from './action'
 
 import { 
@@ -29,6 +33,9 @@ import {
   readData,
   deleteData,
   saveData,
+  width,
+  pic,
+  getImg
 } from '../tools'
 
 function* check(action){
@@ -102,6 +109,31 @@ function* countSage(action){
   yield put(setFenye(page))
 }
 
+function* photosSage(action){
+  console.log(action.payload)
+  
+  let a = []
+  let prevLeft = 0;
+  let prevRight = 0;
+  let right = []
+  let left = []
+
+  for (let i = 0 ; i < pic.length ; i++){
+    let b = yield getImg(pic[i], width)
+    a.push(b)
+    if(prevLeft >= prevRight){
+      right.push(a[i])
+      prevRight = prevRight + a[i].height
+    } else {
+      left.push(a[i])
+      prevLeft = prevLeft + a[i].height
+    }
+  }
+
+  yield put(setLeft(left))
+  yield put(setRight(right))
+}
+
 export default function* mySaga (){
 	yield all(
     [
@@ -111,7 +143,8 @@ export default function* mySaga (){
       takeEvery(LOGIN_SAGA, loginSaga),
       takeEvery(LOGOUT_SAGA, logoutSaga),
       takeEvery(SUBMIT_SAGA, submitSaga),
-      takeEvery(COUNT_SAGA, countSage)
+      takeEvery(COUNT_SAGA, countSage),
+      takeEvery(PHOTOS_SAGA, photosSage)
     ]
   )
 }

@@ -30,6 +30,8 @@ const store = createStore(
       workers: format(workers),
       list: [],
       arrangeData: [],
+      left: [],
+      right: []
     },
     composeEnhancers(applyMiddleware(routeMiddleware, sagaMiddleware))
 );
