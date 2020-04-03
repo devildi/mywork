@@ -93,8 +93,7 @@ function Month(props) {
         <tr>
           <td colSpan="7">
             <h5>
-              {startDay.getFullYear()}年{startDay.getMonth() + 1}
-              月
+              {new Date().getFullYear()}年{new Date().getMonth() + 1}月
             </h5>
           </td>
         </tr>
