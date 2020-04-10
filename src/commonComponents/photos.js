@@ -7,6 +7,12 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Bar from '../components/appbar'
 
+import { 
+  getScrollTop,
+  getClientHeight,
+  getScrollHeight,
+} from '../tools';
+
 import {
   photosSaga,
 } from '../store/action'
@@ -34,9 +40,26 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-function Photos({left, right, dispatch}) {
+function Photos({left, right, loading, dispatch}) {
 
 	const classes = useStyles();
+
+	useEffect(()=>{
+    window.addEventListener('scroll', scroll)
+    return () => {
+      window.removeEventListener('scroll', () => {})
+    }
+  })
+
+  const scroll = () => {
+    if((getScrollHeight() - getScrollTop() - getClientHeight()) <= 20&& !loading){
+      if(1){
+        
+      } else {
+        return 
+      }
+    }
+  }
 	
 	useEffect(()=>{
 		dispatch(photosSaga(1))
