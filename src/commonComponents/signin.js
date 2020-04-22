@@ -135,7 +135,7 @@ function Copyright() {
       className={classes.fix}
     >
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="/logon">
         DevilDI
       </Link>{' '}
       {new Date().getFullYear()}
