@@ -1,4 +1,4 @@
-import React , {useState, useEffect} from 'react';
+import React , {useState} from 'react';
 import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,10 +13,8 @@ import {
 } from '@material-ui/core/styles';
 import LockOpen from '@material-ui/icons/LockOpen';
 import { connect } from 'react-redux';
-import { useHistory } from "react-router-dom";
 import{
-  loginSaga,
-  getUserDataSaga,
+  registerSaga,
 } from '../store/action'
 
 import { 
@@ -39,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover',
   },
   background: {
-    backgroundImage: `url(${picUrl[0]})`,
+    backgroundImage: `url(${picUrl[1]})`,
     position:'fixed',
     top: 0,
     left: 0,
@@ -144,30 +142,29 @@ function Copyright() {
   );
 }
 
-function SignIn({user, dispatch}) {
+function LogOn({user, dispatch}) {
   const classes = useStyles();
-  let history = useHistory();
 
   const [name, setName] = useState('')
   const [password, setPassword] = useState('');
 
   const onSubmit = () => {
     if(name.trim() && password.trim()){
-      dispatch(loginSaga({name: name.trim(), password: password.trim()}))
+      dispatch(registerSaga({name: name.trim(), password: password.trim()}))
     } else {
       return alert('有未填的项目！')
     } 
   }
 
-  useEffect(() => {
-    dispatch(getUserDataSaga())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(getUserDataSaga())
+  // }, [dispatch])
 
-  useEffect(()=>{
-    if(user){ 
-      history.push('/') 
-    } 
-  }, [user, history])
+  // useEffect(()=>{
+  //   if(user){ 
+  //     history.push('/') 
+  //   } 
+  // }, [user, history])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -178,7 +175,7 @@ function SignIn({user, dispatch}) {
             <LockOutlinedIcon className={classes.avatar}/>
           </Avatar>
           <Typography component="h1" variant="h3" className={classes.font}>
-            Sign In
+            Log On
           </Typography>
         </div>
         <div className={classes.form} noValidate>
@@ -207,7 +204,7 @@ function SignIn({user, dispatch}) {
             startIcon={<LockOpen />}
             onClick={() => onSubmit()}
           >
-            登录
+            注册
           </Button>
         </div>
       </div>
@@ -235,4 +232,4 @@ export default connect(
   function mapDispatchToProps(dispatch) {
     return { dispatch };
   }
-)(SignIn);
+)(LogOn);

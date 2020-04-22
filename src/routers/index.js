@@ -7,8 +7,8 @@ import Index from '../pages/index'
 import Submit from '../pages/submit'
 import SubmitArrange from '../pages/submitArrange'
 import Signin from '../commonComponents/signin'
+import Logon from '../commonComponents/logon'
 import Photos from '../commonComponents/photos'
-
 
 const RouteController = ({user, component: Component, ...rest}) => {
 	return(
@@ -37,5 +37,6 @@ export default () => [
 	<InjectedRoute path='/submit' component ={Submit} exact key='submit'/>,
 	<InjectedRoute path='/submitArrange' component ={SubmitArrange} exact key='submitArrange'/>,
 	<Route path='/signin' component ={Signin} exact key='signin'/>,
+	<Route path='/logon' component ={Logon} exact key='logon'/>,
 	<Route path='/photos' component ={Photos} exact key='photos'/>,
 ]

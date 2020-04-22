@@ -18,8 +18,8 @@ function TabPanel(props) {
       component="div"
       role="tabpanel"
       hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
     >
       {value === index && <Box p={3}>{children}</Box>}
@@ -35,8 +35,8 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
   };
 }
 
@@ -48,6 +48,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function FullWidthTabs({rows}) {
+  //console.log('rows', rows)
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -70,8 +71,9 @@ export default function FullWidthTabs({rows}) {
             onChange={handleChange}
             indicatorColor="primary"
             textColor="primary"
-            variant="fullWidth"
-            aria-label="full width tabs example"
+            variant="scrollable"
+            scrollButtons="auto"
+            aria-label="scrollable auto tabs example"
           >
           {
             rows.map((item, index) => (

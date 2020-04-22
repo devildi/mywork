@@ -29,7 +29,6 @@ export default function Navigation(props) {
       value={whichPage}
       onChange={(event, newValue) => {
         onSelect(newValue)
-
       }}
       className={classes.root}
     >

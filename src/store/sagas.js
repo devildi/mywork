@@ -18,6 +18,7 @@ import {
   GET_ARRANGEDATA_SAGA,
   GET_USER_SAGA,
   LOGIN_SAGA,
+  REGISTER_SAGA,
   LOGOUT_SAGA,
   SUBMIT_SAGA,
   COUNT_SAGA,
@@ -74,8 +75,24 @@ function* loginSaga(action){
     yield put(setUser(data.data.name))
     saveData(USER, data.data.name, expire)
     saveData(TOKEN, data.data.token, expire)
+    yield put(push('/'))
   } else {
     alert('查无此人！')
+  }
+}
+
+function* registerSaga(action){
+  const data = yield axios.post('/users',{...action.payload})
+  if(data.data && typeof data.data === 'string'){
+    alert('用户已存在，请直接登录！')
+    yield put(push('/'))
+  } else if(data.data && typeof data.data === 'object'){
+    deleteData(USER)
+    deleteData(TOKEN)
+    alert('注册成功！！')
+    yield put(push('/'))
+  } else {
+    alert('系统出错，稍后再试！')
   }
 }
 
@@ -141,6 +158,7 @@ export default function* mySaga (){
       takeEvery(GET_ARRANGEDATA_SAGA, getArrangeData),
       takeEvery(GET_USER_SAGA, getUserData),
       takeEvery(LOGIN_SAGA, loginSaga),
+      takeEvery(REGISTER_SAGA, registerSaga),
       takeEvery(LOGOUT_SAGA, logoutSaga),
       takeEvery(SUBMIT_SAGA, submitSaga),
       takeEvery(COUNT_SAGA, countSage),

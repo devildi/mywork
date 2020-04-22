@@ -17,6 +17,7 @@ export const SET_LIST_SAGA = 'SET_LIST_SAGA';
 export const GET_ARRANGEDATA_SAGA = 'GET_ARRANGEDATA_SAGA';
 export const GET_USER_SAGA = 'GET_USE_SAGA';
 export const LOGIN_SAGA = 'LOGIN_SAGA';
+export const REGISTER_SAGA = 'REGISTER_SAGA_SAGA';
 export const LOGOUT_SAGA = 'LOGOUT_SAGA';
 export const SUBMIT_SAGA = 'SUBMIT_SAGA';
 export const COUNT_SAGA = 'COUNT_SAGA';
@@ -142,6 +143,13 @@ export function getUserDataSaga() {
 export function loginSaga(payload) {
   return {
     type: LOGIN_SAGA,
+    payload: payload,
+  };
+}
+
+export function registerSaga(payload) {
+  return {
+    type: REGISTER_SAGA,
     payload: payload,
   };
 }

@@ -1,4 +1,7 @@
-export const picUrl = 'https://cn.bing.com/th?id=OIP.WMpknoaU9SsncVEW7W6SzAHaLH&pid=Api&rs=1'
+export const picUrl = [
+'https://cn.bing.com/th?id=OIP.WMpknoaU9SsncVEW7W6SzAHaLH&pid=Api&rs=1',
+'http://youimg1.c-ctrip.com/target/fd/tg/g4/M0A/CA/30/CggYHlbEXmaAYGfJAAnFAUl5-Pk911.jpg'
+]
 const vedioUrlArray = [
 	'http://cdn.moji.com/websrc/video/video621.mp4',
 	'https://res.cloudinary.com/dnfhsjz8u/video/upload/v1584691245/DJI_20191006_114520_418_fl2drt.mp4'
