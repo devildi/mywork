@@ -71,7 +71,7 @@ export default function FullWidthTabs({rows}) {
             onChange={handleChange}
             indicatorColor="primary"
             textColor="primary"
-            variant="scrollable"
+            variant="fullWidth"
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
           >

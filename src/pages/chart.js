@@ -7,13 +7,15 @@ import Chart from '../commonComponents/chart'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height:'500px',
   },
 }));
 
-export default function FloatingActionButtons({data, rows, width}) {
+export default function ({data, rows, width}) {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       <Chart data={data} width={width}/>

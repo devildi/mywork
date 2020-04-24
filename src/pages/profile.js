@@ -4,6 +4,8 @@ import Avatar from '@material-ui/core/Avatar';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { authority } from '../tools'
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: theme.spacing(8),
@@ -21,13 +23,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Profile ({user, logout}) {
+export default function Profile ({user, logout, history}) {
 	const classes = useStyles();
+  const logon = () => {
+    if(user === authority){
+      history.push('/logon')
+    }
+  }
 
 	return (
 		<div className={classes.root}>
-			<Avatar className={classes.avatar}>{user}</Avatar>
-			 <Button
+			<Avatar 
+      className={classes.avatar}
+      onClick={logon}
+      >
+        {user}
+      </Avatar>
+			<Button
         variant="contained"
         color="secondary"
         startIcon={<ExitToApp />}

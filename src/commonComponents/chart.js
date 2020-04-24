@@ -2,8 +2,7 @@ import React from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
-import Skeleton from '@material-ui/lab/Skeleton';
-
+import { makeStyles } from '@material-ui/core/styles';
 import { color } from '../tools'
 
 const filterUser = (arr) => {
@@ -14,7 +13,19 @@ const filterUser = (arr) => {
   } else return null
 }
 
+const useStyles = makeStyles(theme => ({
+  root:{
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: "center",
+    alignItems: 'center',
+  },
+}));
+
 export default function Chart ({data, width}) {
+  //console.log(data)
+  const classes = useStyles();
   return (
     <React.Fragment>
     {
@@ -42,7 +53,9 @@ export default function Chart ({data, width}) {
           })
         }
       </LineChart>
-      :<Skeleton variant="rect" width={width} height={200} />
+      :<div className={classes.root}>
+        暂无数据
+      </div>
     }
     </React.Fragment>
   )

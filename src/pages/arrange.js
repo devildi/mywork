@@ -38,7 +38,15 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 0,
     right: 0
-  }
+  },
+  div2: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: "center",
+    alignItems: 'center',
+    height:'350px'
+  },
 }));
 
 function Data ({arr, toArrange, clearDay}){
@@ -93,8 +101,9 @@ function Data ({arr, toArrange, clearDay}){
 }
 
 function Arrange({onSelect, arrangeData, toArrange, clearDay}) {
+  const classes = useStyles();
   return (
-    <div>
+    <div className={classes.div3}>
       <Days onSelect={onSelect}/>
       {
       	arrangeData && arrangeData.length > 0 
@@ -103,7 +112,9 @@ function Arrange({onSelect, arrangeData, toArrange, clearDay}) {
             toArrange={toArrange}
             clearDay={clearDay}
           /> 
-        : null
+        : <div className={classes.div2}>
+            暂无数据
+          </div>
       }
     </div>
   );

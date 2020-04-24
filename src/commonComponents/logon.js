@@ -109,10 +109,7 @@ const BootstrapInput = withStyles(theme => ({
       props.top === 'ture'
         ? 'none'
         : '',
-    borderRadius: props =>
-      props.top === 'true'
-        ? '5px 5px 0 0'
-        : '0 0 5px 5px',
+    borderRadius: props => getBorderRadius(props),
     position: 'relative',
     backgroundColor: theme.palette.common.white,
     border: '1px solid #fff',
@@ -123,6 +120,16 @@ const BootstrapInput = withStyles(theme => ({
   },
 
 }))(InputBase);
+
+function getBorderRadius(props){
+  if(props.position === 'top'){
+    return '5px 5px 0 0'
+  } else if(props.position === 'bottom'){
+    return '0 0 5px 5px'
+  } else {
+    return '0 0 0 0';
+  }
+}
 
 function Copyright() {
   const classes = useStyles();
@@ -142,29 +149,24 @@ function Copyright() {
   );
 }
 
-function LogOn({user, dispatch}) {
+function LogOn({dispatch}) {
   const classes = useStyles();
 
   const [name, setName] = useState('')
   const [password, setPassword] = useState('');
+  const [auth, setAuth] = useState('');
 
   const onSubmit = () => {
-    if(name.trim() && password.trim()){
-      dispatch(registerSaga({name: name.trim(), password: password.trim()}))
+    if(name.trim() && password.trim() && auth.trim()){
+      dispatch(registerSaga({
+        name: name.trim(), 
+        password: password.trim(),
+        auth: auth.trim()
+      }))
     } else {
       return alert('有未填的项目！')
     } 
   }
-
-  // useEffect(() => {
-  //   dispatch(getUserDataSaga())
-  // }, [dispatch])
-
-  // useEffect(()=>{
-  //   if(user){ 
-  //     history.push('/') 
-  //   } 
-  // }, [user, history])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -184,15 +186,24 @@ function LogOn({user, dispatch}) {
             placeholder="用户名"
             type="text"
             style={{width:'100%'}}
-            top="true"
+            position="top"
             onChange={(e) => {setName(e.target.value)}}
           />
           <BootstrapInput 
             id="密码"
             placeholder="密码"
+            type="text"
+            style={{width:'100%'}}
+            position="middle"
+            onChange={(e) => {setPassword(e.target.value)}}
+          />
+          <BootstrapInput 
+            id="授权码"
+            placeholder="授权码"
             type="password"
             style={{width:'100%'}}
-            onChange={(e) => {setPassword(e.target.value)}}
+            position="bottom"
+            onChange={(e) => {setAuth(e.target.value)}}
           />
           <div className={classes.block}></div>
           <Button
@@ -204,7 +215,7 @@ function LogOn({user, dispatch}) {
             startIcon={<LockOpen />}
             onClick={() => onSubmit()}
           >
-            注册
+            注册新用户
           </Button>
         </div>
       </div>

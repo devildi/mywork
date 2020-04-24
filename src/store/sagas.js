@@ -82,17 +82,18 @@ function* loginSaga(action){
 }
 
 function* registerSaga(action){
-  const data = yield axios.post('/users',{...action.payload})
-  if(data.data && typeof data.data === 'string'){
-    alert('用户已存在，请直接登录！')
-    yield put(push('/'))
-  } else if(data.data && typeof data.data === 'object'){
-    deleteData(USER)
-    deleteData(TOKEN)
-    alert('注册成功！！')
-    yield put(push('/'))
-  } else {
-    alert('系统出错，稍后再试！')
+  try{
+    const data = yield axios.post('/users',{...action.payload})
+    if(data.data && typeof data.data === 'string'){
+      alert('用户已存在，请直接登录！')
+    } else if(data.data && typeof data.data === 'object'){
+      alert('注册成功！！')
+    } else {
+      alert('系统出错，稍后再试！')
+    }
+  }
+  catch(e){
+    alert(e)
   }
 }
 
@@ -118,6 +119,7 @@ function* countSage(action){
   const work = yield axios.get('/work/count',{params: {
     page: action.payload
   }})
+  //console.log(work.data.output)
   yield put(setChartData(work.data.output))
   yield put(setTableData(work.data.arrWork))
   yield put(setAll(work.data.total))

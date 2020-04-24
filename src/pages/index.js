@@ -170,7 +170,7 @@ function Index(props) {
       whichPage === 2
       &&<React.Fragment>
         <Bar title={A[whichPage]} />
-        <Profile user={user} logout={logout}/>
+        <Profile user={user} logout={logout}  history={history}/>
       </React.Fragment>
     }
     	<BottomNavigation onSelect={onSelect} whichPage={whichPage}/>

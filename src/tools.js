@@ -1,3 +1,4 @@
+export const authority = 'wudi'
 export const picUrl = [
 'https://cn.bing.com/th?id=OIP.WMpknoaU9SsncVEW7W6SzAHaLH&pid=Api&rs=1',
 'http://youimg1.c-ctrip.com/target/fd/tg/g4/M0A/CA/30/CggYHlbEXmaAYGfJAAnFAUl5-Pk911.jpg'
