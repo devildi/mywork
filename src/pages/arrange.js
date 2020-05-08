@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import Days from '../commonComponents/DateSelector'
 import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
 import RemoveIcon from '@material-ui/icons/Clear';
-
+import { CSSTransition } from 'react-transition-group';
 import Typography from '@material-ui/core/Typography';
-
+import '../css/index.css';
 const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(2,2,0,2),
@@ -19,7 +19,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: "center",
-    
   },
   div1: {
   	padding: theme.spacing(0.5),
@@ -46,10 +45,11 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     alignItems: 'center',
     height:'350px'
-  },
+  }
 }));
 
 function Data ({arr, toArrange, clearDay}){
+  const [showMessage, setShowMessage] = useState(false);
 	const classes = useStyles();
 
   const clearThisDay = (e, index) => {
@@ -57,42 +57,55 @@ function Data ({arr, toArrange, clearDay}){
     clearDay(index)
   }
 
+  useEffect(()=>{
+    if(arr.length !== 0){
+      setShowMessage(true)
+    }
+  }, [arr.length])
+
 	return (
 		<div className={classes.div}>
   	{
   		arr.map((i,index) => {
   			return(
-  				<div 
-            className={classes.div1} 
+          <CSSTransition
+            in={showMessage}
+            timeout={300}
+            classNames="alert"
             key={i.date}
-            onClick={() => toArrange(index)}
-          > 
-            <div className={classes.title}>
-    					<Typography 
-    						variant="h6" 
-    						component="h2"
-    					>
-                {`${new Date(i.date).getMonth() + 1}月${new Date(i.date).getDate()}日排班情况：`}
-              </Typography>
-              <RemoveIcon 
-                className={classes.icon}
-                onClick={(e) => clearThisDay(e,index)}
-              />
-            </div>
-		      	<div>
-		      		{
-		      			i.list.map((row,index1) => (
-		      				<Chip 
-		                color="primary"
-		                key={row}
-		                label={row} 
-		                className={classes.chip}
-		                variant={'outlined'}
-		              />
-		      			))
-		      		}
-		      	</div>
-	      	</div>
+          >
+    				<div 
+              className={classes.div1} 
+              key={i.date}
+              onClick={() => toArrange(index)}
+            > 
+              <div className={classes.title}>
+      					<Typography 
+      						variant="h6" 
+      						component="h2"
+      					>
+                  {`${new Date(i.date).getMonth() + 1}月${new Date(i.date).getDate()}日排班情况：`}
+                </Typography>
+                <RemoveIcon 
+                  className={classes.icon}
+                  onClick={(e) => clearThisDay(e,index)}
+                />
+              </div>
+  		      	<div>
+  		      		{
+  		      			i.list.map((row,index1) => (
+  		      				<Chip 
+  		                color="primary"
+  		                key={row}
+  		                label={row} 
+  		                className={classes.chip}
+  		                variant={'outlined'}
+  		              />
+  		      			))
+  		      		}
+  		      	</div>
+  	      	</div>
+          </CSSTransition>
   			)
   		})
   	}

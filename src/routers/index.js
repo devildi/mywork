@@ -9,6 +9,7 @@ import SubmitArrange from '../pages/submitArrange'
 import Signin from '../commonComponents/signin'
 import Logon from '../commonComponents/logon'
 import Photos from '../commonComponents/photos'
+import Edit from '../commonComponents/edit'
 
 const RouteController = ({user, component: Component, ...rest}) => {
 	return(
@@ -39,4 +40,5 @@ export default () => [
 	<Route path='/signin' component ={Signin} exact key='signin'/>,
 	<Route path='/logon' component ={Logon} exact key='logon'/>,
 	<Route path='/photos' component ={Photos} exact key='photos'/>,
+	<Route path='/edit' component ={Edit} exact key='edit'/>,
 ]

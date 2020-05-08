@@ -70,15 +70,20 @@ function* getUserData(){
 }
 
 function* loginSaga(action){
-  const data = yield axios.post('/users/login',{...action.payload})
-  if(data.data){
-    yield put(setUser(data.data.name))
-    saveData(USER, data.data.name, expire)
-    saveData(TOKEN, data.data.token, expire)
-    yield put(push('/'))
-  } else {
-    alert('查无此人！')
+  try{
+    const data = yield axios.post('/users/login',{...action.payload})
+      if(data.data){
+        yield put(setUser(data.data.name))
+        saveData(USER, data.data.name, expire)
+        saveData(TOKEN, data.data.token, expire)
+        yield put(push('/'))
+      } else {
+        alert('查无此人！')
+      }
+  }catch(e){
+    alert(e)
   }
+  
 }
 
 function* registerSaga(action){
