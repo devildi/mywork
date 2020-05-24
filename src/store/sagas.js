@@ -71,7 +71,7 @@ function* getUserData(){
 
 function* loginSaga(action){
   try{
-    const data = yield axios.post('/users/login',{...action.payload})
+    const data = yield axios.post('/api/users/login',{...action.payload})
       if(data.data){
         yield put(setUser(data.data.name))
         saveData(USER, data.data.name, expire)
@@ -88,7 +88,7 @@ function* loginSaga(action){
 
 function* registerSaga(action){
   try{
-    const data = yield axios.post('/users',{...action.payload})
+    const data = yield axios.post('/api/users',{...action.payload})
     if(data.data && typeof data.data === 'string'){
       alert('用户已存在，请直接登录！')
     } else if(data.data && typeof data.data === 'object'){
@@ -103,7 +103,7 @@ function* registerSaga(action){
 }
 
 function* logoutSaga(){
-  yield axios.post('/users/logout')
+  yield axios.post('/api/users/logout')
   yield put(setUser(null))
   deleteData(USER)
   deleteData(TOKEN)
@@ -111,7 +111,7 @@ function* logoutSaga(){
 }
 
 function* submitSaga(action){
-  const work = yield axios.post('/work/submit',{...action.payload},{
+  const work = yield axios.post('/api/work/submit',{...action.payload},{
     headers: {'Authorization': 'Bearer ' +readData(TOKEN).data}
   })
   if(work.data){
@@ -121,7 +121,7 @@ function* submitSaga(action){
 
 function* countSage(action){
   yield put(setLoading(true))
-  const work = yield axios.get('/work/count',{params: {
+  const work = yield axios.get('/api/work/count',{params: {
     page: action.payload
   }})
   //console.log(work.data.output)
