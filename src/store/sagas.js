@@ -172,14 +172,18 @@ function* newTripSage (action) {
     yield put(push('/edit'))
   } else {
     console.log(typeof action.payload)
-    const trip = yield axios.get('/api/trip',{params: {
-      uid: action.payload
-    }})
-    if(trip){
-      yield put(setTrip(trip))
-      yield put(push('/edit'))
-    } else {
-      alert('无对应的行程！')
+    try{
+      const trip = yield axios.get('/api/trip',{params: {
+        uid: action.payload
+      }})
+      if(trip){
+        yield put(setTrip(trip))
+        yield put(push('/edit'))
+      } else {
+        alert('无对应的行程！')
+      }
+    }catch(err){
+      alert(err)
     }
   }
 }
