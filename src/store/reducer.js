@@ -12,6 +12,7 @@ import {
   SET_ARRANGEDATA_DELETE,
   SET_LEFT,
   SET_RIGHT,
+  SET_TRIP,
 } from './action'
 
 import { 
@@ -64,6 +65,15 @@ export default {
     const { type, payload } = action;
     switch (type) {
         case SET_USER:
+            return payload;
+        default:
+    }
+    return state;
+  },
+  trip(state = null, action) {
+    const { type, payload } = action;
+    switch (type) {
+        case SET_TRIP:
             return payload;
         default:
     }

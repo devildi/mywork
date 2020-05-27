@@ -13,6 +13,7 @@ import {
   setFenye,
   setLeft,
   setRight,
+  setTrip,
 
   SET_LIST_SAGA,
   GET_ARRANGEDATA_SAGA,
@@ -22,7 +23,8 @@ import {
   LOGOUT_SAGA,
   SUBMIT_SAGA,
   COUNT_SAGA,
-  PHOTOS_SAGA
+  PHOTOS_SAGA,
+  NEWTRIP_SAGA
 } from './action'
 
 import { 
@@ -36,7 +38,9 @@ import {
   saveData,
   width,
   pic,
-  getImg
+  getImg,
+  Trip,
+  Daytrip
 } from '../tools'
 
 function* check(action){
@@ -134,7 +138,7 @@ function* countSage(action){
 }
 
 function* photosSage(action){
-  console.log(action.payload)
+  //console.log(action.payload)
   
   let a = []
   let prevLeft = 0;
@@ -158,6 +162,28 @@ function* photosSage(action){
   yield put(setRight(right))
 }
 
+function* newTripSage (action) {
+  //console.log(typeof action.payload)
+  if(typeof action.payload === 'object'){
+    const {tripName, designer, uid} = action.payload
+    let obj = new Daytrip()
+    let newTrip = new Trip(uid,tripName, designer, [[obj]])
+    yield put(setTrip(newTrip))
+    yield put(push('/edit'))
+  } else {
+    console.log(typeof action.payload)
+    const trip = yield axios.get('/api/trip',{params: {
+      uid: action.payload
+    }})
+    if(trip){
+      yield put(setTrip(trip))
+      yield put(push('/edit'))
+    } else {
+      alert('无对应的行程！')
+    }
+  }
+}
+
 export default function* mySaga (){
 	yield all(
     [
@@ -169,7 +195,8 @@ export default function* mySaga (){
       takeEvery(LOGOUT_SAGA, logoutSaga),
       takeEvery(SUBMIT_SAGA, submitSaga),
       takeEvery(COUNT_SAGA, countSage),
-      takeEvery(PHOTOS_SAGA, photosSage)
+      takeEvery(PHOTOS_SAGA, photosSage),
+      takeEvery(NEWTRIP_SAGA, newTripSage),
     ]
   )
 }

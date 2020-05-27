@@ -31,7 +31,8 @@ const store = createStore(
       list: [],
       arrangeData: [],
       left: [],
-      right: []
+      right: [],
+      trip: null
     },
     composeEnhancers(applyMiddleware(routeMiddleware, sagaMiddleware))
 );

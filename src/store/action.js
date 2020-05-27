@@ -12,6 +12,7 @@ export const SET_CHART_DATA = 'SET_CHART_DATA'
 export const SET_TABLE_DATA = 'SET_TABLE_DATA'
 export const SET_LEFT = 'SET_LEFT';
 export const SET_RIGHT = 'SET_RIGHT';
+export const SET_TRIP = 'SET_TRIP';
 
 export const SET_LIST_SAGA = 'SET_LIST_SAGA';
 export const GET_ARRANGEDATA_SAGA = 'GET_ARRANGEDATA_SAGA';
@@ -22,6 +23,14 @@ export const LOGOUT_SAGA = 'LOGOUT_SAGA';
 export const SUBMIT_SAGA = 'SUBMIT_SAGA';
 export const COUNT_SAGA = 'COUNT_SAGA';
 export const PHOTOS_SAGA = 'PHOTOS_SAGA';
+export const NEWTRIP_SAGA = 'NEWTRIP_SAGA';
+
+export function setTrip(data) {
+  return {
+    type: SET_TRIP,
+    payload: data,
+  };
+}
 
 export function setAll(all) {
   return {
@@ -177,6 +186,13 @@ export function countSaga(payload) {
 export function photosSaga(payload) {
   return {
     type: PHOTOS_SAGA,
+    payload: payload,
+  };
+}
+
+export function newTripSaga(payload) {
+  return {
+    type: NEWTRIP_SAGA,
     payload: payload,
   };
 }

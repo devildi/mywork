@@ -18,8 +18,9 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/AddCircleOutline';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
+import { connect } from 'react-redux';
 
-import { mockData } from '../tools'
+import { Daytrip } from '../tools'
 
 const drawerWidth = 200;
 const useStyles = makeStyles((theme) => ({
@@ -66,22 +67,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ResponsiveDrawer(props) {
-  const { window } = props;
+function ResponsiveDrawer({window, trip}) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [data, setData] = React.useState(mockData);
+  const [data, setData] = React.useState(trip);
 
   const change = (e, str, index) => {
-    data.detail[selectedIndex].whereToGoThisDay[index][str] = e.target.value
+    data.detail[selectedIndex][index][str] = e.target.value
     setData({...data})
   }
 
   const removeItem = (index) => {
-    data.detail[selectedIndex].whereToGoThisDay.splice(index, 1)
+    data.detail[selectedIndex].splice(index, 1)
     setData({...data})
   }
 
@@ -99,8 +99,16 @@ function ResponsiveDrawer(props) {
 
   }
 
-  const addOneDay = () => {
+  const AddOneItem = () => {
+    let obj = new Daytrip()
+    data.detail[selectedIndex].push(obj)
+    setData({...data})
+  }
 
+  const addOneDay = () => {
+    let obj = new Daytrip()
+    data.detail.push([obj])
+    setData({...data})
   }
 
   const drawer = (
@@ -111,6 +119,9 @@ function ResponsiveDrawer(props) {
         </p>
         <p className={classes.drawerTitle}>
           {`by ${data.designer}`}
+        </p>
+        <p className={classes.drawerTitle}>
+          {`行程编号：${data.uid}`}
         </p>
       </div>
       <Divider />
@@ -125,7 +136,7 @@ function ResponsiveDrawer(props) {
             selected={selectedIndex === index}
             onClick={() => {setSelectedIndex(index)}}
           >
-            <ListItemText primary={'Day '+index}/>
+            <ListItemText primary={`Day${index + 1}`}/>
             <ListItemIcon
               onClick={(e) => {removeDay(e, index)}}
             >
@@ -142,136 +153,148 @@ function ResponsiveDrawer(props) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap className={classes.title}>
-            地图数据编辑
-          </Typography>
-          <Button color="inherit" onClick={submit}>SAVE</Button>
-        </Toolbar>
-      </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={container}
-            variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-      </nav>
-      <main className={classes.content}>
       {
-        data.detail[selectedIndex].whereToGoThisDay.map((item, index) => {
-          return(
-          <React.Fragment key={index}>
-            <div className={classes.toolbar} />
-            <div>
+      data
+      ?<React.Fragment>
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap className={classes.title}>
+              地图数据编辑
+            </Typography>
+            <Button style={{marginRight: '5px'}}variant="outlined" color="inherit" onClick={AddOneItem}>Add</Button>
+            <Button variant="outlined" color="inherit" onClick={submit}>SAVE</Button>
+          </Toolbar>
+        </AppBar>
+        <nav className={classes.drawer} aria-label="mailbox folders">
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={container}
+              variant="temporary"
+              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+          <Hidden xsDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              variant="permanent"
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </nav>
+        <main className={classes.content}>
+        { 
+          data.detail[selectedIndex] && data.detail[selectedIndex].length > 0
+          ?data.detail[selectedIndex].map((item, index) => {
+            return(
+            <React.Fragment key={index}>
+              <div className={classes.toolbar} />
+              <div>
+                <TextField 
+                  label="nameOfScence" 
+                  value={item.nameOfScence}
+                  onChange={(e) => {change(e, 'nameOfScence', index)}}
+                />
+              </div>
+              <div>
+                <TextField 
+                  value={item.longitude} 
+                  label="longitude"
+                  onChange={(e) => {change(e, 'longitude', index)}}
+                />
+                <TextField 
+                  value={item.latitude} 
+                  label="latitude"
+                  onChange={(e) => {change(e, 'latitude', index)}}
+                />
+              </div>
+              <div>
+                <TextField
+                  value={item.des}
+                  multiline 
+                  label="des"
+                  onChange={(e) => {change(e, 'des', index)}}
+                />
+              </div>
+              <div>
+                <TextField 
+                  multiline 
+                  label="picURL"
+                  value={item.picURL}
+                  onChange={(e) => {change(e, 'picURL', index)}}
+                />
+              </div>
               <TextField 
-                label="nameOfScence" 
-                value={item.nameOfScence}
-                onChange={(e) => {change(e, 'nameOfScence', index)}}
-              />
-            </div>
-            <div>
-              <TextField 
-                value={item.longitude} 
-                label="longitude"
-                onChange={(e) => {change(e, 'longitude', index)}}
+                value={item.pointOrNot}
+                label="pointOrNot" 
+                onChange={(e) => {change(e, 'pointOrNot', index)}}
               />
               <TextField 
-                value={item.latitude} 
-                label="latitude"
-                onChange={(e) => {change(e, 'latitude', index)}}
+                value={item.category}
+                label="category"
+                onChange={(e) => {change(e, 'category', index)}}
               />
-            </div>
-            <div>
-              <TextField
-                value={item.des}
-                multiline 
-                label="des"
-                onChange={(e) => {change(e, 'des', index)}}
-              />
-            </div>
-            <div>
-              <TextField 
-                multiline 
-                label="picURL"
-                value={item.picURL}
-                onChange={(e) => {change(e, 'picURL', index)}}
-              />
-            </div>
-            <TextField 
-              value={item.pointOrNot}
-              label="pointOrNot" 
-              onChange={(e) => {change(e, 'pointOrNot', index)}}
-            />
-            <TextField 
-              value={item.category}
-              label="category"
-              onChange={(e) => {change(e, 'category', index)}}
-            />
-            <div>
-              <TextField 
-                value={item.contructor}
-                label="contructor" 
-                onChange={(e) => {change(e, 'contructor', index)}}
-              />
-            </div>
-            <div className={classes.btn}>
-              <Button 
-                color="secondary" 
-                variant="contained"
-                onClick={() => removeItem(index)}
-              >
-              DELETE
-              </Button>
-            </div>
-            <Divider />
-          </React.Fragment>
-        )})
-      }     
-      </main>
+              <div>
+                <TextField 
+                  value={item.contructor}
+                  label="contructor" 
+                  onChange={(e) => {change(e, 'contructor', index)}}
+                />
+              </div>
+              <div className={classes.btn}>
+                <Button 
+                  color="secondary" 
+                  variant="contained"
+                  onClick={() => removeItem(index)}
+                >
+                {`删除第${selectedIndex + 1}天第${index + 1}个景点`}
+                </Button>
+              </div>
+              <Divider />
+            </React.Fragment>
+          )})
+          :null
+        }     
+        </main>
+      </React.Fragment>
+      :null
+      }
     </div>
   );
 }
 
 ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
+export default connect(
+  function mapStateToProps(state) {
+    return state;
+  },
+  function mapDispatchToProps(dispatch) {
+    return { dispatch };
+  }
+)(ResponsiveDrawer);

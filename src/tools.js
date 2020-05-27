@@ -214,9 +214,7 @@ export const mockData = {
 	tripName: '沈阳六日',
 	designer: 'wudi',
 	detail:[
-		{
-			indexOfDay: 1,
-			whereToGoThisDay:[
+			[
 				{
 					nameOfScence: 'ggg故宫',
 					longitude: '1111',
@@ -250,11 +248,8 @@ export const mockData = {
 					category: 'aaa',
 					done: false
 				}
-			]
-		},
-		{
-			indexOfDay: 2,
-			whereToGoThisDay:[
+			],
+			[
 				{
 					nameOfScence: '66666故宫',
 					longitude: 'eeeee',
@@ -278,6 +273,43 @@ export const mockData = {
 					done: false
 				}
 			]
-		}
 	]
+}
+
+export class Trip {
+	constructor(
+		uid: '',
+		tripName: '',
+		designer: '',
+		detail: [],
+		) {
+		this.uid = uid;
+	  this.tripName = tripName
+	  this.designer = designer
+	  this.detail = detail
+	}
+}
+
+export class Daytrip{
+	constructor(
+		nameOfScence = '', 
+		longitude = '', 
+		latitude = '',
+		des = '',
+		picURL = '',
+		pointOrNot = true,
+		contructor = '',
+		category = 0,
+		done = false
+		) {
+	  this.nameOfScence = nameOfScence;
+	  this.longitude = longitude
+	  this.latitude = latitude
+	  this.des = des
+	  this.picURL = picURL
+	  this.pointOrNot = pointOrNot
+	  this.contructor = contructor
+	  this.category = category
+	  this.done = done
+	}
 }
