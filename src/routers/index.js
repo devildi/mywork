@@ -17,10 +17,18 @@ const RouteController = ({user, component: Component, ...rest}) => {
 		<Route 
 			{...rest}
 			render = {
-				(props) =>  (user
-					? <Component {...props} />
-					: <Redirect to="/signin" />
-				)
+				(props) =>  (user ? <Component {...props} /> : <Redirect to="/signin" />)
+			}
+		/>
+	)
+}
+
+const EditController = ({trip, component: Component, ...rest}) => {
+	return(
+		<Route 
+			{...rest}
+			render = {
+				(props) =>  (trip ? <Component {...props} /> : <Redirect to="/editinit" />)
 			}
 		/>
 	)
@@ -34,6 +42,14 @@ const InjectedRoute = withRouter(connect(function mapStateToProps(state) {
     }
 )(RouteController))
 
+const InjectedEditRoute = withRouter(connect(function mapStateToProps(state) {
+        return state;
+    },
+    function mapDispatchToProps(dispatch) {
+        return { dispatch };
+    }
+)(EditController))
+
 export default () => [
 	<InjectedRoute path='/' component ={Index} exact key='main'/>,
 	<InjectedRoute path='/submit' component ={Submit} exact key='submit'/>,
@@ -42,5 +58,5 @@ export default () => [
 	<Route path='/logon' component ={Logon} exact key='logon'/>,
 	<Route path='/photos' component ={Photos} exact key='photos'/>,
 	<Route path='/editinit' component ={EditInit} exact key='editinit'/>,
-	<Route path='/edit' component ={Edit} exact key='edit'/>,
+	<InjectedEditRoute path='/edit' component ={Edit} exact key='edit'/>,
 ]

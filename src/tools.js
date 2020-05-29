@@ -196,7 +196,6 @@ export const getImg = async (url, screenWidth) => {
 export const width = Math.floor(document.body.clientWidth / 2)
 
 export const pic = [
-	'https://tse4-mm.cn.bing.net/th/id/OIP.ttSJgkRgYtFZquEitnNbTgHaEo?w=288&h=180&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse4-mm.cn.bing.net/th/id/OIP.uO_nL1Ep5HD2W7XfVI76xQHaJ3?w=158&h=196&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse3-mm.cn.bing.net/th/id/OIP.RiVuBdPbyZfUqwaC_rMgaAHaFj?w=200&h=189&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse3-mm.cn.bing.net/th/id/OIP.PjwD3caT4zGrmyx5OSmsXQHaE7?w=285&h=185&c=7&o=5&dpr=2&pid=1.7',
@@ -208,73 +207,6 @@ export const pic = [
 	'https://tse2-mm.cn.bing.net/th/id/OIP._-DDuCgiElSuM37yuL-x9wHaE4?w=275&h=177&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse3-mm.cn.bing.net/th/id/OIP.s_SXVVhK1MZhrGXQjWdOUAHaFm?w=212&h=160&c=7&o=5&dpr=2&pid=1.7'
 ]
-
-export const mockData = {
-	uid: '11111',
-	tripName: '沈阳六日',
-	designer: 'wudi',
-	detail:[
-			[
-				{
-					nameOfScence: 'ggg故宫',
-					longitude: '1111',
-					latitude: '1111',
-					des: '1111',
-					picURL: '1111',
-					pointOrNot: true,
-					contructor: '1111',//非点时使用
-					category: 0,
-					done: false
-				},
-				{
-					nameOfScence: 'hhhh故宫',
-					longitude: '1111',
-					latitude: '1111',
-					des: '1111',
-					picURL: '111',
-					pointOrNot: '2222',
-					contructor: '3333',//非点时使用
-					category: '3333',
-					done: false
-				},
-				{
-					nameOfScence: 'a故宫',
-					longitude: 'aaa',
-					latitude: 'aaa',
-					des: 'aaa',
-					picURL: 'aaa',
-					pointOrNot: 'aaa',
-					contructor: 'aaa',//非点时使用
-					category: 'aaa',
-					done: false
-				}
-			],
-			[
-				{
-					nameOfScence: '66666故宫',
-					longitude: 'eeeee',
-					latitude: 'eeeee',
-					des: 'eeeee',
-					picURL: 'eeeee',
-					pointOrNot: 'eeeee',
-					contructor: 'eeeee',//非点时使用
-					category: 'eeeee',
-					done: false
-				},
-				{
-					nameOfScence: '65656565故宫',
-					longitude: 'bbbbbbb',
-					latitude: 'bbbbbbb',
-					des: 'bbbbbbb',
-					picURL: 'bbbbbbb',
-					pointOrNot: 'bbbbbbb',
-					contructor: 'bbbbbbb',//非点时使用
-					category: 'bbbbbbb',
-					done: false
-				}
-			]
-	]
-}
 
 export class Trip {
 	constructor(
