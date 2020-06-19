@@ -1,4 +1,4 @@
-import React , {useEffect, useRef} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,8 +19,6 @@ import AddIcon from '@material-ui/icons/AddCircleOutline';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import { connect } from 'react-redux';
-
-import * as R from 'ramda'
 
 import { Daytrip, checkNullInObj } from '../tools'
 
@@ -82,7 +80,7 @@ function ResponsiveDrawer({window, trip, dispatch}) {
   
   const [data, setData] = React.useState(trip);
 
-  const tripRef = useRef();
+  //const tripRef = useRef();
 
   // useEffect(()=>{
   //   tripRef.current = trip
