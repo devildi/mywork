@@ -3,8 +3,8 @@ import Days from '../commonComponents/DateSelector'
 import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
 import RemoveIcon from '@material-ui/icons/Clear';
-import { CSSTransition } from 'react-transition-group';
 import Typography from '@material-ui/core/Typography';
+import Grow from '@material-ui/core/Grow';
 import '../css/index.css';
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,11 +68,10 @@ function Data ({arr, toArrange, clearDay}){
   	{
   		arr.map((i,index) => {
   			return(
-          <CSSTransition
+          <Grow
             in={showMessage}
-            timeout={300}
-            classNames="alert"
-            key={i.date}
+            key={index}
+            {...(showMessage ? { timeout: 500 * index } : {})}
           >
     				<div 
               className={classes.div1} 
@@ -105,7 +104,7 @@ function Data ({arr, toArrange, clearDay}){
   		      		}
   		      	</div>
   	      	</div>
-          </CSSTransition>
+          </Grow>
   			)
   		})
   	}

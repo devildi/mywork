@@ -12,7 +12,7 @@ export const vedioUrl = vedioUrlArray[1]
 export const ATTANGEDATA = 'ARRANGEDATA'
 export const USER = 'USER'
 export const TOKEN = 'TOKEN'
-export const expire = 300//S
+export const expire = 3000//S
 
 export const isVedio = false
 export const whichPage = 0
@@ -205,7 +205,6 @@ export const checkNullInObj = (obj) => {
 }
 
 export const pic = [
-	'https://tse4-mm.cn.bing.net/th/id/OIP.uO_nL1Ep5HD2W7XfVI76xQHaJ3?w=158&h=196&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse3-mm.cn.bing.net/th/id/OIP.RiVuBdPbyZfUqwaC_rMgaAHaFj?w=200&h=189&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse3-mm.cn.bing.net/th/id/OIP.PjwD3caT4zGrmyx5OSmsXQHaE7?w=285&h=185&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse4-mm.cn.bing.net/th/id/OIP.D9KCoJ2Szl3p8iiUt1XQ7wHaJQ?w=166&h=198&c=7&o=5&dpr=2&pid=1.7',

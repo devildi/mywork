@@ -166,10 +166,23 @@ function* photosSage(action){
 function* newTripSage (action) {
   if(typeof action.payload === 'object'){
     const {tripName, designer, uid} = action.payload
-    let obj = new Daytrip()
-    let newTrip = new Trip(uid,tripName, designer, [[obj]])
-    yield put(setTrip(newTrip))
-    yield put(push('/edit'))
+    try{
+      const trip = yield axios.get('/api/trip/get',{params: {
+        uid: uid
+      }})
+      if(trip.data){
+        alert('该行程编号对应的行程已存在！')
+        yield put(setTrip(trip.data))
+        yield put(push('/edit'))
+      } else {
+        let obj = new Daytrip()
+        let newTrip = new Trip(uid,tripName, designer, [[obj]])
+        yield put(setTrip(newTrip))
+        yield put(push('/edit'))
+      }
+    }catch(err){
+      alert(err)
+    }
   } else {
     try{
       const trip = yield axios.get('/api/trip/get',{params: {

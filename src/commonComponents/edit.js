@@ -19,7 +19,7 @@ import AddIcon from '@material-ui/icons/AddCircleOutline';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import { connect } from 'react-redux';
-
+import Link from '@material-ui/core/Link';
 import { Daytrip, checkNullInObj } from '../tools'
 
 import{
@@ -129,8 +129,10 @@ function ResponsiveDrawer({window, trip, dispatch}) {
 
   const AddOneItem = () => {
     let obj = new Daytrip()
-    data.detail[selectedIndex].push(obj)
-    setData({...data})
+    if(data.detail.length > 0){
+      data.detail[selectedIndex].push(obj)
+      setData({...data})
+    }
   }
 
   const addOneDay = () => {
@@ -196,10 +198,20 @@ function ResponsiveDrawer({window, trip, dispatch}) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap className={classes.title}>
-              地图数据编辑
+              <Link color="inherit" href="/editinit">
+                地图数据编辑
+              </Link>
             </Typography>
-            <Button style={{marginRight: '5px'}}variant="outlined" color="inherit" onClick={AddOneItem}>Add</Button>
-            <Button variant="outlined" color="inherit" onClick={submit}>SAVE</Button>
+            {
+              data.detail.length > 0
+              ?<Button style={{marginRight: '5px'}}variant="outlined" color="inherit" onClick={AddOneItem}>Add</Button>
+              : null
+            }
+            {
+              data.detail.length > 0
+              ?<Button variant="outlined" color="inherit" onClick={submit}>SAVE</Button>
+              : null
+            }
           </Toolbar>
         </AppBar>
         <nav className={classes.drawer} aria-label="mailbox folders">
