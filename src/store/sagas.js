@@ -24,7 +24,8 @@ import {
   SUBMIT_SAGA,
   COUNT_SAGA,
   PHOTOS_SAGA,
-  NEWTRIP_SAGA
+  NEWTRIP_SAGA,
+  SAVETRIP_SAGA
 } from './action'
 
 import { 
@@ -163,7 +164,6 @@ function* photosSage(action){
 }
 
 function* newTripSage (action) {
-  //console.log(typeof action.payload)
   if(typeof action.payload === 'object'){
     const {tripName, designer, uid} = action.payload
     let obj = new Daytrip()
@@ -171,13 +171,12 @@ function* newTripSage (action) {
     yield put(setTrip(newTrip))
     yield put(push('/edit'))
   } else {
-    console.log(typeof action.payload)
     try{
-      const trip = yield axios.get('/api/trip',{params: {
+      const trip = yield axios.get('/api/trip/get',{params: {
         uid: action.payload
       }})
-      if(trip){
-        yield put(setTrip(trip))
+      if(trip.data){
+        yield put(setTrip(trip.data))
         yield put(push('/edit'))
       } else {
         alert('无对应的行程！')
@@ -185,6 +184,18 @@ function* newTripSage (action) {
     }catch(err){
       alert(err)
     }
+  }
+}
+
+function* saveTripSage (action) {
+  try{
+    const trip = yield axios.post('/api/trip/new',{...action.payload})
+    if(trip.data){
+      alert('保存成功！')
+      yield put(push('/editinit'))
+    }
+  }catch(err){
+    alert(err)
   }
 }
 
@@ -201,6 +212,7 @@ export default function* mySaga (){
       takeEvery(COUNT_SAGA, countSage),
       takeEvery(PHOTOS_SAGA, photosSage),
       takeEvery(NEWTRIP_SAGA, newTripSage),
+      takeEvery(SAVETRIP_SAGA, saveTripSage),
     ]
   )
 }

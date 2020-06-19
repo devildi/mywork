@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,7 +20,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import { connect } from 'react-redux';
 
-import { Daytrip } from '../tools'
+import * as R from 'ramda'
+
+import { Daytrip, checkNullInObj } from '../tools'
+
+import{
+  saveTripSaga
+} from '../store/action'
 
 const drawerWidth = 200;
 const useStyles = makeStyles((theme) => ({
@@ -67,13 +73,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ResponsiveDrawer({window, trip}) {
+function ResponsiveDrawer({window, trip, dispatch}) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  
   const [data, setData] = React.useState(trip);
+
+  const tripRef = useRef();
+
+  // useEffect(()=>{
+  //   tripRef.current = trip
+  //   console.log('tripRef.current',tripRef.current)
+  // }, [])
 
   const change = (e, str, index) => {
     data.detail[selectedIndex][index][str] = e.target.value
@@ -96,7 +110,23 @@ function ResponsiveDrawer({window, trip}) {
   };
 
   const submit = () => {
+    const array = data.detail
+    for (let i = 0 ; i < array.length ; i++){
+      let innerArray = array[i]
+      for (let j = 0 ; j < innerArray.length ; j++){
+        if(!checkNullInObj(innerArray[j])){
+          return alert('有未填的项目！')
+        }
+      }
+    }
 
+    dispatch(saveTripSaga(data))
+    // if(R.equals(data, tripRef.current)){
+    //   alert('已保存！')
+    // } else {
+    //   alert('已发送！')
+    
+    // }
   }
 
   const AddOneItem = () => {

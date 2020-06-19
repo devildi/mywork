@@ -24,6 +24,7 @@ export const SUBMIT_SAGA = 'SUBMIT_SAGA';
 export const COUNT_SAGA = 'COUNT_SAGA';
 export const PHOTOS_SAGA = 'PHOTOS_SAGA';
 export const NEWTRIP_SAGA = 'NEWTRIP_SAGA';
+export const SAVETRIP_SAGA = 'SAVETRIP_SAGA';
 
 export function setTrip(data) {
   return {
@@ -193,6 +194,13 @@ export function photosSaga(payload) {
 export function newTripSaga(payload) {
   return {
     type: NEWTRIP_SAGA,
+    payload: payload,
+  };
+}
+
+export function saveTripSaga(payload) {
+  return {
+    type: SAVETRIP_SAGA,
     payload: payload,
   };
 }

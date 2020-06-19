@@ -195,6 +195,15 @@ export const getImg = async (url, screenWidth) => {
 
 export const width = Math.floor(document.body.clientWidth / 2)
 
+export const checkNullInObj = (obj) => {
+	for (let key in obj){
+		if(obj[key] === ''){
+			return false
+		}
+	}
+	return true
+}
+
 export const pic = [
 	'https://tse4-mm.cn.bing.net/th/id/OIP.uO_nL1Ep5HD2W7XfVI76xQHaJ3?w=158&h=196&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse3-mm.cn.bing.net/th/id/OIP.RiVuBdPbyZfUqwaC_rMgaAHaFj?w=200&h=189&c=7&o=5&dpr=2&pid=1.7',
@@ -230,7 +239,7 @@ export class Daytrip{
 		des = '',
 		picURL = '',
 		pointOrNot = true,
-		contructor = '',
+		contructor = 'contructor',
 		category = 0,
 		done = false
 		) {
