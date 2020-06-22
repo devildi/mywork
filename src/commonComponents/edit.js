@@ -157,6 +157,7 @@ function ResponsiveDrawer({window, trip, dispatch}) {
       <Divider />
       <List>
         <ListItem button onClick={addOneDay}>
+          添加一日行程
           <ListItemIcon><AddIcon /></ListItemIcon>
         </ListItem>
         {data.detail.map((text, index) => (
