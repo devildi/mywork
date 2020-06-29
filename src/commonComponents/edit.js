@@ -20,7 +20,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import { connect } from 'react-redux';
 import Link from '@material-ui/core/Link';
-import { Daytrip, checkNullInObj } from '../tools'
+import { Daytrip, checkNullInObj, checkInArray } from '../tools'
 
 import{
   saveTripSaga
@@ -117,7 +117,7 @@ function ResponsiveDrawer({window, trip, dispatch}) {
         }
       }
     }
-
+    
     dispatch(saveTripSaga(data))
     // if(R.equals(data, tripRef.current)){
     //   alert('已保存！')
@@ -209,7 +209,7 @@ function ResponsiveDrawer({window, trip, dispatch}) {
               : null
             }
             {
-              data.detail.length > 0
+              data.detail.length > 0 && checkInArray(data.detail)
               ?<Button variant="outlined" color="inherit" onClick={submit}>SAVE</Button>
               : null
             }

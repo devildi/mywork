@@ -204,6 +204,15 @@ export const checkNullInObj = (obj) => {
 	return true
 }
 
+export const checkInArray = (arr) => {
+	for (let i = 0; i < arr.length; i++){
+		if(arr[i].length === 0){
+			return false
+		}
+	}
+	return true
+}
+
 export const pic = [
 	'https://tse3-mm.cn.bing.net/th/id/OIP.RiVuBdPbyZfUqwaC_rMgaAHaFj?w=200&h=189&c=7&o=5&dpr=2&pid=1.7',
 	'https://tse3-mm.cn.bing.net/th/id/OIP.PjwD3caT4zGrmyx5OSmsXQHaE7?w=285&h=185&c=7&o=5&dpr=2&pid=1.7',
