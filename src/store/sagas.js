@@ -14,6 +14,7 @@ import {
   setLeft,
   setRight,
   setTrip,
+  setItem,
 
   SET_LIST_SAGA,
   GET_ARRANGEDATA_SAGA,
@@ -25,6 +26,7 @@ import {
   COUNT_SAGA,
   PHOTOS_SAGA,
   NEWTRIP_SAGA,
+  NEWITEM_SAGA,
   SAVETRIP_SAGA
 } from './action'
 
@@ -212,6 +214,18 @@ function* saveTripSage (action) {
   }
 }
 
+function* newItemSage (action){
+  try{
+    const item = yield axios.post('/api/trip/newItem',{...action.payload})
+    if(item.data){
+      alert('添加成功！')
+      yield put(setItem(''))
+    }
+  }catch(err){
+    alert(err)
+  }
+}
+
 export default function* mySaga (){
 	yield all(
     [
@@ -225,6 +239,7 @@ export default function* mySaga (){
       takeEvery(COUNT_SAGA, countSage),
       takeEvery(PHOTOS_SAGA, photosSage),
       takeEvery(NEWTRIP_SAGA, newTripSage),
+      takeEvery(NEWITEM_SAGA, newItemSage),
       takeEvery(SAVETRIP_SAGA, saveTripSage),
     ]
   )

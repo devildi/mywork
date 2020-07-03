@@ -13,6 +13,7 @@ import {
   SET_LEFT,
   SET_RIGHT,
   SET_TRIP,
+  SET_ITEM,
 } from './action'
 
 import { 
@@ -28,90 +29,99 @@ export default {
   chartData(state = null, action) {
     const { type, payload } = action;
     switch (type) {
-        case SET_CHART_DATA:
-            return payload;
-        default:
+      case SET_CHART_DATA:
+        return payload;
+      default:
     }
     return state;
   },
   tableData(state = null, action) {
     const { type, payload } = action;
     switch (type) {
-        case SET_TABLE_DATA:
-            return payload;
-        default:
+      case SET_TABLE_DATA:
+        return payload;
+      default:
     }
     return state;
   },
   left(state = [], action) {
     const { type, payload } = action;
     switch (type) {
-        case SET_LEFT:
-            return payload;
-        default:
+      case SET_LEFT:
+        return payload;
+      default:
     }
     return state;
   },
   right(state = [], action) {
     const { type, payload } = action;
     switch (type) {
-        case SET_RIGHT:
-            return payload;
-        default:
+      case SET_RIGHT:
+        return payload;
+      default:
     }
     return state;
   },
 	user(state = null, action) {
     const { type, payload } = action;
     switch (type) {
-        case SET_USER:
-            return payload;
-        default:
+      case SET_USER:
+        return payload;
+      default:
     }
     return state;
   },
   trip(state = null, action) {
     const { type, payload } = action;
     switch (type) {
-        case SET_TRIP:
-            return payload;
-        default:
+      case SET_TRIP:
+        return payload;
+      default:
+    }
+    return state;
+  },
+  item(state = '', action) {
+    const { type, payload } = action;
+    switch (type) {
+      case SET_ITEM:
+        return payload;
+      default:
     }
     return state;
   },
   all(state = 0, action) {
     const { type, payload } = action;
     switch (type) {
-        case SET_ALL:
-            return payload;
-        default:
+      case SET_ALL:
+        return payload;
+      default:
     }
     return state;
   },
   loading(state = false, action) {
     const { type, payload } = action;
     switch (type) {
-        case SET_LOADING:
-            return payload;
-        default:
+      case SET_LOADING:
+        return payload;
+      default:
     }
     return state;
   },
   whichPage(state = whichPage, action) {
     const { type, payload } = action;
     switch (type) {
-        case SET_PAGE:
-            return payload;
-        default:
+      case SET_PAGE:
+        return payload;
+      default:
     }
     return state;
   },
   fenye(state = 1, action) {
     const { type, payload } = action;
     switch (type) {
-        case SET_FENYE:
-            return payload;
-        default:
+      case SET_FENYE:
+        return payload;
+      default:
     }
     return state;
   },
