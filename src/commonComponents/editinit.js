@@ -50,11 +50,14 @@ const handleMouseDownPassword = (event) => {
 
 
 function Editinit({dispatch}){
-	const classes = useStyles();
+	const classes = useStyles()
+
+  const [uid1, setUid1] = useState('')
+
 	const [tripName, setTripName] = useState('')
   const [designer, setDesigner] = useState('')
   const [uid, setUid] = useState('')
-  const [uid1, setUid1] = useState('')
+  const [domestic, setDomestic] = useState(1)
 
   const updateTrip = () => {
   	if(!uid1){
@@ -64,13 +67,14 @@ function Editinit({dispatch}){
   }
 
   const newTrip = () => {
-		if(!tripName || !designer|| !uid){
+		if(!tripName || !designer|| !uid || !domestic){
       return alert('有未填项！')
     }
     const obj = {
       tripName: tripName.trim(),
       designer: designer.trim(),
-      uid: uid
+      uid: uid,
+      domestic: parseInt(domestic)
     }
     dispatch(newTripSaga(obj))
 	}
@@ -114,6 +118,13 @@ function Editinit({dispatch}){
           label="设计者" 
           variant="outlined"
           onChange={(e) => {setDesigner(e.target.value)}}
+        />
+        <TextField 
+          className={classes.submit} 
+          id="domestic" 
+          label="国内还是国外（1/0）" 
+          variant="outlined"
+          onChange={(e) => {setDomestic(e.target.value)}}
         />
         <TextField 
           className={classes.submit} 

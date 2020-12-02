@@ -64,7 +64,7 @@ function Story({dispatch, item}){
   
 	return (
 		<div className={classes.root}>
-			<Bar title={'瀑布路页面数据编辑'} />
+			<Bar title={'瀑布流页面数据新增：'} />
     	<form className={classes.form} noValidate autoComplete="off">
         <TextField
           value={articleName}
@@ -96,7 +96,7 @@ function Story({dispatch, item}){
           className={classes.submit}
           onClick={newTrip}
         >
-          数据填充
+          提交
         </Button>
       </form>
 		</div>

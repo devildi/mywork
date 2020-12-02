@@ -167,7 +167,7 @@ function* photosSage(action){
 
 function* newTripSage (action) {
   if(typeof action.payload === 'object'){
-    const {tripName, designer, uid} = action.payload
+    const {tripName, designer, uid, domestic} = action.payload
     try{
       const trip = yield axios.get('/api/trip/get',{params: {
         uid: uid
@@ -178,7 +178,7 @@ function* newTripSage (action) {
         yield put(push('/edit'))
       } else {
         let obj = new Daytrip()
-        let newTrip = new Trip(uid,tripName, designer, [[obj]])
+        let newTrip = new Trip(uid, tripName, designer, domestic, [[obj]])
         yield put(setTrip(newTrip))
         yield put(push('/edit'))
       }
@@ -220,6 +220,8 @@ function* newItemSage (action){
     if(item.data){
       alert('添加成功！')
       yield put(setItem(''))
+    } else{
+      alert('不可添加重复的文章！！')
     }
   }catch(err){
     alert(err)
