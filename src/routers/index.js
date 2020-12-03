@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Redirect, withRouter} from 'react-router-dom'
+import { Route, Redirect, withRouter, Switch} from 'react-router-dom'
 
 import { connect } from 'react-redux';
 
@@ -51,14 +51,16 @@ const InjectedEditRoute = withRouter(connect(function mapStateToProps(state) {
     }
 )(EditController))
 
-export default () => [
-	<InjectedRoute path='/' component ={Index} exact key='main'/>,
-	<InjectedRoute path='/submit' component ={Submit} exact key='submit'/>,
-	<InjectedRoute path='/submitArrange' component ={SubmitArrange} exact key='submitArrange'/>,
-	<Route path='/signin' component ={Signin} exact key='signin'/>,
-	<Route path='/logon' component ={Logon} exact key='logon'/>,
-	<Route path='/photos' component ={Photos} exact key='photos'/>,
-	<Route path='/story' component ={Story} exact key='story'/>,
-	<Route path='/editinit' component ={EditInit} exact key='editinit'/>,
-	<InjectedEditRoute path='/edit' component ={Edit} exact key='edit'/>,
-]
+export default () => 
+	<Switch>
+		<InjectedRoute path='/' component ={Index} exact key='main'/>,
+		<InjectedRoute path='/submit' component ={Submit} exact key='submit'/>,
+		<InjectedRoute path='/submitArrange' component ={SubmitArrange} exact key='submitArrange'/>,
+		<Route path='/signin' component ={Signin} exact key='signin'/>,
+		<Route path='/logon' component ={Logon} exact key='logon'/>,
+		<Route path='/photos' component ={Photos} exact key='photos'/>,
+		<Route path='/story' component ={Story} exact key='story'/>,
+		<Route path='/editinit' component ={EditInit} exact key='editinit'/>,
+		<InjectedEditRoute path='/edit' component ={Edit} exact key='edit'/>,
+		<Route path='*' exact key='404' render = {() => (<Redirect to="/signin" />)}/>,
+	</Switch>
