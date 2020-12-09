@@ -11,6 +11,7 @@ import Logon from '../commonComponents/logon'
 import Photos from '../commonComponents/photos'
 import EditInit from '../commonComponents/editinit'
 import Story from '../commonComponents/story'
+import Client from '../commonComponents/client'
 import Edit from '../commonComponents/edit'
 
 const RouteController = ({user, component: Component, ...rest}) => {
@@ -60,6 +61,7 @@ export default () =>
 		<Route path='/logon' component ={Logon} exact key='logon'/>,
 		<Route path='/photos' component ={Photos} exact key='photos'/>,
 		<Route path='/story' component ={Story} exact key='story'/>,
+		<Route path='/client' component ={Client} exact key='client'/>,
 		<Route path='/editinit' component ={EditInit} exact key='editinit'/>,
 		<InjectedEditRoute path='/edit' component ={Edit} exact key='edit'/>,
 		<Route path='*' exact key='404' render = {() => (<Redirect to="/signin" />)}/>,

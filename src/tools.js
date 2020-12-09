@@ -7,14 +7,14 @@ const vedioUrlArray = [
 	'http://cdn.moji.com/websrc/video/video621.mp4',
 	'https://res.cloudinary.com/dnfhsjz8u/video/upload/v1584691245/DJI_20191006_114520_418_fl2drt.mp4'
 ]
-export const vedioUrl = vedioUrlArray[1]
+export const vedioUrl = vedioUrlArray[0]
 //localStorage
 export const ATTANGEDATA = 'ARRANGEDATA'
 export const USER = 'USER'
 export const TOKEN = 'TOKEN'
 export const expire = 3000//S
 
-export const isVedio = false
+export const isVedio = true
 export const whichPage = 0
 
 export function saveData(str, data, expire){
