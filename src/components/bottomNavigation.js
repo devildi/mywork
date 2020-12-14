@@ -32,9 +32,9 @@ export default function Navigation(props) {
       }}
       className={classes.root}
     >
-      <BottomNavigationAction icon={<RestoreIcon />} />
-      <BottomNavigationAction icon={<FavoriteIcon />} />
       <BottomNavigationAction icon={<ProfileIcon />} />
+      <BottomNavigationAction icon={<FavoriteIcon />} />
+      <BottomNavigationAction icon={<RestoreIcon />} />
     </BottomNavigation>
   );
 }

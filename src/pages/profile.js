@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 import { authority } from '../tools'
 
@@ -20,6 +22,16 @@ const useStyles = makeStyles(theme => ({
   btn: {
   	marginTop: theme.spacing(4),
   	width: theme.spacing(20),
+  },
+  paper: {
+    height: theme.spacing(10),
+    fontSize: 20,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  container: {
+    padding: theme.spacing(5,1,0,1)
   }
 }));
 
@@ -31,14 +43,38 @@ export default function Profile ({user, logout, history}) {
     }
   }
 
+  const pushTo = (str) => {
+    history.push({pathname: str});
+  }
+
 	return (
 		<div className={classes.root}>
 			<Avatar 
-      className={classes.avatar}
-      onClick={logon}
+        className={classes.avatar}
+        onClick={logon}
       >
         {user}
       </Avatar>
+      <Grid container spacing={1} className={classes.container}>
+        <Grid item xs={6}>
+          <Paper 
+            className={classes.paper}
+            onClick={() => pushTo('/photos')}
+            elevation={3}
+          >
+            家族照片
+          </Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/client')}>NT的全体客户</Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/story')}>瀑布流数据编辑</Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/editinit')}>行程设计</Paper>
+        </Grid>
+      </Grid>
 			<Button
         variant="contained"
         color="secondary"

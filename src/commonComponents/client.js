@@ -2,7 +2,7 @@ import React, { useEffect} from 'react';
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
 import Bar from '../components/appbar';
-//import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { 
   getScrollTop,
   getClientHeight,
@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Client(){
+function Client({history}){
   const [total, setTotal] = React.useState(0)
   const [users, setUsers] = React.useState([])
   const [loading, setLoading] = React.useState(false)
@@ -73,7 +73,7 @@ export default function Client(){
   
 	return (
 		<div className={classes.root}>
-			<Bar title={`NextSticker的总用户为 ${total}`} />
+			<Bar title={`NextSticker的总用户为 ${total}`} history={history} />
       <div className={classes.div}></div>
       {
         users.length > 0
@@ -92,11 +92,11 @@ export default function Client(){
 	)
 }
 
-// export default connect(
-//   function mapStateToProps(state) {
-//     return state;
-//   },
-//   function mapDispatchToProps(dispatch) {
-//     return { dispatch };
-//   }
-// )(Client);
+export default connect(
+  function mapStateToProps(state) {
+    return state;
+  },
+  function mapDispatchToProps(dispatch) {
+    return { dispatch };
+  }
+)(Client);

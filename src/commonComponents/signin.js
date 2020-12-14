@@ -145,9 +145,10 @@ function Copyright() {
 }
 
 function SignIn({user, dispatch}) {
+  console.log('signin')
   const classes = useStyles();
   let history = useHistory();
-
+  //let video
   const [name, setName] = useState('')
   const [password, setPassword] = useState('');
 
@@ -169,6 +170,13 @@ function SignIn({user, dispatch}) {
     } 
   }, [user, history])
 
+  // useEffect(()=> {
+  //   video = document.querySelector('video')
+  //   video.oncanplay = ()=>{
+  //     console.log('can play')
+  //   }
+  // }, [])
+  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -213,16 +221,17 @@ function SignIn({user, dispatch}) {
       </div>
       <Copyright />
       {
-        !isVedio
-        ?<div className={classes.background}></div>
-        :<video
+        isVedio
+        ?<video
+          proload='auto'
           autoPlay
           loop
           muted
           className={classes.vedioBackground}
          >
-           <source src={vedioUrl} type="video/mp4"  />
+          <source src={vedioUrl} type="video/mp4"/>
          </video>
+         :<div className={classes.background}></div>
       }
     </Container>
   );

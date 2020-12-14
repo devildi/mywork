@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-function Photos({left, right, loading, dispatch}) {
+function Photos({left, right, loading, dispatch, history}) {
 
 	const classes = useStyles();
 
@@ -67,7 +67,7 @@ function Photos({left, right, loading, dispatch}) {
 
 	return (
 		<div className={classes.root}>
-		<Bar title={'照片'} />
+		<Bar title={'照片'} history={history}/>
 		<div className={classes.container}>
 			<Grid container >
 			{

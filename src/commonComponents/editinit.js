@@ -49,7 +49,7 @@ const handleMouseDownPassword = (event) => {
 };
 
 
-function Editinit({dispatch}){
+function Editinit({dispatch, history}){
 	const classes = useStyles()
 
   const [uid1, setUid1] = useState('')
@@ -81,7 +81,7 @@ function Editinit({dispatch}){
 
 	return (
 		<div className={classes.root}>
-			<Bar title={'地图数据编辑'} />
+			<Bar title={'地图数据编辑'} history={history}/>
 			<FormControl className={clsx(classes.form, classes.textField)} variant="outlined">
         <InputLabel htmlFor="outlined-adornment-password">输入行程编号</InputLabel>
         <Input

@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Story({dispatch, item}){
+function Story({dispatch, item, history}){
   useEffect(()=>{
     
   })
@@ -64,7 +64,7 @@ function Story({dispatch, item}){
   
 	return (
 		<div className={classes.root}>
-			<Bar title={'瀑布流页面数据新增：'} />
+			<Bar title={'瀑布流页面数据新增：'} history={history}/>
     	<form className={classes.form} noValidate autoComplete="off">
         <TextField
           value={articleName}

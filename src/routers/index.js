@@ -14,7 +14,8 @@ import Story from '../commonComponents/story'
 import Client from '../commonComponents/client'
 import Edit from '../commonComponents/edit'
 
-const RouteController = ({user, component: Component, ...rest}) => {
+const RouteController = ({user, path, component: Component, ...rest}) => {
+	console.log(user,path)
 	return(
 		<Route 
 			{...rest}
@@ -60,9 +61,9 @@ export default () =>
 		<Route path='/signin' component ={Signin} exact key='signin'/>,
 		<Route path='/logon' component ={Logon} exact key='logon'/>,
 		<Route path='/photos' component ={Photos} exact key='photos'/>,
-		<Route path='/story' component ={Story} exact key='story'/>,
-		<Route path='/client' component ={Client} exact key='client'/>,
-		<Route path='/editinit' component ={EditInit} exact key='editinit'/>,
+		<InjectedRoute path='/story' component ={Story} exact key='story'/>,
+		<InjectedRoute path='/client' component ={Client} exact key='client'/>,
+		<InjectedRoute path='/editinit' component ={EditInit} exact key='editinit'/>,
 		<InjectedEditRoute path='/edit' component ={Edit} exact key='edit'/>,
 		<Route path='*' exact key='404' render = {() => (<Redirect to="/signin" />)}/>,
 	</Switch>

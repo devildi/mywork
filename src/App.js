@@ -5,10 +5,11 @@ import { Provider } from 'react-redux';
 import store, { history } from './store/store'
 
 function App() {
+	console.log('start')
   return (
   	<Provider store={store}>
 	    <ConnectedRouter history={history}>
-			  <Routes />
+			<Routes />
 	    </ConnectedRouter>
 	  </Provider>
   )

@@ -44,7 +44,7 @@ function getlength(arr){
 }
 
 function Index(props) {
-  const A = ['数据', '排班', '用户']
+  const A = ['用户', '排班', '办公数据']
   const {
     user,
     whichPage,
@@ -145,9 +145,8 @@ function Index(props) {
 
   return (
 		<div className={classes.root}>
-
     {
-      whichPage === 0
+      whichPage === 2
       &&<React.Fragment>
         <Bar title={A[whichPage]} />
         <Chart data={falmatData(chartData)} rows={tableData} width={width}/>
@@ -167,7 +166,7 @@ function Index(props) {
       </React.Fragment>
     }
     {
-      whichPage === 2
+      whichPage === 0
       &&<React.Fragment>
         <Bar title={A[whichPage]} />
         <Profile user={user} logout={logout}  history={history}/>

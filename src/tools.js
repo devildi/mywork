@@ -4,7 +4,7 @@ export const picUrl = [
 'http://youimg1.c-ctrip.com/target/fd/tg/g4/M0A/CA/30/CggYHlbEXmaAYGfJAAnFAUl5-Pk911.jpg'
 ]
 const vedioUrlArray = [
-	'http://cdn.moji.com/websrc/video/video621.mp4',
+	'https://cdn.moji.com/websrc/video/video621.mp4',
 	'https://res.cloudinary.com/dnfhsjz8u/video/upload/v1584691245/DJI_20191006_114520_418_fl2drt.mp4'
 ]
 export const vedioUrl = vedioUrlArray[0]
@@ -68,7 +68,7 @@ export function h1(date , which){
 }
 
 export function flatten(arr) {  
-  return arr.reduce((result, item)=> {
+  return arr.reduce((result, item) => {
     return result.concat(Array.isArray(item) ? flatten(item) : item);
   }, []);
 }
@@ -180,7 +180,7 @@ const getOrigiHeight = (url) => new Promise((resolve, reject) => {
   	if(img.width>0 || img.height>0) {
 	    clearInterval(set);
 			resolve(img)
-  	}
+  		}
 	}
 	let set = setInterval(check,10)
 })
