@@ -58,6 +58,9 @@ function Editinit({dispatch, history}){
   const [designer, setDesigner] = useState('')
   const [uid, setUid] = useState('')
   const [domestic, setDomestic] = useState(1)
+  const [city, setCity] = useState('')
+  const [country, setCountry] = useState('')
+  const [tags, setTags] = useState('')
 
   const updateTrip = () => {
   	if(!uid1){
@@ -132,6 +135,27 @@ function Editinit({dispatch, history}){
           label="行程编号" 
           variant="outlined"
           onChange={(e) => {setUid(e.target.value)}}
+        />
+        <TextField 
+          className={classes.submit} 
+          id="sth" 
+          label="城市" 
+          variant="outlined"
+          onChange={(e) => {setCity(e.target.value)}}
+        />
+        <TextField 
+          className={classes.submit} 
+          id="sth" 
+          label="国家" 
+          variant="outlined"
+          onChange={(e) => {setCountry(e.target.value)}}
+        />
+        <TextField 
+          className={classes.submit} 
+          id="sth" 
+          label="标签（英文 / 分割）" 
+          variant="outlined"
+          onChange={(e) => {setTags(e.target.value)}}
         />
         <Button 
           variant="contained" 

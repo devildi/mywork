@@ -153,6 +153,15 @@ function ResponsiveDrawer({window, trip, dispatch}) {
         <p className={classes.drawerTitle}>
           {`行程编号：${data.uid}`}
         </p>
+        <p className={classes.drawerTitle}>
+          {`城市：${data.city}`}
+        </p>
+        <p className={classes.drawerTitle}>
+          {`国家：${data.country}`}
+        </p>
+        <p className={classes.drawerTitle}>
+          {`标签：${data.tags}`}
+        </p>
       </div>
       <Divider />
       <List>

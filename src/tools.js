@@ -22,7 +22,7 @@ export function saveData(str, data, expire){
     str,
     JSON.stringify({
     	expires: Date.now() + expire * 1000,
-      data: data,
+      	data: data,
     })
   );
 }
@@ -148,15 +148,15 @@ export function color(){
 
 export function getScrollTop(){
 	let scrollTop=0
-  if(document.documentElement&&document.documentElement.scrollTop)
-  {
-      scrollTop=document.documentElement.scrollTop
-  }
-  else if(document.body)
-  {
-      scrollTop=document.body.scrollTop
-  }
-  return scrollTop
+	if(document.documentElement&&document.documentElement.scrollTop)
+	{
+		scrollTop=document.documentElement.scrollTop
+	}
+	else if(document.body)
+	{
+		scrollTop=document.body.scrollTop
+	}
+	return scrollTop
 }
 //获取视窗高度
 export function getClientHeight(){    
@@ -231,6 +231,9 @@ export class Trip {
 		tripName: '',
 		designer: '',
 		domestic: 1,
+		city: '',
+		country: '',
+		tags: '',
 		detail: [],
 		) {
 		this.uid = uid;
