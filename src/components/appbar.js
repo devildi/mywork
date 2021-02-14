@@ -14,7 +14,8 @@ const useStyles = makeStyles(theme => ({
 export default function Bar ({title, history}) {
 	const classes = useStyles();
 	const back = () => {
-		history.push('/')
+		//history.push('/')
+		history.goBack()
 	}
 	return (
 	<AppBar>

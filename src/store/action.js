@@ -14,6 +14,7 @@ export const SET_LEFT = 'SET_LEFT';
 export const SET_RIGHT = 'SET_RIGHT';
 export const SET_TRIP = 'SET_TRIP';
 export const SET_ITEM = 'SET_ITEM';
+export const SET_PAGEINDEX = 'SET_PAGEINDEX';
 
 export const SET_LIST_SAGA = 'SET_LIST_SAGA';
 export const GET_ARRANGEDATA_SAGA = 'GET_ARRANGEDATA_SAGA';
@@ -53,6 +54,13 @@ export function setLoading(loading) {
   return {
     type: SET_LOADING,
     payload: loading,
+  };
+}
+
+export function setPageIndex(index) {
+  return {
+    type: SET_PAGEINDEX,
+    payload: index,
   };
 }
 

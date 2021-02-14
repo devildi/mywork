@@ -11,6 +11,7 @@ import Logon from '../commonComponents/logon'
 import Photos from '../commonComponents/photos'
 import EditInit from '../commonComponents/editinit'
 import Story from '../commonComponents/story'
+import TotalStorys from '../commonComponents/totalStorys'
 import Client from '../commonComponents/client'
 import Edit from '../commonComponents/edit'
 
@@ -62,6 +63,7 @@ export default () =>
 		<Route path='/logon' component ={Logon} exact key='logon'/>,
 		<Route path='/photos' component ={Photos} exact key='photos'/>,
 		<InjectedRoute path='/story' component ={Story} exact key='story'/>,
+		<InjectedRoute path='/TotalStorys' component ={TotalStorys} exact key='totalstorys'/>,
 		<InjectedRoute path='/client' component ={Client} exact key='client'/>,
 		<InjectedRoute path='/editinit' component ={EditInit} exact key='editinit'/>,
 		<InjectedEditRoute path='/edit' component ={Edit} exact key='edit'/>,

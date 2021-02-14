@@ -173,12 +173,12 @@ export function getScrollHeight(){
   return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);   
 }
 
-const getOrigiHeight = (url) => new Promise((resolve, reject) => {
+export const getOrigiHeight = (url) => new Promise((resolve, reject) => {
 	let img = new Image()
 	img.src = url;
 	let check = function(){
   	if(img.width>0 || img.height>0) {
-	    clearInterval(set);
+	    	clearInterval(set);
 			resolve(img)
   		}
 	}

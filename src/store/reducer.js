@@ -14,6 +14,7 @@ import {
   SET_RIGHT,
   SET_TRIP,
   SET_ITEM,
+  SET_PAGEINDEX
 } from './action'
 
 import { 
@@ -195,4 +196,13 @@ export default {
     }
     return state;
   },
+  pageIndex(state = 1, action){
+    const { type, payload } = action;
+    switch (type) {
+      case SET_PAGEINDEX:
+        return payload;
+      default:
+    }
+    return state;
+  }
 }

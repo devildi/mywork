@@ -57,13 +57,7 @@ export default function Profile ({user, logout, history}) {
       </Avatar>
       <Grid container spacing={1} className={classes.container}>
         <Grid item xs={6}>
-          <Paper 
-            className={classes.paper}
-            onClick={() => pushTo('/photos')}
-            elevation={3}
-          >
-            家族照片
-          </Paper>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/photos')}>家族照片</Paper>
         </Grid>
         <Grid item xs={6}>
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/client')}>NT的全体客户</Paper>
@@ -72,8 +66,12 @@ export default function Profile ({user, logout, history}) {
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/story')}>瀑布流数据编辑</Paper>
         </Grid>
         <Grid item xs={6}>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/TotalStorys')}>瀑布流数据</Paper>
+        </Grid>
+        <Grid item xs={6}>
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/editinit')}>行程设计</Paper>
         </Grid>
+        
       </Grid>
 			<Button
         variant="contained"

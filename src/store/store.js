@@ -33,7 +33,8 @@ const store = createStore(
       left: [],
       right: [],
       trip: null,
-      item: ''
+      item: '',
+      pageIndex: 1
     },
     composeEnhancers(applyMiddleware(routeMiddleware, sagaMiddleware))
 );
