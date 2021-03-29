@@ -237,10 +237,13 @@ export class Trip {
 		detail: [],
 		) {
 		this.uid = uid;
-	  this.tripName = tripName
-	  this.designer = designer
-	  this.domestic = domestic
-	  this.detail = detail
+		this.tripName = tripName
+		this.designer = designer
+		this.domestic = domestic
+		this.city = city;
+		this.country = country;
+		this.tags = tags;
+		this.detail = detail
 	}
 }
 

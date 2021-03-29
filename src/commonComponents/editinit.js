@@ -70,13 +70,16 @@ function Editinit({dispatch, history}){
   }
 
   const newTrip = () => {
-		if(!tripName || !designer|| !uid || !domestic){
+		if(!tripName || !designer|| !uid || !domestic || !city || !country || !tags){
       return alert('有未填项！')
     }
     const obj = {
       tripName: tripName.trim(),
       designer: designer.trim(),
       uid: uid,
+      city: city,
+      country: country,
+      tags: tags,
       domestic: parseInt(domestic)
     }
     dispatch(newTripSaga(obj))

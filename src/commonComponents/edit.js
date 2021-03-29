@@ -169,21 +169,26 @@ function ResponsiveDrawer({window, trip, dispatch}) {
           添加一日行程
           <ListItemIcon><AddIcon /></ListItemIcon>
         </ListItem>
-        {data.detail.map((text, index) => (
-          <ListItem 
-            button 
-            key={index} 
-            selected={selectedIndex === index}
-            onClick={() => {setSelectedIndex(index)}}
-          >
-            <ListItemText primary={`Day${index + 1}`}/>
-            <ListItemIcon
-              onClick={(e) => {removeDay(e, index)}}
+        {
+          data.detail != null && data.detail.length > 0
+          ?data.detail.map((text, index) => (
+            <ListItem 
+              button 
+              key={index} 
+              selected={selectedIndex === index}
+              onClick={() => {setSelectedIndex(index)}}
             >
-              <RemoveIcon />
-            </ListItemIcon>
-          </ListItem>
-        ))}
+              <ListItemText primary={`Day${index + 1}`}/>
+              <ListItemIcon
+                onClick={(e) => {removeDay(e, index)}}
+              >
+                <RemoveIcon />
+              </ListItemIcon>
+            </ListItem>
+          ))
+          : null
+        }
+       
       </List>
       <Divider />
     </div>
