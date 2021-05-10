@@ -141,21 +141,21 @@ function Editinit({dispatch, history}){
         />
         <TextField 
           className={classes.submit} 
-          id="sth" 
+          id="city" 
           label="城市" 
           variant="outlined"
           onChange={(e) => {setCity(e.target.value)}}
         />
         <TextField 
           className={classes.submit} 
-          id="sth" 
+          id="country" 
           label="国家" 
           variant="outlined"
           onChange={(e) => {setCountry(e.target.value)}}
         />
         <TextField 
           className={classes.submit} 
-          id="sth" 
+          id="tags" 
           label="标签（英文 / 分割）" 
           variant="outlined"
           onChange={(e) => {setTags(e.target.value)}}

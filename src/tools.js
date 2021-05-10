@@ -8,6 +8,7 @@ const vedioUrlArray = [
 	'https://res.cloudinary.com/dnfhsjz8u/video/upload/v1584691245/DJI_20191006_114520_418_fl2drt.mp4'
 ]
 export const vedioUrl = vedioUrlArray[0]
+export const avatarUrl="https://res.cloudinary.com/dnfhsjz8u/image/upload/v1620372687/u_4168080911_4188088242_fm_15_gp_0_qfgrpg.jpg"
 //localStorage
 export const ATTANGEDATA = 'ARRANGEDATA'
 export const USER = 'USER'
@@ -122,6 +123,17 @@ export const workers = [
 		days: 0
 	},
 ]
+//<a href="https://imgtu.com/i/g8r59O"><img src="https://z3.ax1x.com/2021/05/08/g8r59O.md.jpg" alt="g8r59O.jpg" border="0" /></a>
+export function fomatURL(url){
+	if(url.includes('src="')){
+		let array =  url.split('src="')
+		let array1 = array[1].split('"')
+		//console.log(array1[0])
+		return array1[0]
+	}else {
+		return url
+	}
+} 
 
 export function falmatData(array){
 	if(array && array.length > 0){

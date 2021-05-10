@@ -71,14 +71,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ResponsiveDrawer({window, trip, dispatch}) {
+function ResponsiveDrawer({window, trip, dispatch, location}) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   
-  const [data, setData] = React.useState(trip);
+  const [data, setData] = React.useState(trip || location.params);
 
   //const tripRef = useRef();
 

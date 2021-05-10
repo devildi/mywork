@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: "center",
+    paddingBottom: theme.spacing(7)
   },
   div1: {
   	padding: theme.spacing(0.5),
@@ -40,11 +41,13 @@ const useStyles = makeStyles(theme => ({
   },
   div2: {
     display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
     justifyContent: "center",
-    alignItems: 'center',
-    height:'350px'
+    //alignItems: 'center',
+    height:'100%'
+  },
+  div3: {
+    height: '100%',
+    overflow: 'hidden'
   }
 }));
 

@@ -23,6 +23,7 @@ import {
   picUrl,
   vedioUrl,
   isVedio,
+  avatarUrl
 } from '../tools'
 
 const useStyles = makeStyles(theme => ({
@@ -145,7 +146,7 @@ function Copyright() {
 }
 
 function SignIn({user, dispatch}) {
-  console.log('signin')
+  //console.log('signin')
   const classes = useStyles();
   let history = useHistory();
   //let video
@@ -182,7 +183,7 @@ function SignIn({user, dispatch}) {
       <CssBaseline />
       <div className={classes.paper}>
         <div className={classes.topBlock}>
-          <Avatar className={classes.avatarContainer}>
+          <Avatar className={classes.avatarContainer} src={avatarUrl}>
             <LockOutlinedIcon className={classes.avatar}/>
           </Avatar>
           <Typography component="h1" variant="h3" className={classes.font}>

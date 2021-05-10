@@ -6,14 +6,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import { authority } from '../tools'
+import { authority, avatarUrl } from '../tools'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    height: '100%',
+    overflow: 'hidden'
   },
   avatar: {
   	width: theme.spacing(13),
@@ -52,26 +54,32 @@ export default function Profile ({user, logout, history}) {
 			<Avatar 
         className={classes.avatar}
         onClick={logon}
+        src={avatarUrl}
       >
         {user}
       </Avatar>
       <Grid container spacing={1} className={classes.container}>
         <Grid item xs={6}>
-          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/photos')}>家族照片</Paper>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/photosInput')}>照片录入</Paper>
         </Grid>
         <Grid item xs={6}>
-          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/client')}>NT的全体客户</Paper>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/photosEdit')}>所有照片</Paper>
         </Grid>
         <Grid item xs={6}>
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/story')}>瀑布流数据编辑</Paper>
         </Grid>
         <Grid item xs={6}>
-          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/TotalStorys')}>瀑布流数据</Paper>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/totalStorys')}>所有瀑布流数据</Paper>
         </Grid>
         <Grid item xs={6}>
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/editinit')}>行程设计</Paper>
         </Grid>
-        
+        <Grid item xs={6}>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/totalTrips')}>全部行程</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/client')}>NextSticker的全体客户</Paper>
+        </Grid>
       </Grid>
 			<Button
         variant="contained"

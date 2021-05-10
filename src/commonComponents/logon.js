@@ -21,6 +21,7 @@ import {
   picUrl,
   vedioUrl,
   isVedio,
+  avatarUrl
 } from '../tools'
 
 const useStyles = makeStyles(theme => ({
@@ -173,7 +174,7 @@ function LogOn({dispatch}) {
       <CssBaseline />
       <div className={classes.paper}>
         <div className={classes.topBlock}>
-          <Avatar className={classes.avatarContainer}>
+          <Avatar className={classes.avatarContainer} src={avatarUrl}>
             <LockOutlinedIcon className={classes.avatar}/>
           </Avatar>
           <Typography component="h1" variant="h3" className={classes.font}>

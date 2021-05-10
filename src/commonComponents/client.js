@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 function Client({history}){
   const [total, setTotal] = React.useState(0)
   const [users, setUsers] = React.useState([])
-  const [loading, setLoading] = React.useState(false)
+  const loading = React.useState(false)
 
   useEffect(()=>{
     getdata()

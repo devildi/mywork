@@ -23,40 +23,41 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function TotalStorys({dispatch, item, history, pageIndex}){
+function TotalTrips({dispatch, item, history, pageIndex}){
     const classes = useStyles();
     const [total, setTotal] = useState(null)
     const [dataArray, setDataArray] = useState([])
     useEffect(()=>{
-        axios.get('/api/trip/getStoryByPage',{params: {page: pageIndex}})
+        axios.get('/api/trip/getAllTripByPage',{params: {page: pageIndex}})
         .then((res) => {
+
             setDataArray(res.data.items)
             setTotal(res.data.total) 
         })
         .catch((err) => alert(err))
     },[pageIndex])
     const previous = async() => {
-        const data = await axios.get('/api/trip/getStoryByPage',{params: {page: pageIndex - 1}})
+        const data = await axios.get('/api/trip/getAllTripByPage',{params: {page: pageIndex - 1}})
         setDataArray(data.data.items)
         dispatch(setPageIndex(pageIndex - 1))
     }
     const next = async() => {
-        const data = await axios.get('/api/trip/getStoryByPage',{params: {page: pageIndex + 1}})
+        const data = await axios.get('/api/trip/getAllTripByPage',{params: {page: pageIndex + 1}})
         setDataArray(data.data.items)
         dispatch(setPageIndex(pageIndex + 1))
     }
     const _jump = (item) => {
-        history.push({pathname: '/story', params: item});
+        history.push({pathname: '/edit', params: item});
     }
 	return (
 		<div >
-			<Bar title={'全部瀑布流页面数据：'} history={history}/>
+			<Bar title={'全部行程数据：'} history={history}/>
             <div className={classes.listContainer}>
             {
                 dataArray && dataArray.length > 0
                 ?dataArray.map((item, index) => (
                     <ListItem button key={index} onClick={() => _jump(item)}>
-                        <ListItemText primary={item.articleName} />
+                        <ListItemText primary={`行程编号：${item.uid} | ${item.tripName} | ${item.detail.length}天 | ${item.tags} | ${item.city}`} />
                     </ListItem>
                 ))
                 : null
@@ -87,4 +88,4 @@ export default connect(
   function mapDispatchToProps(dispatch) {
     return { dispatch };
   }
-)(TotalStorys);
+)(TotalTrips);

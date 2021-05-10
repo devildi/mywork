@@ -141,8 +141,6 @@ export default function DateSelector(props) {
 
   now.setDate(day);
 
-  
-
   const monthSequence = [now.getTime()];
 
   // now.setMonth(now.getMonth() + 1);

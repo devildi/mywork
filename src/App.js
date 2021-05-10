@@ -5,14 +5,14 @@ import { Provider } from 'react-redux';
 import store, { history } from './store/store'
 
 function App() {
-	console.log('start')
-  return (
-  	<Provider store={store}>
-	    <ConnectedRouter history={history}>
+	//console.log('start')
+	return (
+	<Provider store={store}>
+		<ConnectedRouter history={history}>
 			<Routes />
-	    </ConnectedRouter>
-	  </Provider>
-  )
+		</ConnectedRouter>
+	</Provider>
+	)
 }
 
 export default App;

@@ -183,6 +183,7 @@ function Story({dispatch, item, history, location}){
           color="primary" 
           className={classes.submit}
           onClick={newTrip}
+          disabled={picURL && width > 0 && height > 0 ? false: true}
         >
           {passedData? '保存更改' : '提交' }
         </Button>

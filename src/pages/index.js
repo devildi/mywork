@@ -9,7 +9,7 @@ import Bar from '../components/appbar'
 import Chart from './chart'
 import Arrange from './arrange'
 import Profile from './profile'
-
+import '../css/index.css';
 import {
   setPage,
   setWorker,
@@ -29,7 +29,9 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(8, 0, 5, 0),
+    padding: theme.spacing(8, 0, 0, 0),
+    //backgroundColor: '#f0f0f0',
+    height: '100%'
   },
 }));
 
