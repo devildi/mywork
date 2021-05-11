@@ -10,7 +10,7 @@ import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
 	root: {
-    margin: theme.spacing(2,2,0,2),
+    padding: theme.spacing(2,2,0,2),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: "center",

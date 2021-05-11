@@ -25,6 +25,9 @@ import {
 } from '../tools'
 
 const useStyles = makeStyles(theme => ({
+  container:{
+    overflow: 'hidden'
+  },
   vedioBackground: {
     position: 'fixed',//视频定位方式设为固定
     right: 0,
@@ -170,7 +173,7 @@ function LogOn({dispatch}) {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className={classes.container}>
       <CssBaseline />
       <div className={classes.paper}>
         <div className={classes.topBlock}>

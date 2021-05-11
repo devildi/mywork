@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
-        margin: theme.spacing(0,0,1,0)
+        padding: theme.spacing(0,0,1,0)
     },
     imgContainer:{
         margin: theme.spacing(1,0,0,1),

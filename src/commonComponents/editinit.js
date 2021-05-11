@@ -17,14 +17,14 @@ import{
 
 const useStyles = makeStyles(theme => ({
 	root: {
-    margin: theme.spacing(2,2,0,2),
+    padding: theme.spacing(2,2,0,2),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: "center",
     alignItems: 'center',
   },
   form: {
-    margin: theme.spacing(7,1,1,1),
+    margin: theme.spacing(6,1,1,1),
     width: '100%',
     display: 'flex',
     flexDirection: 'column',

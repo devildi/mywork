@@ -14,7 +14,7 @@ import{
 
 const useStyles = makeStyles(theme => ({
 	root: {
-    margin: theme.spacing(2,2,0,2),
+    padding: theme.spacing(2,2,0,2),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: "center",
@@ -183,7 +183,7 @@ function Story({dispatch, item, history, location}){
           color="primary" 
           className={classes.submit}
           onClick={newTrip}
-          disabled={picURL && width > 0 && height > 0 ? false: true}
+          disabled={picURL && width > 0 && height > 0 && articleName && articleURL ? false: true}
         >
           {passedData? '保存更改' : '提交' }
         </Button>

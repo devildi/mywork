@@ -13,7 +13,7 @@ import{
 
 const useStyles = makeStyles(theme => ({
 	listContainer: {
-        margin: theme.spacing(8,0,1,0),
+        padding: theme.spacing(8,0,1,0),
     },
     btn: {
         display: 'flex',

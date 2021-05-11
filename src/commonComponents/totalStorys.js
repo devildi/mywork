@@ -12,6 +12,9 @@ import{
 } from '../store/action'
 
 const useStyles = makeStyles(theme => ({
+    container: {
+        overflow: 'hidden'
+    },
 	listContainer: {
         margin: theme.spacing(8,0,1,0),
     },
@@ -49,7 +52,7 @@ function TotalStorys({dispatch, item, history, pageIndex}){
         history.push({pathname: '/story', params: item});
     }
 	return (
-		<div >
+		<div className={classes.container}>
 			<Bar title={'全部瀑布流页面数据：'} history={history}/>
             <div className={classes.listContainer}>
             {
