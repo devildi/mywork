@@ -7,11 +7,11 @@ import store, { history } from './store/store'
 function App() {
 	//console.log('start')
 	return (
-	<Provider store={store}>
-		<ConnectedRouter history={history}>
-			<Routes />
-		</ConnectedRouter>
-	</Provider>
+		<Provider store={store}>
+			<ConnectedRouter history={history}>
+				<Routes />
+			</ConnectedRouter>
+		</Provider>
 	)
 }
 

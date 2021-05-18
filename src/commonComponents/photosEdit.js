@@ -7,6 +7,7 @@ import axios from 'axios'
 import{
     setPageIndex
 } from '../store/action'
+import HighlightOff from '@material-ui/icons/HighlightOff';
 
 const useStyles = makeStyles(theme => ({
 	listContainer: {
@@ -26,7 +27,8 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
         width: '200px',
         height: '200px',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        backgroundColor: '#f0f0f0'
     },
     img: {
         display: 'block',
@@ -42,8 +44,7 @@ const useStyles = makeStyles(theme => ({
         position: 'absolute',
         right: 0,
         top: 0,
-        fontSize: 30,
-        color: 'white'
+        color: 'white',
     }
 }));
 
@@ -96,12 +97,16 @@ function TotalStorys({dispatch, item, history, pageIndex}){
                         className={classes.imgContainer} 
                         onClick={() => _jump(item)}
                     >
-                        <img alt='' className={item.width > item.height ? classes.img : classes.img2} src={item.picURL}/>
+                        <img 
+                            alt='' 
+                            className={item.width > item.height ? classes.img : classes.img2} 
+                            src={item.picURL}
+                        />
                         <div 
                             className={classes.dele}
                             onClick={(e) => dele(index, item, e)} 
                         >
-                            删除
+                            <HighlightOff />
                         </div>
                     </div>
                 ))
