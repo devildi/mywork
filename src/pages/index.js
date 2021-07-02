@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import io from 'socket.io-client'
 
 import { connect } from 'react-redux';
 
@@ -17,6 +18,7 @@ import {
   getArrangeDataSaga,
   logoutSaga,
   countSaga,
+  setNextstickerusersincreaesd
 } from '../store/action'
 
 import { 
@@ -30,7 +32,6 @@ import {
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(8, 0, 0, 0),
-    //backgroundColor: '#f0f0f0',
     height: '100%'
   },
 }));
@@ -44,7 +45,7 @@ function getlength(arr){
     return length
   }else return length
 }
-
+//程序入口：
 function Index(props) {
   const A = ['用户', '排班', '办公数据']
   const {
@@ -57,10 +58,12 @@ function Index(props) {
     tableData,
     all,
     loading,
+    nextstickerUsersIncreased,
     dispatch
   } = props
 
-	const classes = useStyles();
+	const classes = useStyles()
+  
 
   const tableDataRef = useRef();
   const allRef = useRef();
@@ -101,6 +104,16 @@ function Index(props) {
       }
     }
   }
+  //SSE===========================
+  // useEffect(() => {
+  //   const socket = io()
+  //   console.log('完成Socket连接！')
+  //   socket.on('addClient', msg => {
+  //     let num = nextstickerUsersIncreased
+  //     num++
+  //     dispatch(setNextstickerusersincreaesd(num))
+  //   })
+  // }, [dispatch, nextstickerUsersIncreased])
 
   useEffect(() => {
     dispatch(countSaga(1))
@@ -148,10 +161,15 @@ function Index(props) {
   return (
 		<div className={classes.root}>
     {
-      whichPage === 2
+      whichPage === 0
       &&<React.Fragment>
         <Bar title={A[whichPage]} />
-        <Chart data={falmatData(chartData)} rows={tableData} width={width}/>
+        <Profile 
+          user={user} 
+          logout={logout}  
+          history={history}
+          flag={nextstickerUsersIncreased > 0} 
+        />
       </React.Fragment>
     }
     {
@@ -168,13 +186,17 @@ function Index(props) {
       </React.Fragment>
     }
     {
-      whichPage === 0
+      whichPage === 2
       &&<React.Fragment>
         <Bar title={A[whichPage]} />
-        <Profile user={user} logout={logout}  history={history}/>
+        <Chart data={falmatData(chartData)} rows={tableData} width={width}/>
       </React.Fragment>
     }
-    	<BottomNavigation onSelect={onSelect} whichPage={whichPage}/>
+    	<BottomNavigation 
+        onSelect={onSelect} 
+        whichPage={whichPage}
+        nextstickerUsersIncreased={nextstickerUsersIncreased}
+      />
     </div>
   )
 }

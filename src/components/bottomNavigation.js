@@ -5,6 +5,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ProfileIcon from '@material-ui/icons/AccountCircle';
+import Badge from '@material-ui/core/Badge'
 
 const useStyles = makeStyles({
   root: {
@@ -21,7 +22,8 @@ export default function Navigation(props) {
 
   const { 
     whichPage,
-    onSelect
+    onSelect,
+    nextstickerUsersIncreased
    } = props
 
   return (
@@ -32,7 +34,12 @@ export default function Navigation(props) {
       }}
       className={classes.root}
     >
-      <BottomNavigationAction icon={<ProfileIcon />} />
+      <BottomNavigationAction icon={
+        <Badge badgeContent={nextstickerUsersIncreased} color="secondary">
+          <ProfileIcon />
+        </Badge>
+      } 
+      />
       <BottomNavigationAction icon={<FavoriteIcon />} />
       <BottomNavigationAction icon={<RestoreIcon />} />
     </BottomNavigation>

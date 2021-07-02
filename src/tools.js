@@ -123,7 +123,6 @@ export const workers = [
 		days: 0
 	},
 ]
-//<a href="https://imgtu.com/i/g8r59O"><img src="https://z3.ax1x.com/2021/05/08/g8r59O.md.jpg" alt="g8r59O.jpg" border="0" /></a>
 export function fomatURL(url){
 	if(url.includes('src="')){
 		let array =  url.split('src="')

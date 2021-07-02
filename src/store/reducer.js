@@ -1,4 +1,5 @@
 import {
+  SET_NEXTSTICKERUSERSINCREASED,
   SET_ALL,
   SET_LOADING,
 	SET_USER,
@@ -121,6 +122,15 @@ export default {
     const { type, payload } = action;
     switch (type) {
       case SET_FENYE:
+        return payload;
+      default:
+    }
+    return state;
+  },
+  nextstickerUsersIncreased(state = 0, action) {
+    const { type, payload } = action;
+    switch (type) {
+      case SET_NEXTSTICKERUSERSINCREASED:
         return payload;
       default:
     }

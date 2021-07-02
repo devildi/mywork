@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Profile ({user, logout, history}) {
+export default function Profile ({user, logout, history, flag}) {
 	const classes = useStyles();
   const logon = () => {
     if(user === authority){
@@ -78,7 +78,7 @@ export default function Profile ({user, logout, history}) {
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/totalTrips')}>全部行程</Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/client')}>NextSticker的全体客户</Paper>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/client')}>{flag ? '有新增用户' : 'NextSticker的全体客户'}</Paper>
         </Grid>
       </Grid>
 			<Button

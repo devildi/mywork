@@ -8,6 +8,9 @@ import {
   getClientHeight,
   getScrollHeight,
 } from '../tools';
+import {
+  setNextstickerusersincreaesd
+} from '../store/action'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -30,10 +33,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Client({history}){
+function Client({history, dispatch, nextstickerUsersIncreased}){
   const [total, setTotal] = React.useState(0)
   const [users, setUsers] = React.useState([])
   const loading = React.useState(false)
+
+  useEffect(()=>{
+    dispatch(setNextstickerusersincreaesd(0))
+  },[dispatch])
 
   useEffect(()=>{
     getdata()

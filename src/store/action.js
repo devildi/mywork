@@ -15,6 +15,7 @@ export const SET_RIGHT = 'SET_RIGHT';
 export const SET_TRIP = 'SET_TRIP';
 export const SET_ITEM = 'SET_ITEM';
 export const SET_PAGEINDEX = 'SET_PAGEINDEX';
+export const SET_NEXTSTICKERUSERSINCREASED = 'SET_NEXTSTICKERUSERSINCREASED'
 
 export const SET_LIST_SAGA = 'SET_LIST_SAGA';
 export const GET_ARRANGEDATA_SAGA = 'GET_ARRANGEDATA_SAGA';
@@ -82,6 +83,13 @@ export function setFenye(page) {
   return {
     type: SET_FENYE,
     payload: page,
+  };
+}
+
+export function setNextstickerusersincreaesd(num) {
+  return {
+    type: SET_NEXTSTICKERUSERSINCREASED,
+    payload: num,
   };
 }
 

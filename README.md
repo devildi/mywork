@@ -66,3 +66,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+sudo ./bin/mongodump -h 127.0.0.1:27017 -d davinci -o /Users/apple/Desktop/projects/mywork_backend/database
+
+./mongodb-linux-x86_64-amazon-3.2.7/bin/mongorestore -h 127.0.0.1:27017 -d davinci /home/ec2-user/mywork_backend/database/davinci
