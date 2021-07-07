@@ -23,7 +23,9 @@ import {
   picUrl,
   vedioUrl,
   isVedio,
-  avatarUrl
+  avatarUrl,
+  getClientHeight,
+  getScrollHeight
 } from '../tools'
 
 const useStyles = makeStyles(theme => ({
@@ -95,6 +97,10 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     color: '#fff'
   },
+  notFix: {
+    textAlign: 'center',
+    color: '#fff'
+  },
   font: {
     color: '#fff'
   }
@@ -130,13 +136,13 @@ const BootstrapInput = withStyles(theme => ({
 
 }))(InputBase);
 
-function Copyright() {
+function Copyright({height, scrollHeight}) {
   const classes = useStyles();
   return (
     <Typography 
       variant="body2" 
       color="textSecondary" 
-      className={classes.fix}
+      className={height === scrollHeight ? classes.fix : classes.notFix}
     >
       {'Copyright © '}
       <Link color="inherit" href="/logon">
@@ -149,10 +155,10 @@ function Copyright() {
 }
 
 function SignIn({user, dispatch}) {
-  //console.log('signin')
   const classes = useStyles();
   let history = useHistory();
-  //let video
+  const [height] = useState(getClientHeight())
+  const [scrollHeight, setScrollHeight] = useState(getScrollHeight())
   const [name, setName] = useState('')
   const [password, setPassword] = useState('');
 
@@ -163,6 +169,11 @@ function SignIn({user, dispatch}) {
       return alert('有未填的项目！')
     } 
   }
+
+  useEffect(() => {
+    console.log(getClientHeight(), getScrollHeight())
+    setScrollHeight(getScrollHeight())
+  }, [scrollHeight])
 
   useEffect(() => {
     dispatch(getUserDataSaga())
@@ -223,7 +234,7 @@ function SignIn({user, dispatch}) {
           </Button>
         </div>
       </div>
-      <Copyright />
+      <Copyright height={height} scrollHeight={scrollHeight}/>
       {
         isVedio
         ?<video

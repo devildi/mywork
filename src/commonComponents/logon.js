@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -21,7 +21,9 @@ import {
   picUrl,
   vedioUrl,
   isVedio,
-  avatarUrl
+  avatarUrl,
+  getClientHeight,
+  getScrollHeight
 } from '../tools'
 
 const useStyles = makeStyles(theme => ({
@@ -93,6 +95,10 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     color: '#fff'
   },
+  notFix: {
+    textAlign: 'center',
+    color: '#fff'
+  },
   font: {
     color: '#fff'
   }
@@ -135,13 +141,13 @@ function getBorderRadius(props){
   }
 }
 
-function Copyright() {
+function Copyright({height, scrollHeight}) {
   const classes = useStyles();
   return (
     <Typography 
       variant="body2" 
       color="textSecondary" 
-      className={classes.fix}
+      className={height === scrollHeight ? classes.fix : classes.notFix}
     >
       {'Copyright © '}
       <Link color="inherit" href="/signin">
@@ -155,10 +161,17 @@ function Copyright() {
 
 function LogOn({dispatch}) {
   const classes = useStyles();
-
+  const [height] = useState(getClientHeight())
+  const [scrollHeight, setScrollHeight] = useState(getScrollHeight())
   const [name, setName] = useState('')
   const [password, setPassword] = useState('');
   const [auth, setAuth] = useState('');
+
+  useEffect(() => {
+    console.log(getClientHeight(), getScrollHeight())
+    setScrollHeight(getScrollHeight())
+  }, [scrollHeight])
+
 
   const onSubmit = () => {
     if(name.trim() && password.trim() && auth.trim()){
@@ -223,7 +236,7 @@ function LogOn({dispatch}) {
           </Button>
         </div>
       </div>
-      <Copyright />
+      <Copyright height={height} scrollHeight={scrollHeight}/>
       {
         !isVedio
         ?<div className={classes.background}></div>

@@ -34,6 +34,9 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     padding: theme.spacing(5,1,0,1)
+  },
+  div: {
+    height: theme.spacing(9)
   }
 }));
 
@@ -90,6 +93,7 @@ export default function Profile ({user, logout, history, flag}) {
       >
         退出登录
       </Button>
+      <div className={classes.div}></div>
 		</div>
 	)
 }

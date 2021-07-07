@@ -45,6 +45,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     width: '100%',
   },
+  div: {
+    height: theme.spacing(7)
+  }
 }));
 
 export default function FullWidthTabs({rows}) {
@@ -96,6 +99,7 @@ export default function FullWidthTabs({rows}) {
           )
         }
         </SwipeableViews>
+        <div className={classes.div}></div>
       </React.Fragment>
       :null
       } 

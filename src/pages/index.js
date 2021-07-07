@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useRef} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useState, useEffect, useRef} from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 import io from 'socket.io-client'
 
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
 import BottomNavigation from '../components/bottomNavigation'
 import Bar from '../components/appbar'
@@ -10,7 +10,7 @@ import Bar from '../components/appbar'
 import Chart from './chart'
 import Arrange from './arrange'
 import Profile from './profile'
-import '../css/index.css';
+import '../css/index.css'
 import {
   setPage,
   setWorker,
