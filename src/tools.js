@@ -281,3 +281,15 @@ export class Daytrip{
 	  this.done = done
 	}
 }
+
+export const style = {
+    width: '400px',
+    margin: '5px',
+    height: '100px',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    padding: '5px',
+    backgroundColor: '#f0f0f0',
+    borderRadius: '5px',
+}

@@ -42,8 +42,7 @@ import {
   width,
   pic,
   getImg,
-  Trip,
-  Daytrip
+  Trip
 } from '../tools'
 
 function* check(action){
@@ -178,8 +177,8 @@ function* newTripSage (action) {
         yield put(setTrip(trip.data))
         yield put(push('/edit'))
       } else {
-        let obj = new Daytrip()
-        let newTrip = new Trip(uid, tripName, designer, domestic, city, country, tags, [[obj]])
+        //let obj = new Daytrip()
+        let newTrip = new Trip(uid, tripName, designer, domestic, city, country, tags, [[]])
         console.log(newTrip)
         yield put(setTrip(newTrip))
         yield put(push('/edit'))

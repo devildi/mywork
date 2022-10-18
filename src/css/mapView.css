@@ -1,0 +1,118 @@
+#container{
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    background-color: antiquewhite;
+}
+.windowContainer{
+    width: 200px; 
+    background: #2196F3; 
+    border-radius:20px;
+    padding-bottom: 26px;
+}
+.title{
+    color: #ffffff;
+    font-size:20px;
+    text-align:center
+}
+.des{
+    color: #ffffff;
+    padding:2px
+}
+.imgContainer{
+    height:150px;
+    overflow:hidden
+}
+.img{
+    display: block;
+    width: auto;
+    height: 100%;
+}
+.btn{
+    position:absolute;
+    right:10px;
+    bottom:2px;
+    color: #ffffff;
+    background-color: #f0f0f0;
+    color: #2196F3;
+    border-radius:5px;
+    padding:1px;
+}
+.rePlan{
+    position:absolute;
+    left:10px;
+    bottom:2px;
+    color: #ffffff;
+    background-color: #f0f0f0;
+    color: #2196F3;
+    border-radius:5px;
+    padding:1px;
+}
+.listContainer{
+    position: absolute;
+    top: 80px;
+    z-index: 200;
+    background-color: #2196F3;
+    border-radius: 10px;
+    color: #ffffff;
+}
+.textFieldContainer{
+    position: absolute;
+    width: 170px;
+    top: 80px;
+    z-index: 200;
+    right:20px;
+    background-color: #f0f0f0;
+    color: #ffffff;
+}
+.outerContainer{
+    overflow: hidden;
+}
+.searchBTN{
+    position: absolute;
+    right: 5px;
+    margin: auto;
+}
+.resultsContainer{
+    color: #000000
+}
+.textContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.btnContainer{
+    padding-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.replanContainer{
+    width: 400px;
+    margin: 5px;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+.itemContainer{
+    margin: 5px;
+    height: 30px;
+    background-color: #2196F3;
+    color: #ffffff;
+    padding: 5px;
+}
+.replanContainer1{
+    border: 1px solid #f0f0f0;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+.replanContainer2{
+    padding:5px
+}
+.titlereplan{
+    padding: 5px;
+}

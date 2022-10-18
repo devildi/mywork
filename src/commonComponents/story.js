@@ -98,7 +98,7 @@ function Story({dispatch, item, history, location}){
     //let img = await getOrigiHeight(picURL)
     //console.log(img.height, img.width)
     let data = await axios.get('/api/trip/getImgWAH',{params: {url: picURL}})
-    console.log(data.data)
+    //console.log(data.data)
     setWidth(data.data.width)
     setHeight(data.data.height)
     setLoading(false)

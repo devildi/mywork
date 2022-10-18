@@ -31,7 +31,7 @@ const RouteController = ({user, path, component: Component, ...rest}) => {
 }
 
 const EditController = ({trip, component: Component, ...rest}) => {
-	console.log({...rest})
+	//console.log({...rest})
 	return(
 		<Route 
 			{...rest}

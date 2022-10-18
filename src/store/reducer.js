@@ -15,7 +15,7 @@ import {
   SET_RIGHT,
   SET_TRIP,
   SET_ITEM,
-  SET_PAGEINDEX
+  SET_PAGEINDEX,
 } from './action'
 
 import { 

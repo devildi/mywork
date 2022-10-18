@@ -21,10 +21,11 @@ import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 import { connect } from 'react-redux';
 import Link from '@material-ui/core/Link';
 import { Daytrip, checkNullInObj, checkInArray } from '../tools'
-
+import MapComponent from './mapView';
 import{
   saveTripSaga
 } from '../store/action'
+import clsx from 'clsx';
 
 const drawerWidth = 200;
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
+    //padding: theme.spacing(3),
+  },
+  contentMode: {
+    flexGrow: 1,
     padding: theme.spacing(3),
   },
   drawerTitle: {
@@ -68,7 +73,14 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-  }
+  },
+  mapContainer: {
+    // backgroundColor: theme.palette.secondary.main,
+    // padding: 0,
+    // margin: 0,
+    // width: '100%',
+    // height: '100%',
+  },
 }));
 
 function ResponsiveDrawer({window, trip, dispatch, location}) {
@@ -80,6 +92,8 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
   
   const [data, setData] = React.useState(trip || location.params);
 
+  const [open, setOpen] = React.useState(false)//模式
+
   //const tripRef = useRef();
 
   // useEffect(()=>{
@@ -88,7 +102,11 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
   // }, [])
 
   const change = (e, str, index) => {
-    data.detail[selectedIndex][index][str] = e.target.value
+    if(str === 'category'){
+      data.detail[selectedIndex][index][str] = parseInt(e.target.value)
+    }else {
+      data.detail[selectedIndex][index][str] = e.target.value
+    }
     setData({...data})
   }
 
@@ -101,6 +119,9 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
     e.stopPropagation()
     data.detail.splice(index, 1)
     setData({...data})
+    if(index === selectedIndex){
+      setSelectedIndex(0)
+    }
   }
 
   const handleDrawerToggle = () => {
@@ -123,21 +144,36 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
     //   alert('已保存！')
     // } else {
     //   alert('已发送！')
-    
     // }
   }
 
-  const AddOneItem = () => {
-    let obj = new Daytrip()
+  const changePlan = (arr) => {
+    let newData = JSON.parse(JSON.stringify(data))
+    newData.detail = arr
+    console.log('终极数据：', newData)
+    setData(newData)
+  }
+
+  const AddOneItem = (o) => {
+    let obj = null
+    if(o){
+      obj = o
+    } else {
+      obj = new Daytrip()
+    }
+    //console.log('即将存的值：',obj)
     if(data.detail.length > 0){
       data.detail[selectedIndex].push(obj)
       setData({...data})
     }
   }
 
+  const FirstEditMode = () => {
+    setOpen(!open)
+  }
+
   const addOneDay = () => {
-    let obj = new Daytrip()
-    data.detail.push([obj])
+    data.detail.push([])
     setData({...data})
   }
 
@@ -188,13 +224,13 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
           ))
           : null
         }
-       
       </List>
       <Divider />
     </div>
-  );
+  )
 
   const container = window !== undefined ? () => window().document.body : undefined;
+  //console.log(data.detail[selectedIndex])
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -218,8 +254,13 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
               </Link>
             </Typography>
             {
-              data.detail.length > 0
-              ?<Button style={{marginRight: '5px'}}variant="outlined" color="inherit" onClick={AddOneItem}>Add</Button>
+              data.detail.length > 0 && data.detail[selectedIndex] && data.detail[selectedIndex].length > 0
+              ?<Button style={{marginRight: '5px'}}variant="outlined" color="inherit" onClick={FirstEditMode}>{!open ? '编辑模式' : '地图模式'}</Button>
+              : null
+            }
+            {
+              open && data.detail.length > 0
+              ?<Button style={{marginRight: '5px'}}variant="outlined" color="inherit" onClick={AddOneItem}>当天新增一点</Button>
               : null
             }
             {
@@ -260,9 +301,9 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
             </Drawer>
           </Hidden>
         </nav>
-        <main className={classes.content}>
+        <main className={clsx(!open && classes.content, open && classes.contentMode)}>
         { 
-          data.detail[selectedIndex] && data.detail[selectedIndex].length > 0
+          open && data.detail[selectedIndex] && data.detail[selectedIndex].length > 0
           ?data.detail[selectedIndex].map((item, index) => {
             return(
             <React.Fragment key={index}>
@@ -331,7 +372,16 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
               <Divider />
             </React.Fragment>
           )})
-          :null
+          :<div className={classes.mapContainer}>
+            <MapComponent 
+              data={data.detail[selectedIndex]}
+              totalData={data.detail}
+              removeItem={removeItem}
+              AddOneItem={AddOneItem}
+              selectedIndex={selectedIndex}
+              changePlan={changePlan}
+            />
+          </div>
         }     
         </main>
       </React.Fragment>

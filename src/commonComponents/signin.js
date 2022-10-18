@@ -171,7 +171,7 @@ function SignIn({user, dispatch}) {
   }
 
   useEffect(() => {
-    console.log(getClientHeight(), getScrollHeight())
+    //console.log(getClientHeight(), getScrollHeight())
     setScrollHeight(getScrollHeight())
   }, [scrollHeight])
 

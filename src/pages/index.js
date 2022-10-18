@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import io from 'socket.io-client'
+//import io from 'socket.io-client'
 
 import { connect } from 'react-redux'
 
@@ -18,7 +18,7 @@ import {
   getArrangeDataSaga,
   logoutSaga,
   countSaga,
-  setNextstickerusersincreaesd
+  //setNextstickerusersincreaesd
 } from '../store/action'
 
 import { 

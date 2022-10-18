@@ -34,9 +34,9 @@ const useStyles = makeStyles(theme => ({
 		bottom: 0,
 		top:0,
 		display: 'flex',
-    flexDirection: 'column',
-    justifyContent: "center",
-    alignItems: 'center',
+		flexDirection: 'column',
+		justifyContent: "center",
+		alignItems: 'center',
 	}
 }));
 
