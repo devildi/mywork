@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-//import io from 'socket.io-client'
+import io from 'socket.io-client'
 
 import { connect } from 'react-redux'
 
@@ -70,6 +70,11 @@ function Index(props) {
   const fenyeRef = useRef();
 
   const [width, setWidth] = useState(document.body.clientWidth)
+
+  useEffect(() => {
+    //const socket = io("ws://127.0.0.1:4000");
+    //socket.emit('send', {text:'6666'})
+  }, [])
 
   useEffect(() => {
     tableDataRef.current = tableData

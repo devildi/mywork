@@ -74,5 +74,5 @@ export default () =>
 		<InjectedRoute path='/editinit' component ={EditInit} exact key='editinit'/>,
 		<InjectedRoute path='/totalTrips' component ={TotalTrips} exact key='totalTrips'/>,
 		<InjectedEditRoute path='/edit' component ={Edit} exact key='edit'/>,
-		<Route path='*' exact key='404' render = {() => (<Redirect to="/signin" />)}/>,
+		{/* <Route path='*' exact key='404' render = {() => (<Redirect to="/signin" />)}/>, */}
 	</Switch>
