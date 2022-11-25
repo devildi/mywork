@@ -72,8 +72,10 @@ function Index(props) {
   const [width, setWidth] = useState(document.body.clientWidth)
 
   useEffect(() => {
-    //const socket = io("ws://localhost:3000");
-    //socket.emit('send', {text:'6666'})
+    const socket = io("ws://localhost:3000");
+    socket.on('init', (data) => {
+      console.log(data);
+  })
   }, [])
 
   useEffect(() => {
