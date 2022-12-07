@@ -20,7 +20,8 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import {
     getClientHeight,
     Daytrip,
-    style
+    style,
+    gaodeKey
 } from '../tools'
 
 function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
@@ -39,7 +40,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
     useEffect(() => {
         console.log('地图开始渲染！', totalData)
         AMapLoader.load({
-            key:"fbe59813637de60223e3d22805a2486c",                     
+            key: gaodeKey,                     
             version:"2.0",             
             plugins:['AMap.Scale','AMap.Geolocation','AMap.AutoComplete','AMap.PlaceSearch'],             
         }).then((AMap)=>{

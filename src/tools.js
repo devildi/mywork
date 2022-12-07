@@ -1,4 +1,9 @@
 export const authority = 'wudi'
+export const googleMapcontainerStyle = {
+	position: 'relative',  
+	width: '100%',
+	height: '100%'
+}
 export const picUrl = [
 'https://cn.bing.com/th?id=OIP.WMpknoaU9SsncVEW7W6SzAHaLH&pid=Api&rs=1',
 'http://youimg1.c-ctrip.com/target/fd/tg/g4/M0A/CA/30/CggYHlbEXmaAYGfJAAnFAUl5-Pk911.jpg'
@@ -7,6 +12,9 @@ const vedioUrlArray = [
 	'https://cdn.moji.com/websrc/video/video621.mp4',
 	'https://res.cloudinary.com/dnfhsjz8u/video/upload/v1584691245/DJI_20191006_114520_418_fl2drt.mp4'
 ]
+export const googleKeyWudi = 'AIzaSyAJHnZaO6czTIkkftjQNdtNcjL52pMxsIY'
+export const googleKey = 'AIzaSyB5LS2bbGE_Iw1e7Dc3_al7glDliILip_c'
+export const gaodeKey = 'fbe59813637de60223e3d22805a2486c'
 export const vedioUrl = vedioUrlArray[0]
 export const avatarUrl="https://res.cloudinary.com/dnfhsjz8u/image/upload/v1620372687/u_4168080911_4188088242_fm_15_gp_0_qfgrpg.jpg"
 //localStorage

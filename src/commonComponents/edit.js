@@ -22,6 +22,7 @@ import { connect } from 'react-redux';
 import Link from '@material-ui/core/Link';
 import { Daytrip, checkNullInObj, checkInArray } from '../tools'
 import MapComponent from './mapView';
+import GoogleMapComponent from './googleMapView';
 import{
   saveTripSaga
 } from '../store/action'
@@ -93,7 +94,7 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
   const [data, setData] = React.useState(trip || location.params);
 
   const [open, setOpen] = React.useState(false)//模式
-
+  
   //const tripRef = useRef();
 
   // useEffect(()=>{
@@ -372,16 +373,23 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
               <Divider />
             </React.Fragment>
           )})
-          :<div className={classes.mapContainer}>
-            <MapComponent 
-              data={data.detail[selectedIndex]}
-              totalData={data.detail}
-              removeItem={removeItem}
-              AddOneItem={AddOneItem}
-              selectedIndex={selectedIndex}
-              changePlan={changePlan}
-            />
-          </div>
+          : data.domestic === 1 ?
+          <MapComponent 
+            data={data.detail[selectedIndex]}
+            totalData={data.detail}
+            removeItem={removeItem}
+            AddOneItem={AddOneItem}
+            selectedIndex={selectedIndex}
+            changePlan={changePlan}
+          />
+          :<GoogleMapComponent
+            data={data.detail[selectedIndex]}
+            totalData={data.detail}
+            removeItem={removeItem}
+            AddOneItem={AddOneItem}
+            selectedIndex={selectedIndex}
+            changePlan={changePlan}
+          />
         }     
         </main>
       </React.Fragment>

@@ -10,6 +10,9 @@
     border-radius:20px;
     padding-bottom: 26px;
 }
+.windowContainerForGoogle{
+    width: 200px; 
+}
 .title{
     color: #ffffff;
     font-size:20px;

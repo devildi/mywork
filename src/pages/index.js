@@ -71,12 +71,12 @@ function Index(props) {
 
   const [width, setWidth] = useState(document.body.clientWidth)
 
-  useEffect(() => {
-    const socket = io("ws://localhost:3000");
-    socket.on('init', (data) => {
-      console.log(data);
-  })
-  }, [])
+  // useEffect(() => {
+  //   const socket = io("ws://localhost:3000");
+  //   socket.on('init', (data) => {
+  //     console.log(data);
+  //   })
+  // }, [])
 
   useEffect(() => {
     tableDataRef.current = tableData
