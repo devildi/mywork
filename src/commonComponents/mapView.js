@@ -265,7 +265,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
         if(dayData.des === '' || dayData.picURL === ''){
             return alert('有未填项目！')
         }
-        AddOneItem(dayData)
+        AddOneItem({...dayData})
         closeModal()
         setDayData(new Daytrip())
         setResult([])

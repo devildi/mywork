@@ -185,8 +185,7 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
         if(dayData.des === '' || dayData.picURL === ''){
             return alert('有未填项目！')
         }
-
-        AddOneItem(dayData)
+        AddOneItem({...dayData})
         closeModal()
         setDayData(new Daytrip())
         setResult([])

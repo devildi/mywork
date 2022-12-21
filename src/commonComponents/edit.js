@@ -158,11 +158,13 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
   const AddOneItem = (o) => {
     let obj = null
     if(o){
-      obj = o
+      o.longitude = o.longitude.toString()
+      o.latitude = o.latitude.toString()
+      obj = {...o}
     } else {
       obj = new Daytrip()
     }
-    //console.log('即将存的值：',obj)
+    console.log('即将存的值：',obj)
     if(data.detail.length > 0){
       data.detail[selectedIndex].push(obj)
       setData({...data})
