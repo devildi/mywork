@@ -160,6 +160,8 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
     }
 
     const add = () => {
+        console.log("添加详细数据弹窗：")
+        console.log(getInfo())
         dayData.nameOfScence = getInfo().name
         dayData.longitude = getInfo().lng
         dayData.latitude = getInfo().lat
@@ -171,11 +173,18 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
     }
 
     const getInfo = () => {
-        let point = mapG.getAllOverlays('marker')[0]
         let obj = {}
-        obj.name = point.getTitle()
-        obj.lng = point.getPosition().lng
-        obj.lat = point.getPosition().lat
+        let points = mapG.getAllOverlays('marker')
+        data.forEach((item) => {
+            for(let i = 0 ; i < points.length ; i++){
+                if(points[i].getTitle() === item.nameOfScence){
+                    points.splice(i, 1)
+                }
+            }
+        })
+        obj.name = points[0].getTitle()
+        obj.lng = points[0].getPosition().lng
+        obj.lat = points[0].getPosition().lat
         return obj
     }
 
@@ -212,8 +221,17 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
     }
 
     const inJectPoint = (item) => {
+        console.log("添加项目", item)
         if(data.length !== mapG.getAllOverlays('marker').length){
-            mapG.getAllOverlays('marker')[0].remove()
+            let points = mapG.getAllOverlays('marker')
+            data.forEach((item) => {
+                for(let i = 0 ; i < points.length ; i++){
+                    if(points[i].getTitle() === item.nameOfScence){
+                        points.splice(i, 1)
+                    }
+                }
+            })
+            points[0].remove()
         }
         let window = windowConstructor(aMapClass, item.name, null, null, null, add, editItem, mapG.getAllOverlays('marker').length + 1)
         let point = markerConstructor(aMapClass, item.location.lng, item.location.lat, item.name, mapG.getAllOverlays('marker').length + 1)
@@ -227,7 +245,16 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
         setResult([])
         setValue('')
         if(data.length !== mapG.getAllOverlays('marker').length){
-            mapG.getAllOverlays('marker')[0].remove()
+            let points = mapG.getAllOverlays('marker')
+            data.forEach((item) => {
+                console.log(item.nameOfScence)
+                for(let i = 0 ; i < points.length ; i++){
+                    if(points[i].getTitle() === item.nameOfScence){
+                        points.splice(i, 1)
+                    }
+                }
+            })
+            points[0].remove()
             mapG.clearInfoWindow()
         }
     }
