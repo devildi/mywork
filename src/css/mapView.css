@@ -119,3 +119,23 @@
 .titlereplan{
     padding: 5px;
 }
+.inFoContainer{
+    width: 600px;
+    padding: 10px;
+}
+.googleImgsContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.googleImgsBox{
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    margin: 2px;
+}
+.googleImgBox{
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}

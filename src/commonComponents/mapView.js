@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import axios from 'axios'
 import AMapLoader from '@amap/amap-jsapi-loader'
 import '../css/mapView.css'
 import List from '@material-ui/core/List';
@@ -36,6 +37,16 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
     const [dayData, setDayData] = useState(new Daytrip())
     const [cache, setCache] = useState(new Daytrip())
     const [replanIndex, setReplanIndex] = useState(0)
+
+    const [infoOpen, setInfoOpen] = useState(false)
+    const [imgsOpen, setImgsOpen] = useState(false)
+    const [infoFromGoogle, setInfoFromGoogle] = useState(null)
+    const [picsFromGoogle, setPicsFromGoogle] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [errinFo, setErrinFo] = useState(null)
+
+    const desRef = useRef(null);
+    const picsRef = useRef(null);
 
     useEffect(() => {
         console.log('地图开始渲染！', totalData)
@@ -341,6 +352,56 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
             setCache(new Daytrip())
         }
     }
+
+    const handleFocus = (str) => {
+        if(str === 'des'){
+            setInfoOpen(true)
+            desRef.current.blur()
+            setLoading(true)
+            fetchInfoFromGoogle(str)
+        } else {
+            setImgsOpen(true)
+            picsRef.current.blur()
+            setLoading(true)
+            fetchInfoFromGoogle(str)
+        }   
+    }
+
+    const handleCloseInfo = (str) => {
+        if(str === 'des'){
+            setInfoOpen(false)
+            setErrinFo(null)
+        }else {
+            setImgsOpen(false)
+            setErrinFo(null)
+        } 
+    }
+
+    const fetchInfoFromGoogle = (str) => {
+        if(str === 'des'){
+            axios.get('/api/trip/fetchInfo')
+            .then((res) => {
+                setInfoFromGoogle(res.data)
+                setLoading(false)
+            })
+            .catch((err) => {
+                console.log(err)
+                setLoading(false)
+                setErrinFo(err)
+            })
+        }else {
+            axios.get('/api/trip/fetchImgs')
+            .then((res) => {
+                setPicsFromGoogle(res.data)
+                setLoading(false)
+            })
+            .catch((err) => {
+                console.log(err)
+                setLoading(false)
+                setErrinFo(err)
+            })
+        }
+    }
    
     return (
         <div className="outerContainer">
@@ -440,12 +501,16 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                         /> 
                     </div>
                     <TextField 
-                        label="des" 
+                        inputRef={desRef}
+                        label="des"
+                        onFocus={() => handleFocus("des")} 
                         multiline 
                         value={dayData.des }
                         onChange={(e) => {changeContent(e.target.value, "des")}}
                     />
-                    <TextField 
+                    <TextField
+                        inputRef={picsRef}
+                        onFocus={() => handleFocus("picURL")}
                         multiline 
                         label="picURL" 
                         value={dayData.picURL}
@@ -518,7 +583,87 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                     ))
                 }
                 </div>
-            </Dialog> 
+            </Dialog>
+            <Dialog 
+                open={infoOpen} 
+                onClose={() => handleCloseInfo('des')}
+            >
+                <div className='inFoContainer'>
+                    <div>{loading ? '数据获取中...' : null}</div>
+                    <TextField 
+                        label="des"
+                        multiline
+                        fullWidth
+                        value={dayData.des}
+                        onChange={(e) => {changeContent(e.target.value, "des")}}
+                    />
+                    <div onClick={() => {changeContent(infoFromGoogle, "des")}}>{infoFromGoogle !== null ? infoFromGoogle : null}</div>
+                    <div>{infoFromGoogle !== null ? '数据来自 Google Travel' : null}</div>
+                    <div>{errinFo !== null ? '数据获取失败，请自己填写！' : null}</div>
+                    <div className='btnContainer'>
+                        <Button 
+                            color="secondary" 
+                            variant="contained"
+                            onClick={() => handleCloseInfo('des')}
+                        >
+                            返回
+                        </Button>
+                        <Button 
+                            color="primary" 
+                            variant="contained"
+                            onClick={() => handleCloseInfo('des')}
+                        >
+                            保存
+                        </Button>
+                    </div>
+                </div>
+            </Dialog>
+            <Dialog 
+                open={imgsOpen} 
+                onClose={() => handleCloseInfo('picURL')}
+            >
+                <div className='inFoContainer'>
+                    <div>{loading ? '预览图片获取中...' : null}</div>
+                    <TextField 
+                        label="picURL"
+                        multiline
+                        fullWidth
+                        value={dayData.picURL}
+                        onChange={(e) => {changeContent(e.target.value, "picURL")}}
+                    />
+                    <div className='googleImgsContainer'>
+                    {
+                        picsFromGoogle.length > 0 
+                        ? picsFromGoogle.map((item, index) => {
+                            return (
+                                <div className='googleImgsBox' onClick={() => {changeContent(item, "picURL")}}>
+                                   <img className='googleImgBox' src={item}  /> 
+                                </div>
+                            )
+                        })
+                        :<div></div>
+                    }
+                    </div>
+                    <div>{picsFromGoogle !== null && picsFromGoogle.length > 0 ? '预览图片数据来自 Google Travel' : null}</div>
+                    <div>{errinFo !== null ? '预览图片获取失败，请自己填写图片链接！' : null}</div>
+                    <div className='btnContainer'>
+                        <Button 
+                            color="secondary" 
+                            variant="contained"
+                            onClick={() => handleCloseInfo('picURL')}
+                        >
+                            返回
+                        </Button>
+                        <Button 
+                            color="primary" 
+                            variant="contained"
+                            onClick={() => handleCloseInfo('picURL')}
+                        >
+                            保存
+                        </Button>
+                    </div>
+                </div>
+            </Dialog>
         </div>
     );
 }
