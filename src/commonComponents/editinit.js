@@ -61,6 +61,7 @@ function Editinit({dispatch, history}){
   const [city, setCity] = useState('')
   const [country, setCountry] = useState('')
   const [tags, setTags] = useState('')
+  const [cover, setCover] = useState('')
 
   const updateTrip = () => {
   	if(!uid1){
@@ -70,7 +71,7 @@ function Editinit({dispatch, history}){
   }
 
   const newTrip = () => {
-		if(!tripName || !designer|| !uid || !domestic || !city || !country || !tags){
+		if(!tripName || !designer|| !uid || !domestic || !city || !country || !tags || !cover){
       return alert('有未填项！')
     }
     const obj = {
@@ -80,7 +81,8 @@ function Editinit({dispatch, history}){
       city: city,
       country: country,
       tags: tags,
-      domestic: parseInt(domestic)
+      domestic: parseInt(domestic),
+      cover: cover.trim()
     }
     dispatch(newTripSaga(obj))
 	}
@@ -142,14 +144,14 @@ function Editinit({dispatch, history}){
         <TextField 
           className={classes.submit} 
           id="city" 
-          label="城市" 
+          label="城市（英文 / 分割）" 
           variant="outlined"
           onChange={(e) => {setCity(e.target.value)}}
         />
         <TextField 
           className={classes.submit} 
           id="country" 
-          label="国家" 
+          label="国家（英文 / 分割）" 
           variant="outlined"
           onChange={(e) => {setCountry(e.target.value)}}
         />
@@ -159,6 +161,13 @@ function Editinit({dispatch, history}){
           label="标签（英文 / 分割）" 
           variant="outlined"
           onChange={(e) => {setTags(e.target.value)}}
+        />
+        <TextField 
+          className={classes.submit} 
+          id="cover" 
+          label="封面图" 
+          variant="outlined"
+          onChange={(e) => {setCover(e.target.value)}}
         />
         <Button 
           variant="contained" 

@@ -371,15 +371,17 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
         if(str === 'des'){
             setInfoOpen(false)
             setErrinFo(null)
+            setInfoFromGoogle(null)
         }else {
             setImgsOpen(false)
             setErrinFo(null)
+            setPicsFromGoogle([])
         } 
     }
 
     const fetchInfoFromGoogle = (str) => {
         if(str === 'des'){
-            axios.get('/api/trip/fetchInfo')
+            axios.get(`/api/trip/fetchInfo?des=${dayData.nameOfScence}`)
             .then((res) => {
                 setInfoFromGoogle(res.data)
                 setLoading(false)
@@ -390,7 +392,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                 setErrinFo(err)
             })
         }else {
-            axios.get('/api/trip/fetchImgs')
+            axios.get(`/api/trip/fetchImgs?des=${dayData.nameOfScence}`)
             .then((res) => {
                 setPicsFromGoogle(res.data)
                 setLoading(false)
@@ -598,7 +600,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                         onChange={(e) => {changeContent(e.target.value, "des")}}
                     />
                     <div onClick={() => {changeContent(infoFromGoogle, "des")}}>{infoFromGoogle !== null ? infoFromGoogle : null}</div>
-                    <div>{infoFromGoogle !== null ? '数据来自 Google Travel' : null}</div>
+                    <div>{infoFromGoogle !== null ? '数据来自 百度百科' : null}</div>
                     <div>{errinFo !== null ? '数据获取失败，请自己填写！' : null}</div>
                     <div className='btnContainer'>
                         <Button 
