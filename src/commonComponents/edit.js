@@ -82,6 +82,15 @@ const useStyles = makeStyles((theme) => ({
     // width: '100%',
     // height: '100%',
   },
+  coverBTN: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'end'
+  },
+  coverUrlTextContainer: {
+    width: '100%',
+  }
 }));
 
 function ResponsiveDrawer({window, trip, dispatch, location}) {
@@ -108,6 +117,11 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
     }else {
       data.detail[selectedIndex][index][str] = e.target.value
     }
+    setData({...data})
+  }
+
+  const changeCover = (valueURL) => {
+    data.cover = valueURL
     setData({...data})
   }
 
@@ -201,6 +215,22 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
         <p className={classes.drawerTitle}>
           {`标签：${data.tags}`}
         </p>
+      </div>
+      <img alt='' 
+        src={data?.cover} 
+        width={'100%'} 
+        //height={'40px'}
+        //onClick={()=>{setCoverDisplay(false)}} 
+      />
+      <div>
+        <TextField 
+          className={classes.coverUrlTextContainer}
+          value={data?.cover || ''}
+          id="cover" 
+          label="封面" 
+          //variant="outlined"
+          onChange={(e) => {changeCover(e.target.value)}}
+        />
       </div>
       <Divider />
       <List>

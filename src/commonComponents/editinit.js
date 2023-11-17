@@ -10,10 +10,15 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Chip from '@material-ui/core/Chip';
 import { connect } from 'react-redux';
+import Link from '@material-ui/core/Link';
 import{
   newTripSaga
 } from '../store/action'
+import {
+  tagsArray
+} from '../tools'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -30,6 +35,22 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: "center",
     alignItems: 'center',
+  },
+  form1: {
+    //margin: theme.spacing(0,1,1,1),
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    //justifyContent: "center",
+    //alignItems: 'center',
+  },
+  chip: {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: theme.spacing(1,0,1,0),
+  },
+  chipContainer: {
+    margin: theme.spacing(0,1,0,0),
   },
   submit: {
     width: '100%',
@@ -63,6 +84,8 @@ function Editinit({dispatch, history}){
   const [tags, setTags] = useState('')
   const [cover, setCover] = useState('')
 
+  const [array, setArray] = useState([])
+
   const updateTrip = () => {
   	if(!uid1){
       return alert('有未填项！')
@@ -86,6 +109,39 @@ function Editinit({dispatch, history}){
     }
     dispatch(newTripSaga(obj))
 	}
+
+  const filterTags = (str, str1) => {
+    //return str1.split('/').includes(str)
+    return str1.split('/').indexOf(str)
+  }
+
+  const filterTags1 = (num, numArr) => {
+    return numArr.indexOf(num)
+  }
+
+  const handleClick = (item, index) => {
+    if(tags === ''){
+      setTags(item)
+    } else if(filterTags(item, tags) > -1){
+      let newA = tags.split('/')
+      let index = newA.indexOf(item)
+      newA.splice(index, 1)
+      let str = newA.join('/')
+      setTags(str)
+    } else {
+      setTags(`${tags}/${item}`)
+    }
+    if(array.length === 0){
+      setArray([index])
+    } else if(filterTags1(index, array) > -1){
+      let index1 = filterTags1(index, array)
+      let newA = [...array]
+      newA.splice(index1, 1)
+      setArray(newA)
+    } else {
+      setArray([...array, index])
+    }
+  }
 
 	return (
 		<div className={classes.root}>
@@ -155,13 +211,32 @@ function Editinit({dispatch, history}){
           variant="outlined"
           onChange={(e) => {setCountry(e.target.value)}}
         />
-        <TextField 
-          className={classes.submit} 
-          id="tags" 
-          label="标签（英文 / 分割）" 
-          variant="outlined"
-          onChange={(e) => {setTags(e.target.value)}}
-        />
+        <div className={classes.form1}>
+          <TextField
+            value={tags}
+            //className={classes.submit} 
+            id="tags" 
+            label="标签（英文 / 分割）" 
+            variant="outlined"
+            //onChange={(e) => {setTags(e.target.value)}}
+          />
+          <div className={classes.chip}>
+          {
+            tagsArray.map((item, index) => {
+              return (
+                <div key={index} className={classes.chipContainer}>
+                  <Chip 
+                    label={item}
+                    color="primary"
+                    variant={array.includes(index) ?  "default" : "outlined"}
+                    onClick={() => handleClick(item, index)} 
+                  />
+                </div>
+              )
+            })
+          }
+          </div>
+        </div>
         <TextField 
           className={classes.submit} 
           id="cover" 

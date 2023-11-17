@@ -167,7 +167,7 @@ function* photosSage(action){
 function* newTripSage (action) {
   if(typeof action.payload === 'object'){
     console.log(action.payload)
-    const {tripName, designer, uid, domestic, city, country, tags} = action.payload
+    const {tripName, designer, uid, domestic, city, country, tags, cover} = action.payload
     try{
       const trip = yield axios.get('/api/trip/get',{params: {
         uid: uid
@@ -178,7 +178,7 @@ function* newTripSage (action) {
         yield put(push('/edit'))
       } else {
         //let obj = new Daytrip()
-        let newTrip = new Trip(uid, tripName, designer, domestic, city, country, tags, [[]])
+        let newTrip = new Trip(uid, tripName, designer, domestic, city, country, tags, cover ,[[]])
         console.log(newTrip)
         yield put(setTrip(newTrip))
         yield put(push('/edit'))

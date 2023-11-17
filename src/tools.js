@@ -253,6 +253,7 @@ export class Trip {
 		city: '',
 		country: '',
 		tags: '',
+		cover: '',
 		detail: [],
 		) {
 		this.uid = uid;
@@ -262,6 +263,7 @@ export class Trip {
 		this.city = city;
 		this.country = country;
 		this.tags = tags;
+		this.cover = cover;
 		this.detail = detail
 	}
 }
@@ -301,3 +303,5 @@ export const style = {
     backgroundColor: '#f0f0f0',
     borderRadius: '5px',
 }
+
+export const tagsArray = ['文化', '古都', '逛吃', '蜜月', '自驾', '周末', '大海','古建筑', '草原', '藏传佛教','风景','长假','春节','乐园','特种兵','人文']
