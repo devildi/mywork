@@ -170,8 +170,9 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
   }
 
   const AddOneItem = (o) => {
+    console.log(o)
     let obj = null
-    if(o){
+    if(o !== 'edit'){
       o.longitude = o.longitude.toString()
       o.latitude = o.latitude.toString()
       obj = {...o}
@@ -287,13 +288,13 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
               </Link>
             </Typography>
             {
-              data.detail.length > 0 && data.detail[selectedIndex] && data.detail[selectedIndex].length > 0
+              data.detail.length > 0 && data.detail[selectedIndex] && data.detail[selectedIndex].length >= 0
               ?<Button style={{marginRight: '5px'}}variant="outlined" color="inherit" onClick={FirstEditMode}>{!open ? '编辑模式' : '地图模式'}</Button>
               : null
             }
             {
               open && data.detail.length > 0
-              ?<Button style={{marginRight: '5px'}}variant="outlined" color="inherit" onClick={AddOneItem}>当天新增一点</Button>
+              ?<Button style={{marginRight: '5px'}}variant="outlined" color="inherit" onClick={() => AddOneItem('edit')}>当天新增一点</Button>
               : null
             }
             {
