@@ -81,9 +81,7 @@ export default function Profile ({user, logout, history, flag}) {
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/totalTrips')}>全部行程</Paper>
         </Grid>
         <Grid item xs={4}>
-          <Paper elevation={3} className={classes.paper} onClick={() => console.log('12306爬虫')}>
-            12306
-          </Paper>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/preview')}>图片预览</Paper>
         </Grid>
         <Grid item xs={12}>
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/client')}>{flag ? '有新增用户' : 'NextSticker的全体客户'}</Paper>
