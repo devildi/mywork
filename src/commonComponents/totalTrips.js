@@ -4,7 +4,9 @@ import Bar from '../components/appbar';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import axios from 'axios'
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import{
@@ -52,17 +54,37 @@ function TotalTrips({dispatch, item, history, pageIndex}){
 	return (
 		<div >
 			<Bar title={'全部行程数据：'} history={history}/>
-            <div className={classes.listContainer}>
+            <List className={classes.listContainer}>
             {
                 dataArray && dataArray.length > 0
                 ?dataArray.map((item, index) => (
                     <ListItem button key={index} onClick={() => _jump(item)}>
                         <ListItemText primary={`行程编号：${item.uid} | ${item.tripName} | ${item.detail.length}天 | ${item.tags} | ${item.city}`} />
+                        <ListItemSecondaryAction>
+                            <Button 
+                                edge="end" 
+                                aria-label="actions" 
+                                onClick={(e) => {
+                                    e.stopPropagation()// 防止触发ListItem的点击事件
+                                    // 这里处理按钮点击事件
+                                    axios.post('/api/trip/deleteItem', {uid: item.uid})
+                                    .then((res) => {
+                                        if(res.data){
+                                            alert('删除成功')
+                                            setDataArray(dataArray.filter((trip) => trip.uid !== item.uid))
+                                        }else{
+                                            alert('删除失败')
+                                        }
+                                    })
+                                }}>
+                                删除此行程
+                            </Button>
+                        </ListItemSecondaryAction>
                     </ListItem>
                 ))
                 : null
             }
-            </div>
+            </List>
             <div className={classes.btn}>
                 {
                     dataArray && dataArray.length > 0

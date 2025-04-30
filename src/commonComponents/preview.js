@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     flex: 1,
+  },
+  divContainer: {
+    marginLeft: theme.spacing(1),
   }
 }));
 
@@ -80,8 +83,6 @@ export default function Preview({ history, location}) {
     })
     .catch(err => console.error('Error fetching images:', err));
   }, [])
-
-
 
   const handleImageError = (e) => {
     e.target.style.display = 'none';
@@ -125,10 +126,36 @@ export default function Preview({ history, location}) {
       "cover": isCover
     })
     .then(res => {
+      setPics(prevPics => 
+        prevPics.map(item => 
+          item.nameOfScence === nameOfScence 
+            ? { ...item, url: imageUrl} 
+            : item
+        )
+      )
       handleClose()
     })
     .catch(err => console.error('Error fetching images:', err));
   };
+
+
+  const getIMG = () => {
+    if(nameOfScence){
+      axios.get('/api/trip/getBingImg', {
+        params: {
+          point: nameOfScence
+        }
+      })
+      .then(res => {
+        console.log(res.data)
+        if(res.data){
+          setImageUrl(res.data)
+          setSelectedImage(res.data)
+        }      
+      })
+      .catch(err => console.error('Error fetching images:', err));
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -166,6 +193,7 @@ export default function Preview({ history, location}) {
             alt="preview"
             className={classes.dialogImage}
             onError={handleImageError}
+            key={selectedImage}
           />
           <div className={classes.inputContainer}>
             <TextField
@@ -177,12 +205,22 @@ export default function Preview({ history, location}) {
               fullWidth
             />
             <Button
+              className={classes.divContainer}
               variant="contained"
               color="primary"
               onClick={handleSave}
             >
               保存
             </Button>
+            <Button
+              className={classes.divContainer}
+              variant="contained"
+              color="primary"
+              onClick={getIMG}
+            >
+              获取图片
+            </Button>
+            
           </div>
         </DialogContent>
       </Dialog>
