@@ -35,7 +35,8 @@ const store = createStore(
       trip: null,
       item: '',
       pageIndex: 1,
-      nextstickerUsersIncreased: 0
+      nextstickerUsersIncreased: 0,
+      pointIndex: 0
     },
     composeEnhancers(applyMiddleware(routeMiddleware, sagaMiddleware))
 );

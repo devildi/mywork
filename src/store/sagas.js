@@ -27,7 +27,7 @@ import {
   PHOTOS_SAGA,
   NEWTRIP_SAGA,
   NEWITEM_SAGA,
-  SAVETRIP_SAGA
+  SAVETRIP_SAGA,
 } from './action'
 
 import { 
@@ -44,6 +44,8 @@ import {
   getImg,
   Trip
 } from '../tools'
+
+
 
 function* check(action){
   const { payload } = action;

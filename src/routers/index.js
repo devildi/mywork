@@ -18,6 +18,8 @@ import TotalTrips from '../commonComponents/totalTrips'
 import Client from '../commonComponents/client'
 import Edit from '../commonComponents/edit'
 import Preview from '../commonComponents/preview'
+import List from '../commonComponents/list'
+import Show from '../commonComponents/show'
 
 const RouteController = ({user, path, component: Component, ...rest}) => {
 	//console.log(user,path)
@@ -75,6 +77,8 @@ export default () =>
 		<InjectedRoute path='/editinit' component ={EditInit} exact key='editinit'/>,
 		<InjectedRoute path='/totalTrips' component ={TotalTrips} exact key='totalTrips'/>,
 		<InjectedEditRoute path='/edit' component ={Edit} exact key='edit'/>,
-		<Route path='/preview' component={Preview} exact key='preview'/>,
+		<InjectedRoute path='/preview' component={Preview} exact key='preview'/>,
+		<InjectedRoute path='/list' component={List} exact key='list'/>,
+		<InjectedEditRoute path='/show' component ={Show} exact key='show'/>,
 		{/* <Route path='*' exact key='404' render = {() => (<Redirect to="/signin" />)}/>, */}
 	</Switch>

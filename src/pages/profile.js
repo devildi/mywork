@@ -62,11 +62,14 @@ export default function Profile ({user, logout, history, flag}) {
         {user}
       </Avatar>
       <Grid container spacing={1} className={classes.container}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/photosInput')}>照片录入</Paper>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/photosEdit')}>所有照片</Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/client')}>{flag ? '有新增用户' : '全体客户'}</Paper>
         </Grid>
         <Grid item xs={6}>
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/story')}>瀑布流数据编辑</Paper>
@@ -84,7 +87,7 @@ export default function Profile ({user, logout, history, flag}) {
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/preview')}>图片预览</Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/client')}>{flag ? '有新增用户' : 'NextSticker的全体客户'}</Paper>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/list')}>{'行程列表'}</Paper>
         </Grid>
       </Grid>
 			<Button

@@ -16,6 +16,7 @@ import {
   SET_TRIP,
   SET_ITEM,
   SET_PAGEINDEX,
+  SET_POINT_INDEX
 } from './action'
 
 import { 
@@ -113,6 +114,15 @@ export default {
     const { type, payload } = action;
     switch (type) {
       case SET_PAGE:
+        return payload;
+      default:
+    }
+    return state;
+  },
+  pointIndex(state = 0, action) {
+    const { type, payload } = action;
+    switch (type) {
+      case SET_POINT_INDEX:
         return payload;
       default:
     }

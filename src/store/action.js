@@ -5,6 +5,7 @@ export const SET_USER = 'SET_USER';
 export const SET_PAGE = 'SET_PAGE';
 export const SET_WORKERS = 'SET_WORKERS';
 export const SET_LIST = 'SET_LIST';
+export const SET_POINT_INDEX = 'SET_POINT_INDEX';
 export const SET_ARRANGEDATA = 'SET_ARRANGEDATA';
 export const SET_ARRANGEDATA_ARRAY = 'SET_ARRANGEDATA_ARRAY';
 export const SET_ARRANGEDATA_DELETE = 'SET_ARRANGEDATA_DELETE';
@@ -16,7 +17,6 @@ export const SET_TRIP = 'SET_TRIP';
 export const SET_ITEM = 'SET_ITEM';
 export const SET_PAGEINDEX = 'SET_PAGEINDEX';
 export const SET_NEXTSTICKERUSERSINCREASED = 'SET_NEXTSTICKERUSERSINCREASED'
-
 export const SET_LIST_SAGA = 'SET_LIST_SAGA';
 export const GET_ARRANGEDATA_SAGA = 'GET_ARRANGEDATA_SAGA';
 export const GET_USER_SAGA = 'GET_USE_SAGA';
@@ -29,6 +29,13 @@ export const PHOTOS_SAGA = 'PHOTOS_SAGA';
 export const NEWTRIP_SAGA = 'NEWTRIP_SAGA';
 export const NEWITEM_SAGA = 'NEWITEM_SAGA';
 export const SAVETRIP_SAGA = 'SAVETRIP_SAGA';
+
+export function setPointIndex(index) {
+  return {
+    type: SET_POINT_INDEX,
+    payload: index,
+  };
+}
 
 export function setTrip(data) {
   return {

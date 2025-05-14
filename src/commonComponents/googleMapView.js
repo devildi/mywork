@@ -1,19 +1,20 @@
 import React, { useState, useEffect, Component } from 'react'
 import ReactDOM from "react-dom";
 import '../css/mapView.css'
+import axios from 'axios'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Search from '@material-ui/icons/Search';
 import Clear from '@material-ui/icons/Clear';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Container, Draggable } from 'react-smooth-dnd';
@@ -150,7 +151,6 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
       center.lat = lat
       center.lng = lng
       setCenterPointObj(center)
-
       setCacheMarker(marker)
     } 
 
@@ -287,12 +287,39 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
       }
     }
 
+    const handleFocus = (str) => {
+      console.log(str)
+      if(str === 'des'){
+          axios.get(`/api/chat/getDes?chat=${dayData.nameOfScence}`)
+          .then((res) => {
+              changeContent(res.data, str)
+          })
+          .catch((err) => {
+              console.log(err)
+              
+          })
+      }else {
+          axios.get(`/api/trip/getBingImg?point=${dayData.nameOfScence}`)
+          .then((res) => {
+              changeContent(res.data, str)
+          })
+          .catch((err) => {
+              console.log(err)
+          })
+      }
+    }
+
     const closeWindow = () => {
       setTitleG('')
       setDesG('')
       setImgUrl('')
       setActiveMarker(null)
       setShowingInfoWindow(false)
+    }
+
+    const showInfo = () => {
+      console.log('点击图片')
+      setOpen(true)
     }
 
     return (
@@ -334,7 +361,7 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
                       <p>{titleG}</p>
                       <p>{desG}</p>
                       <div className="imgContainer">
-                        <img className="img" src={imgUrl} alt=''/>
+                        <img className="img" src={imgUrl} alt='' onClick={showInfo}/>
                       </div>
                       <div className="btnContainer">
                         <div onClick={editItem}>景点排序</div>
@@ -486,12 +513,38 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
                       multiline 
                       value={dayData.des }
                       onChange={(e) => {changeContent(e.target.value, "des")}}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Button 
+                              variant="text" 
+                              onClick={() => handleFocus("des")}
+                              size="small"
+                            >
+                              获取描述
+                            </Button>
+                          </InputAdornment>
+                        )
+                      }}
                     />
                     <TextField 
                       multiline 
                       label="picURL" 
                       value={dayData.picURL}
                       onChange={(e) => {changeContent(e.target.value, "picURL")}}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Button 
+                              variant="text" 
+                              onClick={() => handleFocus("picURL")}
+                              size="small"
+                            >
+                              获取图片
+                            </Button>
+                          </InputAdornment>
+                        )
+                      }}
                     />
                     <TextField 
                       label="pointOrNot" 

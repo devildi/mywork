@@ -205,9 +205,6 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
           {`by ${data.designer}`}
         </p>
         <p className={classes.drawerTitle}>
-          {`行程编号：${data.uid}`}
-        </p>
-        <p className={classes.drawerTitle}>
           {`城市：${data.city}`}
         </p>
         <p className={classes.drawerTitle}>

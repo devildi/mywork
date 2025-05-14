@@ -381,7 +381,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
 
     const fetchInfoFromGoogle = (str) => {
         if(str === 'des'){
-            axios.get(`/api/trip/fetchInfo?des=${dayData.nameOfScence}`)
+            axios.get(`/api/chat/getDes?chat=${dayData.nameOfScence}`)
             .then((res) => {
                 setInfoFromGoogle(res.data)
                 setLoading(false)
@@ -392,9 +392,9 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                 setErrinFo(err)
             })
         }else {
-            axios.get(`/api/trip/fetchImgs?des=${dayData.nameOfScence}`)
+            axios.get(`/api/trip/getBingImg?point=${dayData.nameOfScence}`)
             .then((res) => {
-                setPicsFromGoogle(res.data)
+                setPicsFromGoogle([res.data])
                 setLoading(false)
             })
             .catch((err) => {
@@ -639,7 +639,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                         ? picsFromGoogle.map((item, index) => {
                             return (
                                 <div className='googleImgsBox' onClick={() => {changeContent(item, "picURL")}}>
-                                   <img className='googleImgBox' src={item}  /> 
+                                   <img className='googleImgBox' src={item}  alt=''/> 
                                 </div>
                             )
                         })

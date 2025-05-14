@@ -59,7 +59,9 @@ function TotalTrips({dispatch, item, history, pageIndex}){
                 dataArray && dataArray.length > 0
                 ?dataArray.map((item, index) => (
                     <ListItem button key={index} onClick={() => _jump(item)}>
-                        <ListItemText primary={`行程编号：${item.uid} | ${item.tripName} | ${item.detail.length}天 | ${item.tags} | ${item.city}`} />
+                        <ListItemText 
+                            primary={`${item.tripName} | ${item.detail.length}天 | ${item.city}`} 
+                        />
                         <ListItemSecondaryAction>
                             <Button 
                                 edge="end" 
