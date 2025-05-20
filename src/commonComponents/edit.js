@@ -186,6 +186,11 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
     }
   }
 
+  const rePlaceOneItem = (index, obj) => {
+    data.detail[selectedIndex][index] = obj
+    setData({...data})
+  }
+
   const FirstEditMode = () => {
     setOpen(!open)
   }
@@ -411,6 +416,7 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
             AddOneItem={AddOneItem}
             selectedIndex={selectedIndex}
             changePlan={changePlan}
+            rePlaceOneItem={rePlaceOneItem}
           />
           :<GoogleMapComponent
             data={data.detail[selectedIndex]}
@@ -419,6 +425,7 @@ function ResponsiveDrawer({window, trip, dispatch, location}) {
             AddOneItem={AddOneItem}
             selectedIndex={selectedIndex}
             changePlan={changePlan}
+            rePlaceOneItem={rePlaceOneItem}
           />
         }     
         </main>

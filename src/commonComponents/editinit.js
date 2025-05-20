@@ -94,7 +94,7 @@ function Editinit({dispatch, history}){
   }
 
   const newTrip = () => {
-		if(!tripName || !designer|| !uid || !domestic || !city || !country || !tags || !cover){
+		if(!tripName || !designer|| !uid || !domestic || !city || !country || !tags){
       return alert('有未填项！')
     }
     const obj = {

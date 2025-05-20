@@ -18,12 +18,13 @@ import { connect } from 'react-redux';
 import Link from '@material-ui/core/Link';
 import Gaode from './gaodeShow';
 import Google from './googleShow';
-
 import clsx from 'clsx';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import{
   setPointIndex,
 } from '../store/action'
+const MemoizedGaode = React.memo(Gaode);
+const MemoizedGoogle = React.memo(Google);
 const drawerWidth = 200;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -110,12 +111,13 @@ function ResponsiveDrawer({window, trip, dispatch, location, pointIndex}) {
 
   const clickPoint = (data, item) => {
     let obj = data?.detail.flat(Infinity).map((item1, index) => ({ item1, index })).filter(({ item1 }) => item1.nameOfScence === item.nameOfScence)
-    dispatch(setPointIndex(obj[0].index))
+    //dispatch(setPointIndex(obj[0].index))
     if (gaodeRef.current && data.domestic === 1) {
       gaodeRef.current.choosePoint(obj[0].index)
     } else if (googleRef.current && data.domestic === 0){
       googleRef.current.choosePoint(obj[0].index)
     }
+    setMobileOpen(!mobileOpen);
   }
 
   const drawer = (
@@ -168,7 +170,7 @@ function ResponsiveDrawer({window, trip, dispatch, location, pointIndex}) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
   //console.log(data.detail[selectedIndex])
-  const mapData = data.detail.flat(Infinity)
+  const mapData = React.useMemo(() => data.detail.flat(Infinity), [data.detail]);
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -227,13 +229,13 @@ function ResponsiveDrawer({window, trip, dispatch, location, pointIndex}) {
         <main className={clsx(!open && classes.content, open && classes.contentMode)}>
         { 
          data.domestic === 1 
-         ?<Gaode 
+         ?<MemoizedGaode 
             data={mapData}
             totalData={data.detail}
             ref={gaodeRef}
             pointIndex={pointIndex}
           />
-          :<Google
+          :<MemoizedGoogle
             data={mapData}
             totalData={data.detail}
             ref={googleRef}

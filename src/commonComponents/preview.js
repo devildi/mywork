@@ -72,6 +72,7 @@ export default function Preview({ history, location}) {
   const [nameOfScence, setNameOfScence] = useState('');
   const [open, setOpen] = useState(false);
   const [isCover, setIsCover] = useState(false);
+  const [loading, setLoading] = useState(false)
   const classes = useStyles();
 
   useEffect(()=>{
@@ -136,23 +137,40 @@ export default function Preview({ history, location}) {
     .catch(err => console.error('Error fetching images:', err));
   };
 
+  const handleGetImage = async () => {
+    setLoading(true); // 开始加载
+    try {
+      await getIMG(); // 调用获取图片的函数
+    } catch (error) {
+      console.error("获取图片失败:", error);
+    } finally {
+      setLoading(false); // 无论成功或失败，都结束加载
+    }
+  };
 
-  const getIMG = () => {
-    if(nameOfScence){
+
+  const getIMG = async() => {
+    return new Promise((resolve, reject) => {
+      if(nameOfScence){
       axios.get('/api/trip/getBingImg', {
         params: {
           point: nameOfScence
         }
       })
       .then(res => {
-        console.log(res.data)
+        console.log(res.data, loading)
         if(res.data){
           setImageUrl(res.data)
           setSelectedImage(res.data)
+          resolve();
         }      
-      })
-      .catch(err => console.error('Error fetching images:', err));
-    }
+        })
+      .catch(err => {
+        console.error('Error fetching images:', err)
+        reject(err)
+      });
+      }
+    })
   }
 
   return (
@@ -214,11 +232,12 @@ export default function Preview({ history, location}) {
               className={classes.divContainer}
               variant="contained"
               color="primary"
-              onClick={getIMG}
+              onClick={handleGetImage}
             >
-              获取图片
+              {
+               loading ? '获取中...' : '获取图片'
+              }
             </Button>
-            
           </div>
         </DialogContent>
       </Dialog>

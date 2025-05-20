@@ -79,7 +79,7 @@ function TotalTrips({dispatch, item, history, pageIndex}){
                                         }
                                     })
                                 }}>
-                                删除此行程
+                                删除
                             </Button>
                         </ListItemSecondaryAction>
                     </ListItem>

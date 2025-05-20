@@ -85,9 +85,20 @@ const Gaode = forwardRef(({ totalData, data, removeItem, AddOneItem, changePlan,
     }
 
     const openAPP = () => {
-        console.log(data[pointIndex])
-        const navUrl = `iosamap://path?sourceApplication=NextSticker&dlon=${data[pointIndex].longitude}&dlat=${data[pointIndex].latitude}&dev=0&t=2`
-        window.location.href = navUrl
+        const point = data[pointIndex];
+        const { longitude, latitude } = point;
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        let navUrl = '';
+        if (isIOS) {
+            navUrl = `iosamap://path?sourceApplication=NextSticker&dlon=${longitude}&dlat=${latitude}&dev=0&t=2`
+        } else if (isAndroid) {
+            navUrl = `amapuri://route/plan/?sourceApplication=NextSticker&dlat=${latitude}&dlon=${longitude}&dev=0&t=2`;
+        } else {
+            alert('当前设备不支持打开高德地图');
+            return;
+        }
+        window.location.href = navUrl;
     }
 
     const content  = (title1, des1, picUrl, fn, fn1, fn2, index) => {
@@ -152,13 +163,24 @@ const Gaode = forwardRef(({ totalData, data, removeItem, AddOneItem, changePlan,
     }
 
     const openOrcloseWindow = (obj, window, map) => {
-        if(window.getIsOpen()){
-            window.close()
-        } else {
-            window.open(map,[obj.lnglat.lng, obj.lnglat.lat]);
-            map.panTo([obj.lnglat.lng, obj.lnglat.lat])
+        try {
+            console.log(obj.target.getTitle())
+            // 获取点击的 Marker 的坐标
+            const position = obj.target.getPosition();
+            
+            // 如果信息窗体已经打开，则关闭它
+            if (window.getIsOpen()) {
+                window.close();
+            } else {
+                // 否则，在点击的 Marker 位置打开信息窗体
+                window.open(map, position);
+                // 将地图中心移动到该 Marker
+                map.panTo(position);
+            }
+        } catch (error) {
+            console.error('Error in openOrcloseWindow:', error);
         }
-    }
+    };
 
     const choosePoint = (index) => {
         if(!windowsG[index].getIsOpen()){

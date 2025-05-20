@@ -17,6 +17,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Container, Draggable } from 'react-smooth-dnd';
 import {
     getClientHeight,
@@ -25,7 +26,7 @@ import {
     gaodeKey
 } from '../tools'
 
-function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
+function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan, rePlaceOneItem}){
     const [mapG, setMapG] = useState(null)
     const [pointsG, setPointsG] = useState([]) 
     const [windowsG, setWindowsG] = useState([]) 
@@ -45,8 +46,16 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
     const [loading, setLoading] = useState(false)
     const [errinFo, setErrinFo] = useState(null)
 
+    const [loadingPic, setLoadingPic] = useState(false)
+    const [loadingInfo, setLoadingInfo] = useState(false)
+    const [searchLoading, setSearchLoading] = useState(false)
+
     const desRef = useRef(null);
     const picsRef = useRef(null);
+
+    useEffect(() => {
+        setDayData(new Daytrip(data[0].nameOfScence, data[0].longitude, data[0].latitude, data[0].des, data[0].picURL));
+    }, [data]);
 
     useEffect(() => {
         console.log('地图开始渲染！', totalData)
@@ -70,7 +79,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
             if(data && data.length > 0){
                 data.forEach((item, index) => {
                     lonLat.push([parseFloat(item.longitude), parseFloat(item.latitude)])
-                    let window = windowConstructor(AMap, item.nameOfScence, item.des, item.picURL, removeItem, add, editItem, index)
+                    let window = windowConstructor(AMap, item.nameOfScence, item.des, item.picURL, removeItem, add, editItem, index, imgClick)
                     infoWindowsArray.push(window)
                     let point = markerConstructor(AMap, parseFloat(item.longitude), parseFloat(item.latitude), item.nameOfScence, index)
                     point.on('click', (obj) => openOrcloseWindow(obj, window, map))
@@ -99,10 +108,14 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
         return point
     }
 
-    const windowConstructor = (amapClass, title, des, picURL, fn, fn1, fn2, index) => {
+    const imgClick = (index) => {
+        setOpen(true)
+    }
+
+    const windowConstructor = (amapClass, title, des, picURL, fn, fn1, fn2, index, imgClick) => {
         let window = new amapClass.InfoWindow({
             isCustom: true,
-            content: content (title, des, picURL, fn, fn1, fn2, index), 
+            content: content (title, des, picURL, fn, fn1, fn2, index, imgClick), 
             offset: new amapClass.Pixel(0, -30)
         })
         return window
@@ -116,7 +129,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
         }
     }
 
-    const content  = (title1, des1, picUrl, fn, fn1, fn2, index) => {
+    const content  = (title1, des1, picUrl, fn, fn1, fn2, index, imgClick) => {
         var windowContainer = document.createElement("div");
         windowContainer.className = 'windowContainer'
 
@@ -140,6 +153,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
             var img = document.createElement("img");
             img.className = 'img'
             img.src = picUrl
+            img.onclick = () => imgClick(index)
 
             imgContainer.appendChild(img)
             windowContainer.appendChild(imgContainer)
@@ -176,6 +190,8 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
         dayData.nameOfScence = getInfo().name
         dayData.longitude = getInfo().lng
         dayData.latitude = getInfo().lat
+        dayData.des = ''
+        dayData.picURL = ''
         setOpen(true)
     }
     //排序
@@ -200,34 +216,43 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
     }
 
     const openOrcloseWindow = (obj, window, map) => {
-        //let index = obj.target._originOpts.extData
-        if(window.getIsOpen()){
-            window.close()
-        } else {
-            window.open(map,[obj.lnglat.lng, obj.lnglat.lat]);
-            map.panTo([obj.lnglat.lng, obj.lnglat.lat])
+        try {
+            const index = data.findIndex(item => item.nameOfScence === obj.target.getTitle())
+            if(index !== -1){
+                setDayData(new Daytrip(data[index].nameOfScence, data[index].longitude, data[index].latitude, data[index].des, data[index].picURL))
+                const position = obj.target.getPosition();
+                window.open(map, position);
+                map.panTo(position);
+            }
+        } catch (error) {
+            console.error('Error in openOrcloseWindow:', error);
         }
-    }
+    };
 
     const choosePoint = (index) => {
         if(!windowsG[index].getIsOpen()){
             windowsG[index].open(mapG,pointsG[index].getPosition());
         }
+        setDayData(new Daytrip(data[index].nameOfScence, data[index].longitude, data[index].latitude, data[index].des, data[index].picURL))
         mapG.panTo(pointsG[index].getPosition())
     }
 
     const search = ()=>{
+        setSearchLoading(true)
         if(value.trim() && value.trim()!== ''){
             var placeSearch = new aMapClass.PlaceSearch();
             placeSearch.search(value.trim(), function (status, result) {
                 if(result.info === 'OK'){
                     setResult(result.poiList.pois)
+                    setSearchLoading(false)
                 } else {
                     alert('无搜索结果，请精确输入关键字！')
+                    setSearchLoading(false)
                 }
             });
         } else {
             alert('无搜索内容！')
+            setSearchLoading(false)
         }
     }
 
@@ -303,11 +328,19 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
         if(dayData.des === '' || dayData.picURL === ''){
             return alert('有未填项目！')
         }
-        AddOneItem({...dayData})
-        closeModal()
-        setDayData(new Daytrip())
-        setResult([])
-        setValue('')
+        const index = data.findIndex(item => item.nameOfScence === dayData.nameOfScence)
+
+        if(index === -1){
+            AddOneItem({...dayData})
+            closeModal()
+            setDayData(new Daytrip())
+            setResult([])
+            setValue('')
+        } else {
+            rePlaceOneItem(index, {...dayData})
+            closeModal()
+            setDayData(new Daytrip())
+        }    
     }
 
     const replanStart = (item, index) => {
@@ -404,6 +437,33 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
             })
         }
     }
+
+    const getInfiOrImg = (str) => {
+        console.log(str)
+        if(str === 'des'){
+        setLoadingInfo(true)
+        axios.get(`/api/chat/getDes?chat=${dayData.nameOfScence}`)
+        .then((res) => {
+            changeContent(res.data, str)
+            setLoadingInfo(false)
+        })
+        .catch((err) => {
+            console.log(err)
+            setLoadingInfo(false)
+        })
+        }else {
+        setLoadingPic(true)
+        axios.get(`/api/trip/getBingImg?point=${dayData.nameOfScence}`)
+        .then((res) => {
+            changeContent(res.data, str)
+            setLoadingPic(false)
+        })
+        .catch((err) => {
+            console.log(err)
+            setLoadingPic(false)
+        })
+        }
+    }
    
     return (
         <div className="outerContainer">
@@ -418,6 +478,16 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                         value={value}
                         onChange={(e)=>{setValue(e.target.value)}}
                         endAdornment={
+                            searchLoading
+                            ?<InputAdornment position="end">
+                                <IconButton
+                                aria-label="toggle password visibility"
+                                edge="end"
+                                >
+                                    <CircularProgress size={20} />
+                                </IconButton>
+                            </InputAdornment>
+                            :
                             result && result.length > 0
                             ?<InputAdornment position="end">
                                 <IconButton
@@ -505,18 +575,44 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                     <TextField 
                         inputRef={desRef}
                         label="des"
-                        onFocus={() => handleFocus("des")} 
+                        //onFocus={() => handleFocus("des")} 
                         multiline 
                         value={dayData.des }
                         onChange={(e) => {changeContent(e.target.value, "des")}}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                <Button 
+                                    variant="text" 
+                                    onClick={() => getInfiOrImg("des")}
+                                    size="small"
+                                >
+                                    {!loadingInfo ? '获取描述' : '正在获取描述中'}
+                                </Button>
+                                </InputAdornment>
+                            )
+                        }}
                     />
                     <TextField
                         inputRef={picsRef}
-                        onFocus={() => handleFocus("picURL")}
+                        //onFocus={() => handleFocus("picURL")}
                         multiline 
                         label="picURL" 
                         value={dayData.picURL}
                         onChange={(e) => {changeContent(e.target.value, "picURL")}}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                <Button 
+                                    variant="text" 
+                                    onClick={() => getInfiOrImg("picURL")}
+                                    size="small"
+                                >
+                                    {!loadingPic ? '获取图片' : '正在获取图片中'}
+                                </Button>
+                                </InputAdornment>
+                            )
+                        }}
                     />
                     <TextField 
                         label="pointOrNot" 
@@ -534,13 +630,6 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                         onChange={(e) => {changeContent(e.target.value, "contructor")}}
                     />
                     <div className='btnContainer'>
-                        {/* <Button 
-                            color="secondary" 
-                            variant="contained"
-                            onClick={() => {}}
-                        >
-                            预览
-                        </Button> */}
                         <Button 
                             color="primary" 
                             variant="contained"
@@ -591,7 +680,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                 onClose={() => handleCloseInfo('des')}
             >
                 <div className='inFoContainer'>
-                    <div>{loading ? '数据获取中...' : null}</div>
+                    <div>{loading ? '景点简介获取中...' : null}</div>
                     <TextField 
                         label="des"
                         multiline
@@ -638,7 +727,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                         picsFromGoogle.length > 0 
                         ? picsFromGoogle.map((item, index) => {
                             return (
-                                <div className='googleImgsBox' onClick={() => {changeContent(item, "picURL")}}>
+                                <div className='googleImgsBox' onClick={() => {changeContent(item, "picURL")}} key={index}>
                                    <img className='googleImgBox' src={item}  alt=''/> 
                                 </div>
                             )
@@ -646,7 +735,7 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan}){
                         :<div></div>
                     }
                     </div>
-                    <div>{picsFromGoogle !== null && picsFromGoogle.length > 0 ? '预览图片数据来自 Google Travel' : null}</div>
+                    <div>{picsFromGoogle !== null && picsFromGoogle.length > 0 ? '预览图片数据来自 Bing' : null}</div>
                     <div>{errinFo !== null ? '预览图片获取失败，请自己填写图片链接！' : null}</div>
                     <div className='btnContainer'>
                         <Button 

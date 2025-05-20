@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react'
+import React, { useState, useEffect, Component, useRef } from 'react'
 import ReactDOM from "react-dom";
 import '../css/mapView.css'
 import axios from 'axios'
@@ -10,6 +10,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Search from '@material-ui/icons/Search';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Clear from '@material-ui/icons/Clear';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -33,7 +34,7 @@ import {
     googleMapcontainerStyle,
 } from '../tools'
 
-function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, changePlan}){
+function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, changePlan, rePlaceOneItem}){
     const [mapG, setMapG] = useState(null)
     const [value, setValue] = useState('')//搜索框
     const [result, setResult] = useState([])
@@ -50,9 +51,19 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
     const [showingInfoWindow, setShowingInfoWindow] = useState(false)
     const [placeService, setPlaceService] = useState(null)
     const [cacheMarker, setCacheMarker] = useState(null)
+    const [loadingPic, setLoadingPic] = useState(false)
+    const [loadingInfo, setLoadingInfo] = useState(false)
+    const [searchLoading, setSearchLoading] = useState(false)
+    const markersRef = useRef([])
+    useEffect(() => {
+      if(data && data.length > 0){
+        setDayData(new Daytrip(data[0].nameOfScence, data[0].longitude, data[0].latitude, data[0].des, data[0].picURL));
+      }
+    }, [data]);
 
     useEffect(() => {
       console.log('google地图开始渲染！', totalData, data)
+      markersRef.current = []
       if(data && data.length > 0){
         setCenter(data[0])
       }
@@ -84,6 +95,13 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
       dayData.nameOfScence = item.name
       dayData.longitude = item.geometry.location.lng()
       dayData.latitude = item.geometry.location.lat()
+      dayData.des = ''
+      dayData.picURL = ''
+      setOpen(true)
+    }
+
+    const getInfo = () => {
+      let obj = {}
       setOpen(true)
     }
     //排序
@@ -97,10 +115,20 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
     }
 
     const choosePoint = (index) => {
-        setCenter(data[index])
+      setDayData(new Daytrip(data[index].nameOfScence, data[index].longitude, data[index].latitude, data[index].des, data[index].picURL))
+      setCenter(data[index])
+      const marker = markersRef.current[index];
+      if (marker) {
+        setTitleG(data[index].nameOfScence)
+        setDesG(data[index].des)
+        setImgUrl(data[index].picURL)
+        setActiveMarker(marker.marker);
+        setShowingInfoWindow(true);
+      }
     }
 
     const search = ()=>{
+      setSearchLoading(true)
       if(value.trim() && value.trim()!== ''){
         const request = {
           query: value.trim(),
@@ -116,12 +144,14 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
               if (status === google.maps.places.PlacesServiceStatus.OK && results) {
                 console.log(results[0].geometry.location.lat())
                 setResult(results)
+                setSearchLoading(false)
               }
             }
           )
         } catch (error) {
           alert('系统错误，请稍后重试！')
           console.log(error)
+          setSearchLoading(false)
         }
       }
     }
@@ -185,14 +215,22 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
         if(dayData.des === '' || dayData.picURL === ''){
             return alert('有未填项目！')
         }
-        AddOneItem({...dayData})
-        closeModal()
-        setDayData(new Daytrip())
-        setResult([])
-        setValue('')
-        if(cacheMarker){
-          cacheMarker.setMap(null)
-          setCacheMarker(null)
+        const index = data.findIndex(item => item.nameOfScence === dayData.nameOfScence)
+        if(index === -1){
+          AddOneItem({...dayData})
+          closeModal()
+          setDayData(new Daytrip())
+          setResult([])
+          setValue('')
+          if(cacheMarker){
+            cacheMarker.setMap(null)
+            setCacheMarker(null)
+          }
+        } else {
+          rePlaceOneItem(index, {...dayData})
+          closeModal()
+          setDayData(new Daytrip())
+          setTitleG('')
         }
     }
 
@@ -241,10 +279,30 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
 
     const fetchPlaces = (mapProps, map) => {
       console.log('地图完成初始化：', mapProps)
+      
       const {google} = mapProps;
       let service = new google.maps.places.PlacesService(map)
       setPlaceService(service)
       setMapG(map)
+      if (data && data.length > 0) {
+        setTitleG(data[0].nameOfScence);
+        setDesG(data[0].des);
+        setImgUrl(data[0].picURL);
+        setCenterPointObj({
+          lat: parseFloat(data[0].latitude),
+          lng: parseFloat(data[0].longitude),
+        });
+        
+        // 设置第一个 Marker 为 activeMarker
+        // 注意：markersRef.current[0] 可能需要在 Marker 渲染完成后才能访问
+        // 因此可以稍延迟执行（例如使用 setTimeout）
+        setTimeout(() => {
+          if (markersRef.current[0]) {
+            setActiveMarker(markersRef.current[0].marker);
+            setShowingInfoWindow(true);
+          }
+        }, 1000); // 延迟 100ms 确保 Marker 已渲染
+      }
     }
 
     const onMarkerClick = (props, marker) => {
@@ -252,6 +310,7 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
       let objArray = data.filter((item) => {
         return item.nameOfScence === props.title
       })
+      setDayData(new Daytrip(objArray[0].nameOfScence, objArray[0].longitude, objArray[0].latitude, objArray[0].des, objArray[0].picURL))
       if(objArray[0].nameOfScence !== titleG){
         setTitleG(objArray[0].nameOfScence)
         setDesG(objArray[0].des)
@@ -290,22 +349,27 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
     const handleFocus = (str) => {
       console.log(str)
       if(str === 'des'){
-          axios.get(`/api/chat/getDes?chat=${dayData.nameOfScence}`)
-          .then((res) => {
-              changeContent(res.data, str)
-          })
-          .catch((err) => {
-              console.log(err)
-              
-          })
+        setLoadingInfo(true)
+        axios.get(`/api/chat/getDes?chat=${dayData.nameOfScence}`)
+        .then((res) => {
+            changeContent(res.data, str)
+            setLoadingInfo(false)
+        })
+        .catch((err) => {
+            console.log(err)
+            setLoadingInfo(false)
+        })
       }else {
-          axios.get(`/api/trip/getBingImg?point=${dayData.nameOfScence}`)
-          .then((res) => {
-              changeContent(res.data, str)
-          })
-          .catch((err) => {
-              console.log(err)
-          })
+        setLoadingPic(true)
+        axios.get(`/api/trip/getBingImg?point=${dayData.nameOfScence}`)
+        .then((res) => {
+            changeContent(res.data, str)
+            setLoadingPic(false)
+        })
+        .catch((err) => {
+            console.log(err)
+            setLoadingPic(false)
+        })
       }
     }
 
@@ -343,6 +407,9 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
                       return(
                         <Marker
                           key={index}
+                          ref={(marker) => {
+                            if (marker) markersRef.current[index] = marker;
+                          }}
                           title={item.nameOfScence}
                           onClick={onMarkerClick}
                           position={obj} 
@@ -424,21 +491,31 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
                         value={value}
                         onChange={(e)=>{setValue(e.target.value)}}
                         endAdornment={
-                            result && result.length > 0
+                            searchLoading
                             ?<InputAdornment position="end">
                                 <IconButton
                                 aria-label="toggle password visibility"
-                                onClick={clear}
                                 edge="end"
+                                >
+                                    <CircularProgress size={20} />
+                                </IconButton>
+                            </InputAdornment>
+                            :
+                            result && result.length > 0
+                            ?<InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={clear}
+                                  edge="end"
                                 >
                                     <Clear />
                                 </IconButton>
                             </InputAdornment>
                             :<InputAdornment position="end">
                             <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={search}
-                            edge="end"
+                              aria-label="toggle password visibility"
+                              onClick={search}
+                              edge="end"
                             >
                                 <Search />
                             </IconButton>
@@ -521,7 +598,7 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
                               onClick={() => handleFocus("des")}
                               size="small"
                             >
-                              获取描述
+                              {!loadingInfo ? '获取描述' : '正在获取描述中'}
                             </Button>
                           </InputAdornment>
                         )
@@ -540,7 +617,7 @@ function  GoogleMapComponent ({google, totalData, data, removeItem, AddOneItem, 
                               onClick={() => handleFocus("picURL")}
                               size="small"
                             >
-                              获取图片
+                              {!loadingPic ? '获取图片' : '正在获取图片中'}
                             </Button>
                           </InputAdornment>
                         )

@@ -295,7 +295,7 @@ export class Daytrip{
 export const style = {
     width: '400px',
     margin: '5px',
-    height: '100px',
+    height: '120px',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',

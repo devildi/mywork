@@ -58,11 +58,46 @@ const List = ({dispatch, history}) => {
   }
 
   if (loading && page === 1) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)'
+      }}>
+        <div style={{
+          fontSize: '24px',
+          fontWeight: 'bold'
+        }}>Loading...</div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)'
+      }}>
+        <div style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+          color: 'red'
+        }}>Error: {error}</div>
+      </div>
+    );
   }
 
   return (

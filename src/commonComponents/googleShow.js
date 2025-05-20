@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component, useImperativeHandle, forwardRef } from 'react'
+import React, { useState, useEffect, Component, useImperativeHandle, forwardRef, useRef } from 'react'
 import ReactDOM from "react-dom";
 import '../css/mapView.css'
 import {
@@ -24,7 +24,7 @@ const Google = forwardRef(({ google, totalData, data, removeItem, AddOneItem, ch
     const [imgUrl, setImgUrl] = useState('')
     const [showingInfoWindow, setShowingInfoWindow] = useState(false)
     const [placeService, setPlaceService] = useState(null)
-
+    const markersRef = useRef([])
     useEffect(() => {
       console.log('google地图开始渲染！', totalData, data)
       if(data && data.length > 0){
@@ -43,10 +43,31 @@ const Google = forwardRef(({ google, totalData, data, removeItem, AddOneItem, ch
     }
 
     const fetchPlaces = (mapProps, map) => {
+      console.log('地图完成初始化：', mapProps)
+      
       const {google} = mapProps;
       let service = new google.maps.places.PlacesService(map)
       setPlaceService(service)
       setMapG(map)
+      if (data && data.length > 0) {
+        setTitleG(data[0].nameOfScence);
+        setDesG(data[0].des);
+        setImgUrl(data[0].picURL);
+        setCenterPointObj({
+          lat: parseFloat(data[0].latitude),
+          lng: parseFloat(data[0].longitude),
+        });
+        
+        // 设置第一个 Marker 为 activeMarker
+        // 注意：markersRef.current[0] 可能需要在 Marker 渲染完成后才能访问
+        // 因此可以稍延迟执行（例如使用 setTimeout）
+        setTimeout(() => {
+          if (markersRef.current[0]) {
+            setActiveMarker(markersRef.current[0].marker);
+            setShowingInfoWindow(true);
+          }
+        }, 1000); // 延迟 100ms 确保 Marker 已渲染
+      }
     }
 
     const onMarkerClick = (props, marker) => {
@@ -83,7 +104,16 @@ const Google = forwardRef(({ google, totalData, data, removeItem, AddOneItem, ch
     }
 
     const choosePoint = (index) => {
+        console.log('点击了', index)  
         setCenter(data[index])
+        const marker = markersRef.current[index];
+        if (marker) {
+          setTitleG(data[index].nameOfScence)
+          setDesG(data[index].des)
+          setImgUrl(data[index].picURL)
+          setActiveMarker(marker.marker);
+          setShowingInfoWindow(true);
+        }
     }
 
     useImperativeHandle(ref, () => ({
@@ -91,9 +121,25 @@ const Google = forwardRef(({ google, totalData, data, removeItem, AddOneItem, ch
     }))
 
     const openAPP = () => {
-      console.log(data[pointIndex])
-      const navUrl = `comgooglemaps://?daddr=${data[pointIndex].latitude},${data[pointIndex].longitude}&directionsmode=transit`
-      window.location.href = navUrl
+      const point = data[pointIndex];
+      const { latitude, longitude } = point;
+
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const isAndroid = /Android/i.test(navigator.userAgent);
+
+      let navUrl = '';
+
+      if (isIOS) {
+        // iOS 使用 comgooglemaps URL Scheme
+        navUrl = `comgooglemaps://?daddr=${latitude},${longitude}&directionsmode=transit`;
+      } else if (isAndroid) {
+        // Android 使用 intent:// scheme
+        navUrl = `intent://maps.google.com/maps?daddr=${latitude},${longitude}&directionsmode=transit#Intent;scheme=https;package=com.google.android.apps.maps;end;`;
+      } else {
+        alert('当前平台暂不支持地图跳转');
+        return;
+      }
+      window.location.href = navUrl;
     }
 
     return (
@@ -116,6 +162,9 @@ const Google = forwardRef(({ google, totalData, data, removeItem, AddOneItem, ch
                       return(
                         <Marker
                           key={index}
+                          ref={(marker) => {
+                            if (marker) markersRef.current[index] = marker;
+                          }}
                           title={item.nameOfScence}
                           onClick={onMarkerClick}
                           position={obj} 
