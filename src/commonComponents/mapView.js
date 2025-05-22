@@ -333,13 +333,15 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan, re
         if(index === -1){
             AddOneItem({...dayData})
             closeModal()
-            setDayData(new Daytrip())
+            setDayData(new Daytrip(data[0].nameOfScence, data[0].longitude, data[0].latitude, data[0].des, data[0].picURL))
             setResult([])
             setValue('')
         } else {
             rePlaceOneItem(index, {...dayData})
             closeModal()
-            setDayData(new Daytrip())
+            const newArray = data.with(index, {...dayData});
+            setDayData(new Daytrip(data[index].nameOfScence, data[index].longitude, data[index].latitude, data[index].des, data[index].picURL))
+
         }    
     }
 
