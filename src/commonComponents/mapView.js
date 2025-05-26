@@ -532,7 +532,12 @@ function  MapComponent ({totalData, data, removeItem, AddOneItem, changePlan, re
                 }
                 </div>
             </div>
-            <div className="listContainer" style={{ left: document.body.clientWidth < getClientHeight() ? '20px' : '220px' }}>
+            <div className="listContainer" style={{ 
+                left: document.body.clientWidth < getClientHeight() ? '20px' : '220px' ,
+                maxHeight: `${getClientHeight() - 100}px`, // Set your desired maximum height here
+                overflowY: 'auto',  // Enable vertical scrolling when content exceeds maxHeight
+                position: 'absolute',
+            }}>
                 {data && data.length > 0
                     ?<List>
                     {
