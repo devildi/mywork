@@ -6,6 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import DialogContent from '@material-ui/core/DialogContent';
+import Typography from '@material-ui/core/Typography'; // 新增导入
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,14 +19,23 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     minHeight: '80vh',  // 确保有足够的高度以显示居中文字
   },
+  squareContainer: { // 新增样式：包裹图片和文字的容器
+    display: 'flex',
+    flexDirection: 'column',
+    marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    border: '1px solid #ccc', // 添加1像素的灰色实线边框
+    borderRadius: '4px', // 可选：添加圆角
+    //padding: '4px', // 可选：
+  },
   square: {
     width: 100,
     height: 100,
     cursor: 'pointer',
-    marginRight: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginRight: 0, // 确保这里设置为0
+    //marginBottom: theme.spacing(1),
     overflow: 'hidden',
-    backgroundColor: 'pink',  // 默认背景色
+    backgroundColor: 'pink',
     '&:hover': {
       transform: 'scale(1.05)',
       transition: 'transform 0.2s',
@@ -36,6 +46,15 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     objectFit: 'cover',
     display: 'block',  // 防止图片底部有间隙
+  },
+  sceneName: { // 新增样式：地点名称
+    textAlign: 'center',
+    fontSize: '0.8rem',
+    //marginTop: theme.spacing(0.5),
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: 100,
   },
   emptyMessage: {
     width: '100%',
@@ -182,15 +201,22 @@ export default function Preview({ history, location}) {
           ? pics.map((item, index) => (
             <div 
               key={index} 
-              className={classes.square}
-              onClick={() => handleImageClick(item)}
+              className={classes.squareContainer} // 使用新的容器样式
             >
-              <img 
-                src={item.url}
-                alt={`preview-${index}`}
-                className={classes.image}
-                onError={handleImageError}
-              />
+              <div 
+                className={classes.square}
+                onClick={() => handleImageClick(item)}
+              >
+                <img 
+                  src={item.url}
+                  alt={`preview-${index}`}
+                  className={classes.image}
+                  onError={handleImageError}
+                />
+              </div>
+              <Typography variant="body2" className={classes.sceneName}>
+                {item.nameOfScence}
+              </Typography>
             </div>
           ))
           : <div className={classes.emptyMessage}>
