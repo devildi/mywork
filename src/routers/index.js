@@ -20,6 +20,7 @@ import Edit from '../commonComponents/edit'
 import Preview from '../commonComponents/preview'
 import List from '../commonComponents/list'
 import Show from '../commonComponents/show'
+import Test from '../commonComponents/test'
 
 const RouteController = ({user, path, component: Component, ...rest}) => {
 	//console.log(user,path)
@@ -79,6 +80,7 @@ export default () =>
 		<InjectedEditRoute path='/edit' component ={Edit} exact key='edit'/>,
 		<InjectedRoute path='/preview' component={Preview} exact key='preview'/>,
 		<InjectedRoute path='/list' component={List} exact key='list'/>,
+		<InjectedRoute path='/test' component={Test} exact key='test'/>,
 		<InjectedEditRoute path='/show' component ={Show} exact key='show'/>,
 		{/* <Route path='*' exact key='404' render = {() => (<Redirect to="/signin" />)}/>, */}
 	</Switch>

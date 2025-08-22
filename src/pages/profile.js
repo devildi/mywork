@@ -86,8 +86,11 @@ export default function Profile ({user, logout, history, flag}) {
         <Grid item xs={4}>
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/preview')}>图片预览</Paper>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/list')}>{'行程列表'}</Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper elevation={3} className={classes.paper} onClick={() => pushTo('/test')}>{'测试'}</Paper>
         </Grid>
       </Grid>
 			<Button
