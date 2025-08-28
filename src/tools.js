@@ -15,6 +15,7 @@ const vedioUrlArray = [
 export const googleKeyWudi = 'AIzaSyAJHnZaO6czTIkkftjQNdtNcjL52pMxsIY'
 export const googleKey = 'AIzaSyB5LS2bbGE_Iw1e7Dc3_al7glDliILip_c'
 export const gaodeKey = 'fbe59813637de60223e3d22805a2486c'
+
 export const vedioUrl = vedioUrlArray[0]
 export const avatarUrl="https://res.cloudinary.com/dnfhsjz8u/image/upload/v1620372687/u_4168080911_4188088242_fm_15_gp_0_qfgrpg.jpg"
 //localStorage
