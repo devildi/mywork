@@ -76,7 +76,7 @@ const Test = ({ dispatch, history }) => {
 
   return (
     <div style={{ margin: 0, padding: 0 }}>
-      <Bar title={'测试'} history={history} />
+      <Bar title={'测试图片链接'} history={history} />
 
       <div className={classes.toolbar} />
 
